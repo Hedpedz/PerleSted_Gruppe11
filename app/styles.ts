@@ -111,6 +111,15 @@ const allStyles = StyleSheet.create({
     justifyContent: "space-between",
   },
 
+  // Map
+  mapContainer: {
+    flex: 1,
+  },
+  mapView: {
+    height: "100%",
+    width: "100%",
+  },
+
 
   // Misc
   text: {
