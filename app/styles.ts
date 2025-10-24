@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 
 const allStyles = StyleSheet.create({
+  // Profile
   ProfileButton: {
     backgroundColor: "transparent",
     padding: 16,

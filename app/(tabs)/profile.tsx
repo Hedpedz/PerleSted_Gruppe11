@@ -1,11 +1,11 @@
-import { ProfileSettingCard } from "../../components/SettingCard";
+import { ProfileSettingCard } from "../../components/profile/SettingCard";
 
 import { Image } from "expo-image";
 import { ScrollView, Text, View } from "react-native";
 
 import image from "../../assets/beluga.png";
-import PostCard from "../../components/PostCard";
-import { styles } from "../components/styles";
+import PostCard from "../../components/profile/PostCard";
+import { styles } from "../styles";
 
 import Button from "../../components/Button";
 
@@ -58,7 +58,7 @@ const Profile = ({
       <View style={styles.profileContainer}>
         <View style={styles.profileHeaderContainer}>
           <Image
-            source={imageUrl ? { uri: imageUrl } : image}
+            source={typeof imageUrl === "string" ? { uri: imageUrl } : imageUrl}
             style={styles.profileImage}
           />
           <Text style={styles.profileHeaderText}>{username}</Text>
