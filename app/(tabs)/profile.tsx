@@ -1,4 +1,4 @@
-import { ProfileSettingCard } from "../../components/profile/SettingCard";
+import { ProfileSettingCard } from "../../components/profile/ProfileSettingCard";
 
 import { Image } from "expo-image";
 import { ScrollView, Text, View } from "react-native";
@@ -73,8 +73,8 @@ const Profile = ({
           />
           <ProfileSettingCard setting="E-post" settingInfo={email} />
           <Button
-            text="Lagre endringer"
-            path="../settings"
+            text="Endre instillinger"
+            path="./usersettings"
             buttonStyle={styles.profileButton}
             buttonTextStyle={styles.profileText}
           />

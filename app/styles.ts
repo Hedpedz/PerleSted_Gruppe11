@@ -53,6 +53,64 @@ const allStyles = StyleSheet.create({
     gap: 12,
     justifyContent: "space-between",
   },
+
+  // Settings
+  settingsSmallButton: {
+    backgroundColor: "transparent",
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
+
+    borderRadius: 8,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#000000ff",
+  },
+
+  settingsBigButton: {
+    backgroundColor: "transparent",
+    padding: 16,
+    borderRadius: 8,
+    alignItems: "center",
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#49464656",
+  },
+
+  settingsContainer: {
+    flex: 1,
+    paddingBottom: 30,
+    paddingTop: 20,
+    gap: 10,
+    width: "90%",
+    alignItems: "center",
+    alignSelf: "center",
+  },
+
+  settingsTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  settingsCardContainer: {
+    flexDirection: "row",
+    width: "100%",
+    borderColor: "#000000e8",
+    padding: 3,
+    justifyContent: "space-between",
+  },
+
+
+  // Misc
+  text: {
+    fontSize: 16,
+  },
+
+  textBold: {
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
 
 export const styles = StyleSheet.create({
