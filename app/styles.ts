@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 const allStyles = StyleSheet.create({
   // Profile
-  ProfileButton: {
+  profileButton: {
     backgroundColor: "transparent",
     padding: 16,
     borderRadius: 8,
@@ -11,20 +11,20 @@ const allStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#e0e0e0e8",
   },
-  ProfileText: {
+  profileText: {
     fontSize: 16,
   },
-  ProfileHeaderText: {
+  profileHeaderText: {
     fontSize: 16,
     textAlign: "center",
     marginTop: 8,
   },
-  ProfileMiddleContainer: {
+  profileMiddleContainer: {
     alignItems: "center",
     gap: 12,
     width: "100%",
   },
-  ProfileContainer: {
+  profileContainer: {
     flex: 1,
     paddingBottom: 30,
     paddingTop: 20,
@@ -33,21 +33,21 @@ const allStyles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
   },
-  ProfileHeaderContainer: {
+  profileHeaderContainer: {
     alignItems: "center",
   },
-  ProfileSettingCardContainer: {
+  profileSettingCardContainer: {
     flexDirection: "row",
     width: "100%",
   },
-  ProfileImage: {
+  profileImage: {
     width: 90,
     height: 90,
     borderWidth: 4,
     borderRadius: 90,
     borderColor: "#E1F8D7",
   },
-  ProfilePostsView: {
+  profilePostsView: {
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 12,
@@ -56,13 +56,5 @@ const allStyles = StyleSheet.create({
 });
 
 export const styles = StyleSheet.create({
-  profileButton: allStyles.ProfileButton,
-  profileText: allStyles.ProfileText,
-  profileContainer: allStyles.ProfileContainer,
-  profileHeaderContainer: allStyles.ProfileHeaderContainer,
-  profileSettingCardContainer: allStyles.ProfileSettingCardContainer,
-  profileHeaderText: allStyles.ProfileHeaderText,
-  profileContainerMiddle: allStyles.ProfileMiddleContainer,
-  profileImage: allStyles.ProfileImage,
-  profilePostsView: allStyles.ProfilePostsView,
+  ...allStyles,
 });
