@@ -27,7 +27,7 @@ const dummyProfileData = {
   password: "hashedpassword",
 };
 
-const UserSettings = ({
+const Settings = ({
   imageUrl,
   username = dummyProfileData.username,
   verified = dummyProfileData.verified,
@@ -76,4 +76,4 @@ const UserSettings = ({
   );
 };
 
-export default UserSettings;
+export default Settings;

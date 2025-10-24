@@ -74,7 +74,7 @@ const Profile = ({
           <ProfileSettingCard setting="E-post" settingInfo={email} />
           <Button
             text="Endre instillinger"
-            path="./usersettings"
+            path="./settings"
             buttonStyle={styles.profileButton}
             buttonTextStyle={styles.profileText}
           />

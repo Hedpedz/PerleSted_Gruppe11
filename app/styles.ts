@@ -1,6 +1,16 @@
 import { StyleSheet } from "react-native";
 
 const allStyles = StyleSheet.create({
+  // Header
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    paddingLeft: 15,
+  },
+  headerRightButton: {
+    marginRight: 15,
+  },
+
   // Profile
   profileButton: {
     backgroundColor: "transparent",
@@ -116,3 +126,5 @@ const allStyles = StyleSheet.create({
 export const styles = StyleSheet.create({
   ...allStyles,
 });
+
+export default styles;
