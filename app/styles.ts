@@ -53,6 +53,12 @@ const allStyles = StyleSheet.create({
     gap: 12,
     justifyContent: "space-between",
   },
+  //Pearl
+  PearlTitle: {
+    fontSize: 16,
+    textAlign: "center",
+    marginTop: 8,
+  }
 });
 
 export const styles = StyleSheet.create({

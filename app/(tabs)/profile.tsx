@@ -8,6 +8,8 @@ import PostCard from "../../components/profile/PostCard";
 import { styles } from "../styles";
 
 import Button from "../../components/Button";
+import React from "react";
+
 
 interface ProfileProps {
   imageUrl?: string;
