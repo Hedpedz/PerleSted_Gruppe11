@@ -47,6 +47,7 @@ const PearlCardComponent: React.FC<PearlCardProps> = ({
 };
 
 export const PearlCard = memo(PearlCardComponent);
+
 export default PearlCard;
 
 
