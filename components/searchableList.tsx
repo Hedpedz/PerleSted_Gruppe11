@@ -1,3 +1,4 @@
+// Deler av koden er hentet fra https://reactnative.dev/docs/flatlist.html
 import React, { useState } from "react";
 import { TextInput, Text, View, FlatList, StyleSheet, StatusBar, Button} from "react-native";
 
@@ -9,27 +10,29 @@ const Item = ({ title }: itemProps) => (
 );
 export default class SearchableList extends React.Component {
 
-    modifiableData = [];
+
     textChangeEvent(text) {
         if (text == "") {
-            this.modifiableData = this.data;
-            this.forceUpdate();
+            this.setState({modifiableData: []})
+            //this.forceUpdate();
             return;
 
         }
         var newDataList = [];
-        for (var i = 0; i < this.data[0].length; i++) {
-            if (this.modifiableData[0][i].get("name").includes(text)) {
+        for (var i = 0; i < this.data.length; i++) {
+            //console.log(this.data)
+            if (this.data[i]["title"].toLowerCase().includes(text.toLowerCase())) {
 
                 newDataList.push(this.data[i]);
             }
         }
-        this.forceUpdate();
+        console.log(newDataList);
+        this.setState({ modifiableData: newDataList });
     }
     constructor({ data, placeHolderText }) {
             super();
             this.data = data;
-            this.modifiableData = data;
+            this.state = { modifiableData: [] };
             
     }
     render() {
@@ -37,7 +40,7 @@ export default class SearchableList extends React.Component {
         var output = <View>
                 <TextInput onChangeText={this.textChangeEvent.bind(this)} placeholder="Søk etter perle sted"></TextInput>
                 <FlatList
-                    data={this.modifiableData}
+                    data={this.state.modifiableData}
                     renderItem={({ item }) => <Item title={item.title} />}
                     keyExtractor={item => item.id}            ></FlatList>
         </View>;
