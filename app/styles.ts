@@ -111,6 +111,33 @@ const allStyles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+  //Pearl
+  PearlTitle: {
+    fontSize: 16,
+    textAlign: "center",
+    marginTop: 8,
+  },
+  PearlCard: {
+    width: "100%",
+    marginTop: 16,
+    padding: 12,
+    borderRadius: 12,
+    backgroundColor: "#fff",
+    // เงา
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  PearlImageWrap: {
+    borderRadius: 12,
+    overflow: "hidden",
+  },
+  PearlImage: {
+    width: "100%",
+    height: 180,
+  },
 });
 
 export const styles = StyleSheet.create({
