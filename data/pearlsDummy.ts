@@ -1,6 +1,7 @@
-import { pearlImages } from "../types/pearl";
+import { pearlImages } from "../constants/pearlImage";
+import { Pearl } from "../types/pearl"
 
-export const DummyPearls = [
+export const DummyPearls: Pearl[] = [
     {
         id: "p1",
         title: "Fredriksten Festning",

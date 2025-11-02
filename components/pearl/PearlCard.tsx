@@ -1,6 +1,6 @@
-import React, { memo, useMemo } from "react";
-import { Text, TouchableOpacity, View, ImageSourcePropType, StyleSheet } from "react-native";
 import { Image } from "expo-image";
+import React, { memo, useMemo } from "react";
+import { ImageSourcePropType, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "../../app/styles";
 import fallbackImg from "../../assets/FredrikstenFesning.jpg";
 
@@ -50,23 +50,3 @@ const PearlCardComponent: React.FC<PearlCardProps> = ({
 
 export const PearlCard = memo(PearlCardComponent);
 
-export default PearlCard;
-
-
-
-  export async fucntion getLastestPlaces() {
-    try {
-        const result = await database.ListDokuments(
-            config.databaseId!,
-            config.pearlCollectionId!,
-            [Query.orderAsc('$createdAt'), Query.limit(5)];
-        )
-
-        return result.dokuments;
-
-    } catch (error) {
-        console.error(error);
-        return [];
-    
-    }
-  }
