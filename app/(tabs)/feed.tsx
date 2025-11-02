@@ -1,7 +1,6 @@
 import React from "react";
 import { Image } from "expo-image";
-import fallbackImg from "@/assets/FredrikstenFesning.jpg";
-import { PearlCard } from "@/components/pearl/PearlCard";
+import { PearlCard } from "../../components/pearl/PearlCard";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, View, StyleSheet, FlatList } from "react-native"; 
 
