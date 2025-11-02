@@ -10,4 +10,17 @@ interface PearlDetail extends PearlCard {
 }
 
 
+function getPearlById({ id }: { id: string}) {
+    try {
+        const result = await DrawerLayoutAndroidBase.getDokument(
+            config.datanaseId!,
+            config.pearlCollectionId!,
+            id,
+        );
+        return result;
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
 export default PearlDetail;

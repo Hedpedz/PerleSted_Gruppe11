@@ -54,4 +54,19 @@ export default PearlCard;
 
 
 
-  
+  export async fucntion getLastestPlaces() {
+    try {
+        const result = await database.ListDokuments(
+            config.databaseId!,
+            config.pearlCollectionId!,
+            [Query.orderAsc('$createdAt'), Query.limit(5)];
+        )
+
+        return result.dokuments;
+
+    } catch (error) {
+        console.error(error);
+        return [];
+    
+    }
+  }
