@@ -1,5 +1,6 @@
 import { Text, View } from "react-native";
 import { styles } from "../../app/styles";
+import React from "react";
 
 interface ProfileSettingCardProps {
   setting: string;
