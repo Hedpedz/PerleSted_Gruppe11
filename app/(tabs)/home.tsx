@@ -1,12 +1,35 @@
+import Button from "@/components/Button";
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
+import { styles } from "../styles";
 
-const Home = () => {
-    return (
-        <View>
-            <Text>Home</Text>
-        </View>
-    )
+interface Pearl {
+  id: string;
+  title: string;
 }
 
-export default Home;
+const placeHolderPearls = [
+  { id: "1", title: "pearl1" },
+  { id: "2", title: "pearl2" },
+];
+
+const home = () => {
+  return (
+    <View>
+      <Button
+        text="Min profil"
+        path="/profile"
+        buttonStyle={styles.profileButton}
+        buttonTextStyle={styles.profileText}
+      />
+      <Button
+        text="Innstillinger"
+        path="/usersettings"
+        buttonStyle={styles.profileButton}
+        buttonTextStyle={styles.profileText}
+      />
+    </View>
+  );
+};
+
+export default home;

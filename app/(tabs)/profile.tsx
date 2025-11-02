@@ -1,4 +1,4 @@
-import { ProfileSettingCard } from "../../components/profile/SettingCard";
+import { ProfileSettingCard } from "../../components/profile/ProfileSettingCard";
 
 import { Image } from "expo-image";
 import { ScrollView, Text, View } from "react-native";
@@ -69,20 +69,20 @@ const Profile = ({
             {verified ? "Verifisert medlem" : "Uverifisert medlem"}
           </Text>
         </View>
-        <View style={styles.profileContainerMiddle}>
+        <View style={styles.profileMiddleContainer}>
           <ProfileSettingCard
             setting="Telefonnummer"
             settingInfo={phoneNumber}
           />
           <ProfileSettingCard setting="E-post" settingInfo={email} />
           <Button
-            text="Lagre endringer"
-            path="../settings"
+            text="Endre instillinger"
+            path="./usersettings"
             buttonStyle={styles.profileButton}
             buttonTextStyle={styles.profileText}
           />
         </View>
-        <View style={styles.profileContainerMiddle}>
+        <View style={styles.profileMiddleContainer}>
           <Text>Mine innlegg</Text>
           <View style={styles.profilePostsView}>
             {posts.map((post) => (

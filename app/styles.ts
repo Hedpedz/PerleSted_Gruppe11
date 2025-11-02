@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 const allStyles = StyleSheet.create({
   // Profile
-  ProfileButton: {
+  profileButton: {
     backgroundColor: "transparent",
     padding: 16,
     borderRadius: 8,
@@ -11,20 +11,20 @@ const allStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#e0e0e0e8",
   },
-  ProfileText: {
+  profileText: {
     fontSize: 16,
   },
-  ProfileHeaderText: {
+  profileHeaderText: {
     fontSize: 16,
     textAlign: "center",
     marginTop: 8,
   },
-  ProfileMiddleContainer: {
+  profileMiddleContainer: {
     alignItems: "center",
     gap: 12,
     width: "100%",
   },
-  ProfileContainer: {
+  profileContainer: {
     flex: 1,
     paddingBottom: 30,
     paddingTop: 20,
@@ -33,25 +33,83 @@ const allStyles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
   },
-  ProfileHeaderContainer: {
+  profileHeaderContainer: {
     alignItems: "center",
   },
-  ProfileSettingCardContainer: {
+  profileSettingCardContainer: {
     flexDirection: "row",
     width: "100%",
   },
-  ProfileImage: {
+  profileImage: {
     width: 90,
     height: 90,
     borderWidth: 4,
     borderRadius: 90,
     borderColor: "#E1F8D7",
   },
-  ProfilePostsView: {
+  profilePostsView: {
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 12,
     justifyContent: "space-between",
+  },
+
+  // Settings
+  settingsSmallButton: {
+    backgroundColor: "transparent",
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 5,
+    paddingBottom: 5,
+
+    borderRadius: 8,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#000000ff",
+  },
+
+  settingsBigButton: {
+    backgroundColor: "transparent",
+    padding: 16,
+    borderRadius: 8,
+    alignItems: "center",
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#49464656",
+  },
+
+  settingsContainer: {
+    flex: 1,
+    paddingBottom: 30,
+    paddingTop: 20,
+    gap: 10,
+    width: "90%",
+    alignItems: "center",
+    alignSelf: "center",
+  },
+
+  settingsTextContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+
+  settingsCardContainer: {
+    flexDirection: "row",
+    width: "100%",
+    borderColor: "#000000e8",
+    padding: 3,
+    justifyContent: "space-between",
+  },
+
+
+  // Misc
+  text: {
+    fontSize: 16,
+  },
+
+  textBold: {
+    fontSize: 16,
+    fontWeight: "bold",
   },
   //Pearl
   PearlTitle: {
@@ -83,18 +141,5 @@ const allStyles = StyleSheet.create({
 });
 
 export const styles = StyleSheet.create({
-  profileButton: allStyles.ProfileButton,
-  profileText: allStyles.ProfileText,
-  profileContainer: allStyles.ProfileContainer,
-  profileHeaderContainer: allStyles.ProfileHeaderContainer,
-  profileSettingCardContainer: allStyles.ProfileSettingCardContainer,
-  profileHeaderText: allStyles.ProfileHeaderText,
-  profileContainerMiddle: allStyles.ProfileMiddleContainer,
-  profileImage: allStyles.ProfileImage,
-  profilePostsView: allStyles.ProfilePostsView,
-  //pearl
-  pearlTitle: allStyles.PearlTitle,
-  pearlCard: allStyles.PearlCard,
-  pearlImageWrap: allStyles.PearlImageWrap,
-  pearlImage: allStyles.PearlImage,
+  ...allStyles,
 });
