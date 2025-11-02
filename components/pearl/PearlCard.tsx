@@ -2,7 +2,6 @@ import { Image } from "expo-image";
 import React, { memo, useMemo } from "react";
 import { ImageSourcePropType, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "../../app/styles";
-import fallbackImg from "../../assets/FredrikstenFesning.jpg";
 
 
 
@@ -21,10 +20,11 @@ const PearlCardComponent: React.FC<PearlCardProps> = ({
   imageLocal,
   onPress,
 }) => {
-  const source = useMemo(
-    () => (imageLocal ? imageLocal : imageUrl ? { uri: imageUrl } : fallbackImg),
-    [imageLocal, imageUrl]
+    const source = useMemo(
+        () => (imageLocal ? imageLocal : imageUrl ? { uri: imageUrl } : null),
+        [imageLocal, imageUrl]
   );
+
 
   const displayTitle = (title || "").trim() || "FredikstenFesning";
 
