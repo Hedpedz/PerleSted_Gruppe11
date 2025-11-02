@@ -5,7 +5,7 @@ import PearlCard from "./PearlCard";
 interface PearlDetail extends PearlCard {
     description?: string;
     tags?: string[];
-    //createdBy: profile;
+
     location?: {lat: number; lng: number; name?: string };
 }
 
