@@ -1,13 +1,11 @@
 import React from "react";
 import { Text, View } from "react-native";
-import { styles } from "../styles";
 
-
-const Map = () => {
+const NewPlaces = () => {
     return (
         <View>
             <Text>Nytt sted</Text>
         </View>
     )
 }
-export default Map;
+export default NewPlaces;

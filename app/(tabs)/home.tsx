@@ -1,23 +1,35 @@
-import React from "react";
-import {Pressable, TextInput, View } from "react-native";
 import Button from "@/components/Button";
-import SearchableList from "@/components/searchableList";
+import React from "react";
+import { View } from "react-native";
+import { styles } from "../styles";
 
-export default class Home extends React.Component {
-    placeHolderPearls = [{ id: "1", title: "pearl1" }, {id: "2", title: "pearl2"}]
-
-
-    
-
-    render() { 
-        var output = <View>
-            <Button text = "Min profil" path = "/profile"></Button>
-            <Button text = "Innstillinger" path = "/usersettings"></Button>
-            <SearchableList data = {this.placeHolderPearls} placeHolderText = "sok etter perle steder"></SearchableList>
-
-        </View>
-        this.output = output;
-        return (output);
-    }
-
+interface Pearl {
+  id: string;
+  title: string;
 }
+
+const placeHolderPearls = [
+  { id: "1", title: "pearl1" },
+  { id: "2", title: "pearl2" },
+];
+
+const home = () => {
+  return (
+    <View>
+      <Button
+        text="Min profil"
+        path="/profile"
+        buttonStyle={styles.profileButton}
+        buttonTextStyle={styles.profileText}
+      />
+      <Button
+        text="Innstillinger"
+        path="/usersettings"
+        buttonStyle={styles.profileButton}
+        buttonTextStyle={styles.profileText}
+      />
+    </View>
+  );
+};
+
+export default home;
