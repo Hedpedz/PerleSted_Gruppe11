@@ -32,13 +32,14 @@ export default class SearchableList extends React.Component {
     constructor({ data, placeHolderText }) {
             super();
             this.data = data;
-            this.state = { modifiableData: [] };
+        this.state = { modifiableData: [] };
+        this.placeHolderText = placeHolderText;
             
     }
     render() {
         //modifiableData = useState([]);
         var output = <View>
-                <TextInput onChangeText={this.textChangeEvent.bind(this)} placeholder="Søk etter perle sted"></TextInput>
+                <TextInput onChangeText={this.textChangeEvent.bind(this)} placeholder= this.placeHolderText></TextInput>
                 <FlatList
                     data={this.state.modifiableData}
                     renderItem={({ item }) => <Item title={item.title} />}
