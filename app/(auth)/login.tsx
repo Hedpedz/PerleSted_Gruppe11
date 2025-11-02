@@ -2,7 +2,7 @@ import { Link, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { ActivityIndicator, Pressable, Text, TextInput, View } from 'react-native';
 import { useAuth } from '../../lib/AuthProvider';
-import { loginStyles } from "../styles";
+import { loginStyles } from '../styles';
 
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
@@ -50,7 +50,7 @@ export default function LoginScreen() {
         )}
       </Pressable>
 
-      <Link href="../register" style={loginStyles.link}>
+      <Link href="/register" style={loginStyles.link}>
         <Text>Ny bruker? Registrer deg</Text>
       </Link>
     </View>
