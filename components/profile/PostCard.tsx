@@ -1,9 +1,9 @@
-import React from "react";
 import { Image } from "expo-image";
+import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import image from "../../assets/xp.jpg";
-import React from "react";
+
 
 interface PostCardProps {
   title?: string;
