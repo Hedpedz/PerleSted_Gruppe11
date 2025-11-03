@@ -7,7 +7,6 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { useAuth } from "../../lib/AuthProvider";
 import { styles } from "../styles";
 
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -20,7 +19,6 @@ export default function RegisterScreen() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
-  const { register } = useAuth();
 
   const handleRegister = async () => {
     if (isLoading) return;

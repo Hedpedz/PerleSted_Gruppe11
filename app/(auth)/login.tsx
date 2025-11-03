@@ -9,14 +9,12 @@ import {
   View,
 } from "react-native";
 import { auth } from "../../FirebaseConfig";
-import { useAuth } from "../../lib/AuthProvider";
 import { styles } from "../styles";
 
 export default function LoginScreen() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
   const router = useRouter();
 
   /*
@@ -36,13 +34,14 @@ export default function LoginScreen() {
     if (isLoading) return;
     setIsLoading(true);
     try {
-      const user = await signInWithEmailAndPassword(auth, username, password);
-      if (user) {
+      const usern = await signInWithEmailAndPassword(auth, username, password);
+      if (usern.user) {
         router.replace("/(tabs)/home");
       }
     } catch (error: any) {
       console.log(error);
       alert("Innlogging feilet: " + error.message);
+    } finally {
       setIsLoading(false);
     }
   };

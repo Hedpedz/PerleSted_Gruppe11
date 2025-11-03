@@ -7,10 +7,8 @@ import image from "../../assets/beluga.png";
 import PostCard from "../../components/profile/PostCard";
 import { styles } from "../styles";
 
-import Button from "../../components/Button";
 import React from "react";
-
-
+import Button from "../../components/Button";
 
 interface ProfileProps {
   imageUrl?: string;
@@ -69,7 +67,7 @@ const Profile = ({
             {verified ? "Verifisert medlem" : "Uverifisert medlem"}
           </Text>
         </View>
-        <View style={styles.profileMiddleContainer}>
+        <View style={styles.profileContainerMiddle}>
           <ProfileSettingCard
             setting="Telefonnummer"
             settingInfo={phoneNumber}
@@ -82,7 +80,7 @@ const Profile = ({
             buttonTextStyle={styles.profileText}
           />
         </View>
-        <View style={styles.profileMiddleContainer}>
+        <View style={styles.profileContainerMiddle}>
           <Text>Mine innlegg</Text>
           <View style={styles.profilePostsView}>
             {posts.map((post) => (
