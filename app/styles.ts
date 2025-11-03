@@ -1,6 +1,30 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+
+  // Header
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#333333',
+  },
+
+  // Tabs layout 
+  tabsLayoutContainer: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+
   // Profile 
   profileButton: {
     backgroundColor: "transparent",
