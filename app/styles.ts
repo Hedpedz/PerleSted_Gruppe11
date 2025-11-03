@@ -101,4 +101,41 @@ export const styles = StyleSheet.create({
     marginTop: 20,
 
   },
+   // Form, new place
+  formContainer: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#FFFFFF',
+  },
+  formTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 40,
+    color: '#333333',
+    textAlign: 'center',
+  },
+  formInput: {
+    width: '100%',
+    height: 50,
+    borderColor: '#DDDDDD',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    backgroundColor: '#F9F9F9',
+    color: '#000000',
+  },
+  formButton: {
+    backgroundColor: '#E1F8D7',
+    paddingVertical: 15,
+    borderRadius: 8,
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  formButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000000',
+  },
 });
