@@ -1,17 +1,7 @@
 import { StyleSheet } from "react-native";
 
-const allStyles = StyleSheet.create({
-  // Header
-  headerTitle: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    paddingLeft: 15,
-  },
-  headerRightButton: {
-    marginRight: 15,
-  },
-
-  // Profile
+export const styles = StyleSheet.create({
+  // Profile 
   profileButton: {
     backgroundColor: "transparent",
     padding: 16,
@@ -29,7 +19,7 @@ const allStyles = StyleSheet.create({
     textAlign: "center",
     marginTop: 8,
   },
-  profileMiddleContainer: {
+  profileContainerMiddle: {
     alignItems: "center",
     gap: 12,
     width: "100%",
@@ -63,104 +53,52 @@ const allStyles = StyleSheet.create({
     gap: 12,
     justifyContent: "space-between",
   },
-
-  // Settings
-  settingsSmallButton: {
-    backgroundColor: "transparent",
-    paddingLeft: 15,
-    paddingRight: 15,
-    paddingTop: 5,
-    paddingBottom: 5,
-
-    borderRadius: 8,
-    alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#000000ff",
-  },
-
-  settingsBigButton: {
-    backgroundColor: "transparent",
-    padding: 16,
-    borderRadius: 8,
-    alignItems: "center",
-    width: "100%",
-    borderWidth: 1,
-    borderColor: "#49464656",
-  },
-
-  settingsContainer: {
-    flex: 1,
-    paddingBottom: 30,
-    paddingTop: 20,
-    gap: 10,
-    width: "90%",
-    alignItems: "center",
-    alignSelf: "center",
-  },
-
-  settingsTextContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-  },
-
-  settingsCardContainer: {
-    flexDirection: "row",
-    width: "100%",
-    borderColor: "#000000e8",
-    padding: 3,
-    justifyContent: "space-between",
-  },
-
-  // Map
-  mapContainer: {
-    flex: 1,
-  },
-  mapView: {
-    height: "100%",
-    width: "100%",
-  },
-
-
-  // Misc
-  text: {
-    fontSize: 16,
-  },
-
-  textBold: {
-    fontSize: 16,
-    fontWeight: "bold",
-  },
   //Pearl
-  PearlTitle: {
+  pearlTitle: {
     fontSize: 16,
     textAlign: "center",
     marginTop: 8,
   },
-  PearlCard: {
-    width: "100%",
-    marginTop: 16,
-    padding: 12,
-    borderRadius: 12,
-    backgroundColor: "#fff",
-    // เงา
-    shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 8,
-    elevation: 4,
+
+   // Auth
+   authContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#FFFFFF',
   },
-  PearlImageWrap: {
-    borderRadius: 12,
-    overflow: "hidden",
+  authTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 40,
+    color: '#333333',
   },
-  PearlImage: {
-    width: "100%",
-    height: 180,
+  authInput: {
+    width: '90%',
+    height: 50,
+    borderColor: '#DDDDDD',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    backgroundColor: '#F9F9F9',
+  },
+  authButton: {
+    backgroundColor: '#E1F8D7',
+    paddingVertical: 15,
+    borderRadius: 8,
+    width: '90%',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  authButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000000',
+  },
+  authLink: {
+    marginTop: 20,
+
   },
 });
-
-export const styles = StyleSheet.create({
-  ...allStyles,
-});
-
-export default styles;

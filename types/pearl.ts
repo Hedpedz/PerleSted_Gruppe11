@@ -1,4 +1,3 @@
-import Profile from "@/app/(tabs)/profile";
 import type { ImageSourcePropType } from "react-native";
 
 
