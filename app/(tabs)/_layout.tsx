@@ -1,24 +1,11 @@
-import {View, Text} from 'react-native'
-import React from 'react'
-import { Tabs } from 'expo-router'
-import { ImageBackground } from 'expo-image'
+import React from 'react';
+import { Tabs } from 'expo-router';
 import { Feather } from "@expo/vector-icons";
 
 
 const _Layout = () => {
     return (
-        <Tabs
-          screenOptions={{
-            headerShown: false,
-            tabBarActiveTintColor: "#007bff",
-            tabBarInactiveTintColor: "#9ca3af",
-            //tabBarIconStyle: { marginBottom: -5},
-            tabBarStyle: {height: 70, paddingTop: 10, paddingBottom: 10},
-            tabBarItemStyle: { paddingVertical: 7},
-            tabBarLabelStyle: { fontSize: 12},
-            // tabBarShowLabel: false,
-    
-          }}>
+        <Tabs>
             <Tabs.Screen
             name="home"
             options={{

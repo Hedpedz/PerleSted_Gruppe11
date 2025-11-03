@@ -2,7 +2,7 @@ import { Link, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { ActivityIndicator, Pressable, Text, TextInput, View } from 'react-native';
 import { useAuth } from '../../lib/AuthProvider';
-import { loginStyles } from '../styles';
+import { styles } from '../styles';
 
 export default function LoginScreen() {
   const [username, setUsername] = useState('');
@@ -24,33 +24,35 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={loginStyles.container}>
-      <Text style={loginStyles.title}>PerleSted</Text>
+    <View style={styles.authContainer}>
+      <Text style={styles.authTitle}>PerleSted</Text>
 
       <TextInput
-        style={loginStyles.input}
+        style={styles.authInput}
         placeholder="Brukernavn"
+        placeholderTextColor="#888888" 
         value={username}
         onChangeText={setUsername}
         autoCapitalize="none"
       />
       <TextInput
-        style={loginStyles.input}
+        style={styles.authInput}
         placeholder="Passord"
+        placeholderTextColor="#888888" 
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
 
-      <Pressable style={loginStyles.button} onPress={handleLogin} disabled={isLoading}>
+      <Pressable style={styles.authButton} onPress={handleLogin} disabled={isLoading}>
         {isLoading ? (
           <ActivityIndicator />
         ) : (
-          <Text style={loginStyles.buttonText}>Logg inn</Text>
+          <Text style={styles.authButtonText}>Logg inn</Text>
         )}
       </Pressable>
 
-      <Link href="/register" style={loginStyles.link}>
+      <Link href="/register" style={styles.authLink}>
         <Text>Ny bruker? Registrer deg</Text>
       </Link>
     </View>
