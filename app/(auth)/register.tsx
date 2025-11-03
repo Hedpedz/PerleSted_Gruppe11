@@ -1,5 +1,6 @@
 import { Link, router } from "expo-router";
-import React, { useState } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import React, { useRef, useState } from "react";
 import {
   ActivityIndicator,
   Pressable,
@@ -7,10 +8,19 @@ import {
   TextInput,
   View,
 } from "react-native";
+import { auth, db } from "../../FirebaseConfig";
 import { styles } from "../styles";
 
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../FirebaseConfig";
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
+
+const userData = collection(db, "users");
 
 export default function RegisterScreen() {
   const [username, setUsername] = useState("");
@@ -19,6 +29,34 @@ export default function RegisterScreen() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const usernameRef = useRef(null);
+  const emailRef = useRef(null);
+
+  const addUserFirestore = async (
+    uid: string,
+    username: string,
+    email: string
+  ) => {
+    await setDoc(doc(userData, "users", uid), {
+      username: username,
+      email: email,
+    });
+  };
+
+  const checkUsernameAvailability = async (username: string) => {
+    const usernameQuery = query(userData, where("username", "==", username));
+    const names = await getDocs(usernameQuery);
+
+    return names.empty;
+  };
+
+  const checkEmailAvailability = async (email: string) => {
+    const emailQuery = query(userData, where("email", "==", email));
+    const emails = await getDocs(emailQuery);
+
+    return emails.empty;
+  };
 
   const handleRegister = async () => {
     if (isLoading) return;
@@ -31,8 +69,25 @@ export default function RegisterScreen() {
     setIsLoading(true);
 
     try {
-      const user = await createUserWithEmailAndPassword(auth, email, password);
-      if (user) {
+      if (!(await checkUsernameAvailability(username))) {
+        alert("Brukernavnet er allerede tatt.");
+        setIsLoading(false);
+        return;
+      }
+
+      if (!(await checkEmailAvailability(email))) {
+        alert("Denne e-posten er allerede registrert.");
+        setIsLoading(false);
+        return;
+      }
+
+      const userTemp = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if (userTemp.user) {
+        addUserFirestore(userTemp.user.uid, username, email);
         router.replace("/(tabs)/home");
       }
     } catch (error: any) {
@@ -47,6 +102,7 @@ export default function RegisterScreen() {
       <Text style={styles.authTitle}>Registrer ny bruker</Text>
 
       <TextInput
+        ref={emailRef}
         style={styles.authInput}
         placeholder="Epost-adresse"
         placeholderTextColor="#888888"
@@ -56,6 +112,7 @@ export default function RegisterScreen() {
         keyboardType="email-address"
       />
       <TextInput
+        ref={usernameRef}
         style={styles.authInput}
         placeholder="Brukernavn"
         placeholderTextColor="#888888"
