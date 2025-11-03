@@ -19,6 +19,7 @@ export default function LoginScreen() {
   const { login } = useAuth();
   const router = useRouter();
 
+  /*
   const handleLogin = async () => {
     if (isLoading) return;
     setIsLoading(true);
@@ -30,14 +31,14 @@ export default function LoginScreen() {
       setIsLoading(false);
     }
   };
-
+*/
   const signIn = async () => {
     if (isLoading) return;
     setIsLoading(true);
     try {
       const user = await signInWithEmailAndPassword(auth, username, password);
       if (user) {
-        router.replace("../(tabs)/home");
+        router.replace("/(tabs)/home");
       }
     } catch (error: any) {
       console.log(error);

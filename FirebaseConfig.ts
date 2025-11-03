@@ -2,6 +2,7 @@
 import ReactNativeAsyncStorage from "@react-native-async-storage/async-storage";
 import { initializeApp } from "firebase/app";
 import { getReactNativePersistence, initializeAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -9,18 +10,19 @@ import { getReactNativePersistence, initializeAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyAP9VqX4E7FHPBNwSiso2PdBSIeOlmn_iw",
-  authDomain: "perlested.firebaseapp.com",
-  databaseURL: "https://perlested-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "perlested",
-  storageBucket: "perlested.firebasestorage.app",
-  messagingSenderId: "427045034277",
-  appId: "1:427045034277:web:4cf21959c2c7a6454322cc",
-  measurementId: "G-HH27ZTHRK7"
+  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
+
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 export const auth = initializeAuth(app, {
     persistence: getReactNativePersistence(ReactNativeAsyncStorage)
 });
+export const db = getFirestore(app);
