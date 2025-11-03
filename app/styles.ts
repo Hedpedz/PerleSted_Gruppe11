@@ -55,7 +55,7 @@ const allStyles = StyleSheet.create({
   },
   //Pearl
   PearlTitle: {
-    fontSize: 16,
+    fontSize: 20,
     textAlign: "center",
     marginTop: 8,
   },
