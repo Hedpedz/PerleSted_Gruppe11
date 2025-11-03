@@ -65,7 +65,7 @@ const Profile = ({
             style={styles.profileImage}
           />
           <Text style={styles.profileHeaderText}>{username}</Text>
-          <Text style={[styles.profileHeaderText, styles.profileHeaderText]}>
+          <Text style={styles.profileHeaderText}>
             {verified ? "Verifisert medlem" : "Uverifisert medlem"}
           </Text>
         </View>

@@ -4,6 +4,7 @@ interface AuthContextType {
   user: { username: string } | null;
   loading: boolean;
   login: (username: string, pass: string) => Promise<void>;
+  register: (email: string, username: string, pass: string) => Promise<void>; 
   logout: () => void;
 }
 
@@ -25,13 +26,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser({ username: username });
     setLoading(false);
   };
+  
+  const register = async (email: string, username: string, pass: string) => {
+    setLoading(true);
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    setUser({ username: username }); 
+    setLoading(false);
+  };
 
   const logout = () => {
     setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   );
