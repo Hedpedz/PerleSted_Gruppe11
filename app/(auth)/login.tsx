@@ -1,12 +1,20 @@
-import { Link, useRouter } from 'expo-router';
-import React, { useState } from 'react';
-import { ActivityIndicator, Pressable, Text, TextInput, View } from 'react-native';
-import { useAuth } from '../../lib/AuthProvider';
-import { styles } from '../styles';
+import { Link, useRouter } from "expo-router";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import React, { useState } from "react";
+import {
+  ActivityIndicator,
+  Pressable,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { auth } from "../../FirebaseConfig";
+import { useAuth } from "../../lib/AuthProvider";
+import { styles } from "../styles";
 
 export default function LoginScreen() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const router = useRouter();
@@ -18,7 +26,22 @@ export default function LoginScreen() {
     try {
       await login(username, password);
     } catch (e) {
-      alert('Innlogging feilet (dummy-feil)');
+      alert("Innlogging feilet (dummy-feil)");
+      setIsLoading(false);
+    }
+  };
+
+  const signIn = async () => {
+    if (isLoading) return;
+    setIsLoading(true);
+    try {
+      const user = await signInWithEmailAndPassword(auth, username, password);
+      if (user) {
+        router.replace("../(tabs)/home");
+      }
+    } catch (error: any) {
+      console.log(error);
+      alert("Innlogging feilet: " + error.message);
       setIsLoading(false);
     }
   };
@@ -30,7 +53,7 @@ export default function LoginScreen() {
       <TextInput
         style={styles.authInput}
         placeholder="Brukernavn"
-        placeholderTextColor="#888888" 
+        placeholderTextColor="#888888"
         value={username}
         onChangeText={setUsername}
         autoCapitalize="none"
@@ -38,13 +61,17 @@ export default function LoginScreen() {
       <TextInput
         style={styles.authInput}
         placeholder="Passord"
-        placeholderTextColor="#888888" 
+        placeholderTextColor="#888888"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
 
-      <Pressable style={styles.authButton} onPress={handleLogin} disabled={isLoading}>
+      <Pressable
+        style={styles.authButton}
+        onPress={signIn}
+        disabled={isLoading}
+      >
         {isLoading ? (
           <ActivityIndicator />
         ) : (
@@ -58,4 +85,3 @@ export default function LoginScreen() {
     </View>
   );
 }
-
