@@ -1,8 +1,32 @@
 import { StyleSheet } from "react-native";
 
-const allStyles = StyleSheet.create({
-  // Profile
-  ProfileButton: {
+export const styles = StyleSheet.create({
+
+  // Header
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#333333',
+  },
+
+  // Tabs layout 
+  tabsLayoutContainer: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+
+  // Profile 
+  profileButton: {
     backgroundColor: "transparent",
     padding: 16,
     borderRadius: 8,
@@ -11,20 +35,20 @@ const allStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#e0e0e0e8",
   },
-  ProfileText: {
+  profileText: {
     fontSize: 16,
   },
-  ProfileHeaderText: {
+  profileHeaderText: {
     fontSize: 16,
     textAlign: "center",
     marginTop: 8,
   },
-  ProfileMiddleContainer: {
+  profileContainerMiddle: {
     alignItems: "center",
     gap: 12,
     width: "100%",
   },
-  ProfileContainer: {
+  profileContainer: {
     flex: 1,
     paddingBottom: 30,
     paddingTop: 20,
@@ -33,68 +57,109 @@ const allStyles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
   },
-  ProfileHeaderContainer: {
+  profileHeaderContainer: {
     alignItems: "center",
   },
-  ProfileSettingCardContainer: {
+  profileSettingCardContainer: {
     flexDirection: "row",
     width: "100%",
   },
-  ProfileImage: {
+  profileImage: {
     width: 90,
     height: 90,
     borderWidth: 4,
     borderRadius: 90,
     borderColor: "#E1F8D7",
   },
-  ProfilePostsView: {
+  profilePostsView: {
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 12,
     justifyContent: "space-between",
   },
   //Pearl
-  PearlTitle: {
+  pearlTitle: {
     fontSize: 16,
     textAlign: "center",
     marginTop: 8,
   },
-  PearlCard: {
-    width: "100%",
-    marginTop: 16,
-    padding: 12,
-    borderRadius: 12,
-    backgroundColor: "#fff",
-    // เงา
-    shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  PearlImageWrap: {
-    borderRadius: 12,
-    overflow: "hidden",
-  },
-  PearlImage: {
-    width: "100%",
-    height: 180,
-  },
-});
 
-export const styles = StyleSheet.create({
-  profileButton: allStyles.ProfileButton,
-  profileText: allStyles.ProfileText,
-  profileContainer: allStyles.ProfileContainer,
-  profileHeaderContainer: allStyles.ProfileHeaderContainer,
-  profileSettingCardContainer: allStyles.ProfileSettingCardContainer,
-  profileHeaderText: allStyles.ProfileHeaderText,
-  profileContainerMiddle: allStyles.ProfileMiddleContainer,
-  profileImage: allStyles.ProfileImage,
-  profilePostsView: allStyles.ProfilePostsView,
-  //pearl
-  pearlTitle: allStyles.PearlTitle,
-  pearlCard: allStyles.PearlCard,
-  pearlImageWrap: allStyles.PearlImageWrap,
-  pearlImage: allStyles.PearlImage,
+   // Auth
+   authContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#FFFFFF',
+  },
+  authTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 40,
+    color: '#333333',
+  },
+  authInput: {
+    width: '90%',
+    height: 50,
+    borderColor: '#DDDDDD',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    backgroundColor: '#F9F9F9',
+  },
+  authButton: {
+    backgroundColor: '#E1F8D7',
+    paddingVertical: 15,
+    borderRadius: 8,
+    width: '90%',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  authButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000000',
+  },
+  authLink: {
+    marginTop: 20,
+
+  },
+   // Form, new place
+  formContainer: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#FFFFFF',
+  },
+  formTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 40,
+    color: '#333333',
+    textAlign: 'center',
+  },
+  formInput: {
+    width: '100%',
+    height: 50,
+    borderColor: '#DDDDDD',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    backgroundColor: '#F9F9F9',
+    color: '#000000',
+  },
+  formButton: {
+    backgroundColor: '#E1F8D7',
+    paddingVertical: 15,
+    borderRadius: 8,
+    width: '100%',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  formButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000000',
+  },
 });

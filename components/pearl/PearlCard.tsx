@@ -1,8 +1,10 @@
-import React, { memo, useMemo } from "react";
-import { Text, TouchableOpacity, View, ImageSourcePropType } from "react-native";
 import { Image } from "expo-image";
-import { styles } from "@/app/styles";
+import React, { memo, useMemo } from "react";
+import { ImageSourcePropType, Text, TouchableOpacity, View } from "react-native";
+import { styles } from "../../app/styles";
 import fallbackImg from "../../assets/FredrikstenFesning.jpg";
+
+
 
 type PearlCardProps = {
   id: string;
@@ -24,22 +26,22 @@ const PearlCardComponent: React.FC<PearlCardProps> = ({
     [imageLocal, imageUrl]
   );
 
-  const displayTitle = (title || "").trim() || "Untitled";
+  const displayTitle = (title || "").trim() || "FredikstenFesning";
 
   return (
     <TouchableOpacity
-      style={styles.pearlCard}
+      style={styles.PearlCard}
       onPress={onPress}
       activeOpacity={0.9}
       accessibilityRole="button"
       accessibilityLabel={`Open ${displayTitle}`}
       testID={`pearl-card-${id}`}
     >
-      <View style={styles.pearlImageWrap}>
-        <Image source={source} style={styles.pearlImage} contentFit="cover" />
+      <View style={styles.PearlImageWrap}>
+        <Image source={source} style={styles.PearlImage} contentFit="cover" />
       </View>
 
-      <Text style={styles.pearlTitle} numberOfLines={1}>
+      <Text style={styles.PearlTitle} numberOfLines={1}>
         {displayTitle}
       </Text>
     </TouchableOpacity>
@@ -48,8 +50,3 @@ const PearlCardComponent: React.FC<PearlCardProps> = ({
 
 export const PearlCard = memo(PearlCardComponent);
 
-export default PearlCard;
-
-
-
-  

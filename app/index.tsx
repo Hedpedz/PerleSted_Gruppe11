@@ -4,5 +4,5 @@ import { View } from "react-native";
 
 
 export default function Index() {
-  return <Redirect href="/(tabs)/profile" />;
+  return <Redirect href="/(tabs)/home" />;
 }
