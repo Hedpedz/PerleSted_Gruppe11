@@ -59,6 +59,27 @@ const allStyles = StyleSheet.create({
     textAlign: "center",
     marginTop: 8,
   },
+  PearlCard: {
+    width: "100%",
+    marginTop: 16,
+    padding: 12,
+    borderRadius: 12,
+    backgroundColor: "#fff",
+    // เงา
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  PearlImageWrap: {
+    borderRadius: 12,
+    overflow: "hidden",
+  },
+  PearlImage: {
+    width: "100%",
+    height: 180,
+  },
 
   // Login
   container: {
@@ -143,3 +164,11 @@ export const registerStyles = StyleSheet.create({
   title: allStyles.registerTitle,
   link: allStyles.registerLink,
 });
+
+
+export const pearlStyles = StyleSheet.create({
+  title: allStyles.PearlTitle,
+  card: allStyles.PearlCard,
+  imageWrap: allStyles.PearlImageWrap,
+  image: allStyles.PearlImage,
+})

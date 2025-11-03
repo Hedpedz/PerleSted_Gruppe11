@@ -1,7 +1,7 @@
 import { Image } from "expo-image";
 import React, { memo, useMemo } from "react";
-import { ImageSourcePropType, Text, TouchableOpacity, View } from "react-native";
-import { styles } from "../../app/styles";
+import { ImageSourcePropType, Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import { pearlStyles } from "../../app/styles";
 
 
 
@@ -30,18 +30,18 @@ const PearlCardComponent: React.FC<PearlCardProps> = ({
 
   return (
     <TouchableOpacity
-      style={styles.PearlCard}
+      style={pearlStyles.card}
       onPress={onPress}
       activeOpacity={0.9}
       accessibilityRole="button"
       accessibilityLabel={`Open ${displayTitle}`}
       testID={`pearl-card-${id}`}
     >
-      <View style={styles.PearlImageWrap}>
-        <Image source={source} style={styles.PearlImage} contentFit="cover" />
+      <View style={pearlStyles.imageWrap}>
+        <Image source={source} style={pearlStyles.image} contentFit="cover" />
       </View>
 
-      <Text style={styles.PearlTitle} numberOfLines={1}>
+      <Text style={pearlStyles.title} numberOfLines={1}>
         {displayTitle}
       </Text>
     </TouchableOpacity>
