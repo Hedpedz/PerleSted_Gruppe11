@@ -38,7 +38,7 @@ export default function RegisterScreen() {
     username: string,
     email: string
   ) => {
-    await setDoc(doc(userData, "users", uid), {
+    await setDoc(doc(db, "users", uid), {
       username: username,
       email: email,
     });
