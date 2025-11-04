@@ -22,7 +22,6 @@ export default function PearlDetailScreen() {
     );
   }
 
-  // ไม่ใช้ไฟล์ placeholder — ถ้าไม่มีรูปให้เป็น null
   const imgSrc =
     pearl.imageLocal ?? (pearl.imageUrl ? { uri: pearl.imageUrl } : null);
 
@@ -34,7 +33,6 @@ export default function PearlDetailScreen() {
         {imgSrc ? (
           <Image source={imgSrc} style={{ width: "100%", height: 280 }} resizeMode="cover" />
         ) : (
-          // กล่องเทาแทนรูปเมื่อไม่มีภาพ
           <View
             style={{
               width: "100%",

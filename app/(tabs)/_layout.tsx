@@ -58,6 +58,7 @@ const _Layout = () => {
 
         <Tabs.Screen name="settings" options={{ href: null }} />
         <Tabs.Screen name="profile" options={{ href: null }} />
+        <Tabs.Screen name="pearl" options={{ href: null }} />
       </Tabs>
     </SafeAreaView>
   );
