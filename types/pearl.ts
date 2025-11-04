@@ -1,3 +1,4 @@
+import Profile from "@/app/(tabs)/profile";
 import type { ImageSourcePropType } from "react-native";
 
 
@@ -8,7 +9,7 @@ export type Pearl = {
   rating?: number;
   imageUrl?: string;
   imageLocal?: ImageSourcePropType;
-  // createdBy: Profile;
+  createdBy: string;
   tags?: string[];
   isFavorite?: boolean;
   location?: { lat: number; lng: number; name?: string };
