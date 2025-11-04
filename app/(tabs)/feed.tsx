@@ -1,10 +1,8 @@
-import React from "react";
-import { Image } from "expo-image";
-import { PearlCard } from "../../../components/pearl/PearlCard";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, View, StyleSheet, FlatList } from "react-native"; 
-import { DummyPearls } from "../../../data/pearlsDummy";
 import { router } from "expo-router";
+import React from "react";
+import { FlatList, StyleSheet, View } from "react-native";
+import { PearlCard } from "../../components/pearl/PearlCard";
+import { DummyPearls } from "../../data/pearlsDummy";
 
 const Feed = () => { 
     return ( 
