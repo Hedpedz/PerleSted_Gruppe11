@@ -25,7 +25,7 @@ const _Layout = () => {
                     ),
                 }}
                 />
-               
+
                 <Tabs.Screen 
                 name="feed"
                 options={{

@@ -1,14 +1,13 @@
 import React from "react";
 import { Image } from "expo-image";
-import { PearlCard } from "../../components/pearl/PearlCard";
+import { PearlCard } from "../../../components/pearl/PearlCard";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text, View, StyleSheet, FlatList } from "react-native"; 
-import { DummyPearls } from "../../data/pearlsDummy";
+import { DummyPearls } from "../../../data/pearlsDummy";
 import { router } from "expo-router";
 
 const Feed = () => { 
     return ( 
-        <SafeAreaView style={styles.container}> 
         <FlatList data={DummyPearls} 
         keyExtractor={(item) => item.id} //each item has i own Id 
         renderItem={({item}) => (
@@ -31,9 +30,7 @@ const Feed = () => {
             </View> 
         </View> 
         } /> 
-        </SafeAreaView> 
-        ) 
-    } 
+    )} 
     const styles = StyleSheet.create({ 
 
         container: { 
