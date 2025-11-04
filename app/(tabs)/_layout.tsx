@@ -11,7 +11,7 @@ const _Layout = () => {
       <Tabs
         screenOptions={{
           headerShown: false,
-          tabBarStyle: { height: 70, paddingTop: 10, paddingBottom: 10 },
+          tabBarStyle: { height: 50, paddingTop: 5, paddingBottom: 2 },
           tabBarItemStyle: { paddingVertical: 7 },
           tabBarLabelStyle: { fontSize: 12 },
         }}

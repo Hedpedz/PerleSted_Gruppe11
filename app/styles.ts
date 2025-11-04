@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 12,
+    paddingVertical: 5,
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
     borderBottomColor: '#E0E0E0',
@@ -28,6 +28,7 @@ export const styles = StyleSheet.create({
   tabsLayoutContainer: {
     flex: 1,
     backgroundColor: '#FFFFFF',
+    
   },
 
   // Profile 
