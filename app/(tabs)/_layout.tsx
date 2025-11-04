@@ -56,15 +56,7 @@ const _Layout = () => {
           }}
         />
 
-        <Tabs.Screen
-          name="profile"
-          options={{
-            title: "Profil",
-            tabBarIcon: ({ color, size, focused }) => (
-              <Feather name="user" siza={size} color={color} />
-            ),
-          }}
-        />
+   
         <Tabs.Screen name="settings" options={{ href: null }} />
       </Tabs>
     </SafeAreaView>

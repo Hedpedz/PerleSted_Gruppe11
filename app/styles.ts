@@ -18,6 +18,11 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#333333',
   },
+  headerIconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+  },
 
   // Tabs layout 
   tabsLayoutContainer: {
