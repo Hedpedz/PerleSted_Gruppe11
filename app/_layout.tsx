@@ -14,12 +14,25 @@ function RootLayoutNav() {
     const inTabs = segments[0] === '(tabs)';
     const inAuth = segments[0] === '(auth)';
 
-    if (user && !inTabs) {
+    /*if (user && !inTabs) {
       router.replace('/(tabs)/home'); 
     } else if (!user && !inAuth) {
       router.replace('/login');
     }
-  }, [user, loading, segments]); 
+  }, [user, loading, segments]); */
+
+  // When user press on pearl card, if (user && !inTabs) makes it back to home page
+    if (user) {
+    if (inAuth) {
+      router.replace('/(tabs)/home');
+    }
+    } else {
+    if (!inAuth) {
+      router.replace('/login');
+    }
+    }
+  // ใส่ router ใน deps ด้วย
+}, [user, loading, segments, router]);
 
   if (loading) {
     return (

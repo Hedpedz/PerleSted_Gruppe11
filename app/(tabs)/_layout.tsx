@@ -2,7 +2,8 @@ import React from 'react';
 import { Tabs } from 'expo-router';
 import { Feather } from "@expo/vector-icons";
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Header from '../features/components/header';
+import Header from '../features/components/Header';
+
 
 const _Layout = () => {
     return (

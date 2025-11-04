@@ -18,7 +18,10 @@ const Feed = () => {
             imageLocal={item.imageLocal}
             //imageUrl={item.imageUrl}
             
-            onPress = {() => router.push('pearls/${item.id}')}
+            onPress={() => router.push({ 
+                pathname: "pearl/[id]",
+                params: { id: String(item.id) } })}
+
             />
             )
         } 
