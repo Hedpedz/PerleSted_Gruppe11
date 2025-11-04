@@ -65,6 +65,7 @@ const _Layout = () => {
             ),
           }}
         />
+        <Tabs.Screen name="settings" options={{ href: null }} />
       </Tabs>
     </SafeAreaView>
   );
