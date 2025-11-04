@@ -21,7 +21,7 @@ const _Layout = () => {
           options={{
             title: "Hjem",
             tabBarIcon: ({ color, size, focused }) => (
-              <Feather name="home" siza={34} color={color} />
+              <Feather name="home" size={34} color={color} />
             ),
           }}
         />
@@ -31,7 +31,7 @@ const _Layout = () => {
           options={{
             title: "Feed",
             tabBarIcon: ({ color, size, focused }) => (
-              <Feather name="image" siza={size} color={color} />
+              <Feather name="image" size={size} color={color} />
             ),
           }}
         />
@@ -41,7 +41,7 @@ const _Layout = () => {
           options={{
             title: "Nytt sted",
             tabBarIcon: ({ color, size, focused }) => (
-              <Feather name="plus-circle" siza={size} color={color} />
+              <Feather name="plus-circle" size={size} color={color} />
             ),
           }}
         />
@@ -51,7 +51,7 @@ const _Layout = () => {
           options={{
             title: "Kart",
             tabBarIcon: ({ color, size, focused }) => (
-              <Feather name="map" siza={size} color={color} />
+              <Feather name="map" size={size} color={color} />
             ),
           }}
         />
