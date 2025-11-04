@@ -1,8 +1,32 @@
 import { StyleSheet } from "react-native";
 
-const allStyles = StyleSheet.create({
-  // Profile
-  ProfileButton: {
+export const styles = StyleSheet.create({
+
+  // Header
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#333333',
+  },
+
+  // Tabs layout 
+  tabsLayoutContainer: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+  },
+
+  // Profile 
+  profileButton: {
     backgroundColor: "transparent",
     padding: 16,
     borderRadius: 8,
@@ -11,20 +35,20 @@ const allStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#e0e0e0e8",
   },
-  ProfileText: {
+  profileText: {
     fontSize: 16,
   },
-  ProfileHeaderText: {
+  profileHeaderText: {
     fontSize: 16,
     textAlign: "center",
     marginTop: 8,
   },
-  ProfileMiddleContainer: {
+  profileContainerMiddle: {
     alignItems: "center",
     gap: 12,
     width: "100%",
   },
-  ProfileContainer: {
+  profileContainer: {
     flex: 1,
     paddingBottom: 30,
     paddingTop: 20,
@@ -33,28 +57,28 @@ const allStyles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
   },
-  ProfileHeaderContainer: {
+  profileHeaderContainer: {
     alignItems: "center",
   },
-  ProfileSettingCardContainer: {
+  profileSettingCardContainer: {
     flexDirection: "row",
     width: "100%",
   },
-  ProfileImage: {
+  profileImage: {
     width: 90,
     height: 90,
     borderWidth: 4,
     borderRadius: 90,
     borderColor: "#E1F8D7",
   },
-  ProfilePostsView: {
+  profilePostsView: {
     flexDirection: "row",
     flexWrap: "wrap",
     gap: 12,
     justifyContent: "space-between",
   },
   //Pearl
-  PearlTitle: {
+  pearlTitle: {
     fontSize: 20,
     textAlign: "center",
     marginTop: 8,
@@ -81,21 +105,21 @@ const allStyles = StyleSheet.create({
     height: 180,
   },
 
-  // Login
-  container: {
+   // Auth
+   authContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
     backgroundColor: '#FFFFFF',
   },
-  title: {
+  authTitle: {
     fontSize: 32,
     fontWeight: 'bold',
     marginBottom: 40,
     color: '#333333',
   },
-  input: {
+  authInput: {
     width: '90%',
     height: 50,
     borderColor: '#DDDDDD',
@@ -105,7 +129,7 @@ const allStyles = StyleSheet.create({
     marginBottom: 15,
     backgroundColor: '#F9F9F9',
   },
-  button: {
+  authButton: {
     backgroundColor: '#E1F8D7',
     paddingVertical: 15,
     borderRadius: 8,
@@ -113,62 +137,50 @@ const allStyles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
-  buttonText: {
+  authButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: '#000000',
   },
-  link: {
+  authLink: {
     marginTop: 20,
-    
-  },
 
-  // Register
-  registerContainer: {
+  },
+   // Form, new place
+  formContainer: {
     flex: 1,
-    justifyContent: 'center',
+    padding: 20,
+    backgroundColor: '#FFFFFF',
+  },
+  formTitle: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 40,
+    color: '#333333',
+    textAlign: 'center',
+  },
+  formInput: {
+    width: '100%',
+    height: 50,
+    borderColor: '#DDDDDD',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    backgroundColor: '#F9F9F9',
+    color: '#000000',
+  },
+  formButton: {
+    backgroundColor: '#E1F8D7',
+    paddingVertical: 15,
+    borderRadius: 8,
+    width: '100%',
     alignItems: 'center',
+    marginTop: 10,
   },
-  registerTitle: {
-    marginBottom: 20,
-    color: '#FFFFFF'
+  formButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000000',
   },
-  registerLink: {
-    marginTop: 20,
-    color: '#FFFFFF', 
-  }
 });
-
-export const styles = StyleSheet.create({
-  profileButton: allStyles.ProfileButton,
-  profileText: allStyles.ProfileText,
-  profileContainer: allStyles.ProfileContainer,
-  profileHeaderContainer: allStyles.ProfileHeaderContainer,
-  profileSettingCardContainer: allStyles.ProfileSettingCardContainer,
-  profileHeaderText: allStyles.ProfileHeaderText,
-  profileContainerMiddle: allStyles.ProfileMiddleContainer,
-  profileImage: allStyles.ProfileImage,
-  profilePostsView: allStyles.ProfilePostsView,
-});
-
-export const loginStyles = StyleSheet.create({
-  container: allStyles.container,
-  title: allStyles.title,
-  input: allStyles.input,
-  button: allStyles.button,
-  buttonText: allStyles.buttonText,
-  link: allStyles.link,
-});
-
-export const registerStyles = StyleSheet.create({
-  container: allStyles.registerContainer,
-  title: allStyles.registerTitle,
-  link: allStyles.registerLink,
-});
-
-
-export const pearlStyles = StyleSheet.create({
-  title: allStyles.PearlTitle,
-  card: allStyles.PearlCard,
-  imageWrap: allStyles.PearlImageWrap,
-  image: allStyles.PearlImage,
-})
