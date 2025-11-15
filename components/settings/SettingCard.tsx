@@ -1,4 +1,5 @@
 import { router } from "expo-router";
+import React from "react";
 import { Text, View } from "react-native";
 import { styles } from "../../app/styles";
 import Button from "../Button";
@@ -8,6 +9,9 @@ interface SettingCardProps {
   settingInfo?: string;
   btnText: string;
   path?: Parameters<typeof router.push>[0];
+  style?: object;
+
+
 }
 
 export const SettingCard = ({
@@ -15,19 +19,19 @@ export const SettingCard = ({
   settingInfo,
   btnText,
   // route = "changesetting",
-  path = "/usersettings",
+  path = "/settings",
 }: SettingCardProps) => {
   return (
-    <View style={styles.settingsCardContainer}>
-      <View style={styles.settingsTextContainer}>
-        <Text style={styles.textBold}>{setting + ": "}</Text>
-        <Text style={styles.text}>{settingInfo ? settingInfo : "ERROR"}</Text>
+    <View style={styles.settingsContainer}>
+      <View style={styles.settingFormText}>
+        <Text style={styles.settingFormText}>{setting + ": "}</Text>
+        <Text style={styles.settingFormText}>{settingInfo ? settingInfo : "ERROR"}</Text>
       </View>
       <Button
         text={btnText}
         path={path}
         buttonStyle={styles.settingsSmallButton}
-        buttonTextStyle={styles.text}
+        buttonTextStyle={styles.formButtonText}
       />
     </View>
   );

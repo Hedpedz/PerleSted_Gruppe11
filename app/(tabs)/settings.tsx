@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 
 import { SettingCard } from "../../components/settings/SettingCard";
 
+import React from "react";
 import image from "../../assets/beluga.png";
 import Button from "../../components/Button";
 import { styles } from "../styles";
@@ -37,40 +38,53 @@ const Settings = ({
   notifications = dummyProfileData.notifications,
 }: ProfileHeaderProps) => {
   return (
-    <View style={styles.settingsContainer}>
+    <View style={styles.profileContainer}>
       <Image
         source={imageUrl ? { uri: imageUrl } : image}
-        style={styles.profileImage}
+        style={styles.profileImageSettings}
       />
       <Button
         text="Endre bilde"
         path="./profile"
-        buttonStyle={styles.settingsBigButton}
-        buttonTextStyle={styles.text}
+        buttonStyle={styles.settingsPictureButton}
+        buttonTextStyle={styles.formButtonText}
       />
+      <View style={styles.settingsContainer}>
       <SettingCard
         setting="Brukernavn"
         settingInfo={username}
         btnText="Endre"
       />
-      <SettingCard setting="Passord" settingInfo="********" btnText="Endre" />
-      <SettingCard setting="E-post" settingInfo={email} btnText="Endre" />
-      <SettingCard
-        setting="Telefonnummer"
-        settingInfo={phoneNumber}
-        btnText="Endre"
+      <SettingCard 
+      setting="Passord" 
+      settingInfo="********" 
+      btnText="Endre" 
+      style={styles.settingFormText}
+      />
+      <SettingCard 
+      setting="E-post" 
+      settingInfo={email} 
+      btnText="Endre" 
+      style={styles.settingFormText}
+      />
+      <SettingCard 
+      setting="Telefonnummer" 
+      settingInfo={phoneNumber} 
+      btnText="Endre"
+      style={styles.settingFormText}
       />
       <SettingCard
         setting="Varsler"
         settingInfo={notifications ? "På" : "Av"}
         btnText="Endre"
       />
+      </View>
       <Text> </Text>
       <Button
         text="Logg ut"
         path=".././"
         buttonStyle={styles.settingsBigButton}
-        buttonTextStyle={styles.text}
+        buttonTextStyle={styles.formButtonText}
       />
     </View>
   );

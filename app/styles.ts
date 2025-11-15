@@ -95,7 +95,6 @@ export const styles = StyleSheet.create({
     padding: 12,
     borderRadius: 12,
     backgroundColor: "#fff",
-    // เงา
     shadowColor: "#000",
     shadowOpacity: 0.15,
     shadowOffset: { width: 0, height: 4 },
@@ -110,6 +109,66 @@ export const styles = StyleSheet.create({
     width: "100%",
     height: 180,
   },
+
+  // Settings
+  settingsContainer: {
+    gap: 10,
+    display: "flex",
+    flexDirection: "row",
+    gridTemplateRows: "1fr 1fr",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+
+  profileImageSettings: {
+    width: 120,
+    height: 120,
+    borderWidth: 4,
+    borderRadius: 60,
+    borderColor: "#E1F8D7",
+    alignSelf: "center",
+  },
+
+
+  settingsPictureButton: {
+    display: "flex",
+    alignItems: "center",
+    backgroundColor: "#E1F8D7",
+    borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+
+  settingFormText: {
+    display: "flex",
+    fontSize: 15,
+    flexDirection: "row",
+    paddingLeft: 7,
+    gap: 8,
+  },
+  
+  settingsSmallButton: {
+    backgroundColor: "#E1F8D7",
+    width: 70,
+    height: 40,
+    borderRadius: 20, 
+    justifyContent: "center", 
+    alignItems: "center",
+    marginInline: 40,
+
+  },
+
+ 
+  settingsBigButton: {
+    backgroundColor: "#E1F8D7",
+    paddingVertical: 15,
+    borderRadius: 8,
+    width: "100%",
+    alignItems: "center",
+  },
+
+
 
    // Auth
    authContainer: {
