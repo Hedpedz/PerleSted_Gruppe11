@@ -307,4 +307,12 @@ export const styles = StyleSheet.create({
     color: '#007AFF',
     fontSize: 16,
   },
+
+  // Map
+  mapContainer: {
+    flex: 1,
+  },
+  map: {
+    flex: 1,
+  },
 });

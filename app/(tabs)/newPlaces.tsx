@@ -1,8 +1,8 @@
 import { Link, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { ActivityIndicator, Image, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
-import PerleCameraView from '../components/CameraView';
-import { usePerleCamera } from '../hooks/useCamera';
+import PerleCameraView from '../../components/camera/CameraViewer';
+import { usePerleCamera } from '../../hooks/useCamera';
 import { styles } from '../styles';
 
 export default function NewPlacesScreen() {

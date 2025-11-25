@@ -1,7 +1,7 @@
 import { CameraView } from 'expo-camera';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { styles } from '../styles';
+import { styles } from '../../app/styles';
 
 export default function PerleCameraView({ camera }: { camera: any }) {
   return (
