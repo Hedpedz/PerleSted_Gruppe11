@@ -3,10 +3,10 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useRef, useState } from "react";
 import {
   ActivityIndicator,
+  KeyboardAvoidingView,
   Pressable,
   Text,
   TextInput,
-  View,
 } from "react-native";
 import { auth, db } from "../../FirebaseConfig";
 import { styles } from "../styles";
@@ -98,7 +98,7 @@ export default function RegisterScreen() {
   };
 
   return (
-    <View style={styles.authContainer}>
+    <KeyboardAvoidingView style={styles.authContainer} behavior="padding">
       <Text style={styles.authTitle}>Registrer ny bruker</Text>
 
       <TextInput
@@ -152,6 +152,6 @@ export default function RegisterScreen() {
       <Link href="/login" style={styles.authLink}>
         <Text>Tilbake til login</Text>
       </Link>
-    </View>
+    </KeyboardAvoidingView>
   );
 }
