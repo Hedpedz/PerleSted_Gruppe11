@@ -48,7 +48,7 @@ export default function PearlDetailScreen() {
 
         {/* Back button */}
         <TouchableOpacity
-          onPress={() => router.replace("/(tabs)/feed/feed")}
+          onPress={() => router.replace("/(tabs)/feed")}
           style={{
             position: "absolute",
             top: 40,
