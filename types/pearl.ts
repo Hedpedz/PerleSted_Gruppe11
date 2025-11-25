@@ -9,7 +9,7 @@ export type Pearl = {
   rating?: number;
   imageUrl?: string;
   imageLocal?: ImageSourcePropType;
-  // createdBy: Profile;
+  createdBy: string;
   tags?: string[];
   isFavorite?: boolean;
   location?: { lat: number; lng: number; name?: string };

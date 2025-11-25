@@ -1,32 +1,98 @@
-import { Link } from 'expo-router';
-import React, { useState } from 'react';
-import { ActivityIndicator, Pressable, TextInput, Text, View } from 'react-native';
-import { useAuth } from '../../lib/AuthProvider';
-import { styles } from '../styles';
+import { Link, router } from "expo-router";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import React, { useRef, useState } from "react";
+import {
+  ActivityIndicator,
+  Pressable,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import { auth, db } from "../../FirebaseConfig";
+import { styles } from "../styles";
+
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
+
+const userData = collection(db, "users");
 
 export default function RegisterScreen() {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [isLoading, setIsLoading] = useState(false);
-  const { register } = useAuth(); 
+
+  const usernameRef = useRef(null);
+  const emailRef = useRef(null);
+
+  const addUserFirestore = async (
+    uid: string,
+    username: string,
+    email: string
+  ) => {
+    await setDoc(doc(db, "users", uid), {
+      username: username,
+      email: email,
+    });
+  };
+
+  const checkUsernameAvailability = async (username: string) => {
+    const usernameQuery = query(userData, where("username", "==", username));
+    const names = await getDocs(usernameQuery);
+
+    return names.empty;
+  };
+
+  const checkEmailAvailability = async (email: string) => {
+    const emailQuery = query(userData, where("email", "==", email));
+    const emails = await getDocs(emailQuery);
+
+    return emails.empty;
+  };
 
   const handleRegister = async () => {
     if (isLoading) return;
-    
+
     if (password !== confirmPassword) {
       alert("Passordene er ikke like.");
       return;
     }
-    
+
     setIsLoading(true);
 
     try {
-      await register(email, username, password);
-    } catch (e) {
-      alert('Registrering feilet (dummy-feil)');
+      if (!(await checkUsernameAvailability(username))) {
+        alert("Brukernavnet er allerede tatt.");
+        setIsLoading(false);
+        return;
+      }
+
+      if (!(await checkEmailAvailability(email))) {
+        alert("Denne e-posten er allerede registrert.");
+        setIsLoading(false);
+        return;
+      }
+
+      const userTemp = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      if (userTemp.user) {
+        addUserFirestore(userTemp.user.uid, username, email);
+        router.replace("/(tabs)/home");
+      }
+    } catch (error: any) {
+      console.log(error);
+      alert("Registrering feilet: " + error.message);
       setIsLoading(false);
     }
   };
@@ -36,18 +102,20 @@ export default function RegisterScreen() {
       <Text style={styles.authTitle}>Registrer ny bruker</Text>
 
       <TextInput
+        ref={emailRef}
         style={styles.authInput}
         placeholder="Epost-adresse"
-        placeholderTextColor="#888888" 
+        placeholderTextColor="#888888"
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
         keyboardType="email-address"
       />
       <TextInput
+        ref={usernameRef}
         style={styles.authInput}
         placeholder="Brukernavn"
-        placeholderTextColor="#888888" 
+        placeholderTextColor="#888888"
         value={username}
         onChangeText={setUsername}
         autoCapitalize="none"
@@ -55,7 +123,7 @@ export default function RegisterScreen() {
       <TextInput
         style={styles.authInput}
         placeholder="Passord"
-        placeholderTextColor="#888888" 
+        placeholderTextColor="#888888"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
@@ -63,13 +131,17 @@ export default function RegisterScreen() {
       <TextInput
         style={styles.authInput}
         placeholder="Skriv inn passord på nytt"
-        placeholderTextColor="#888888" 
+        placeholderTextColor="#888888"
         value={confirmPassword}
         onChangeText={setConfirmPassword}
         secureTextEntry
       />
 
-      <Pressable style={styles.authButton} onPress={handleRegister} disabled={isLoading}>
+      <Pressable
+        style={styles.authButton}
+        onPress={handleRegister}
+        disabled={isLoading}
+      >
         {isLoading ? (
           <ActivityIndicator color="#FFFFFF" />
         ) : (
@@ -83,4 +155,3 @@ export default function RegisterScreen() {
     </View>
   );
 }
-

@@ -1,4 +1,4 @@
-import { ProfileSettingCard } from "../../components/profile/SettingCard";
+import { ProfileSettingCard } from "../../components/profile/ProfileSettingCard";
 
 import { Image } from "expo-image";
 import { ScrollView, Text, View } from "react-native";
@@ -7,10 +7,8 @@ import image from "../../assets/beluga.png";
 import PostCard from "../../components/profile/PostCard";
 import { styles } from "../styles";
 
-import Button from "../../components/Button";
 import React from "react";
-
-
+import Button from "../../components/Button";
 
 interface ProfileProps {
   imageUrl?: string;
@@ -76,8 +74,8 @@ const Profile = ({
           />
           <ProfileSettingCard setting="E-post" settingInfo={email} />
           <Button
-            text="Lagre endringer"
-            path="../settings"
+            text="Endre instillinger"
+            path="./settings"
             buttonStyle={styles.profileButton}
             buttonTextStyle={styles.profileText}
           />

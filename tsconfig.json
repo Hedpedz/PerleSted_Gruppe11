@@ -5,15 +5,24 @@
     "strict": true,
     "module": "ESNext",
     "paths": {
+      "@firebase/auth": [
+        "./node_modules/@firebase/auth/dist/index.rn.d.ts"
+      ],
       "@/*": [
         "./*"
-      ]
+      ],
+    "types": ["./declarations.d.ts"]
     }
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "expo-env.d.ts",
+    "declarations.d.ts",
+    "types",
+    "constants",
+    "assets"
   ]
+  
 }

@@ -1,8 +1,7 @@
-import { Redirect, Link } from "expo-router";
+import { Redirect } from "expo-router";
 import React from "react";
-import { View } from "react-native";
-
 
 export default function Index() {
-  return <Redirect href="/(tabs)/profile" />;
+  return <Redirect href="/(auth)/login" />;
+  // return <Redirect href="/(tabs)/home" />;
 }
