@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
+  KeyboardAvoidingView,
   Pressable,
   Text,
   TextInput,
@@ -47,41 +48,43 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.authContainer}>
-      <Text style={styles.authTitle}>PerleSted</Text>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+      <View style={styles.authContainer}>
+        <Text style={styles.authTitle}>PerleSted</Text>
 
-      <TextInput
-        style={styles.authInput}
-        placeholder="Brukernavn"
-        placeholderTextColor="#888888"
-        value={username}
-        onChangeText={setUsername}
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.authInput}
-        placeholder="Passord"
-        placeholderTextColor="#888888"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+        <TextInput
+          style={styles.authInput}
+          placeholder="Brukernavn"
+          placeholderTextColor="#888888"
+          value={username}
+          onChangeText={setUsername}
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.authInput}
+          placeholder="Passord"
+          placeholderTextColor="#888888"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
 
-      <Pressable
-        style={styles.authButton}
-        onPress={signIn}
-        disabled={isLoading}
-      >
-        {isLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <Text style={styles.authButtonText}>Logg inn</Text>
-        )}
-      </Pressable>
+        <Pressable
+          style={styles.authButton}
+          onPress={signIn}
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <Text style={styles.authButtonText}>Logg inn</Text>
+          )}
+        </Pressable>
 
-      <Link href="/register" style={styles.authLink}>
-        <Text>Ny bruker? Registrer deg</Text>
-      </Link>
-    </View>
+        <Link href="/register" style={styles.authLink}>
+          <Text>Ny bruker? Registrer deg</Text>
+        </Link>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
