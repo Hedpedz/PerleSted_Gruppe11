@@ -1,18 +1,23 @@
 import { Link, useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, Text, TextInput } from 'react-native';
+import { ActivityIndicator, Image, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
+import PerleCameraView from '../components/CameraView';
+import { usePerleCamera } from '../hooks/useCamera';
 import { styles } from '../styles';
 
 export default function NewPlacesScreen() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  
-  
+
+
   const [isLoading, setIsLoading] = useState(false);
+  const camera = usePerleCamera(); 
   const router = useRouter(); 
 
   const handleSubmit = async () => {
     if (isLoading) return;
+    if (!title || !camera.image) { alert("Mangler info"); return; }
+    
     setIsLoading(true);
 
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -20,13 +25,18 @@ export default function NewPlacesScreen() {
     console.log('Ny perle opprettet (dummy):', {
       title,
       description,
+      image: camera.image
     });
 
     setIsLoading(false);
-    
+
     setTitle('');
     setDescription('');
+    camera.resetImage();
   };
+  if (camera.isCameraVisible) {
+    return <PerleCameraView camera={camera} />;
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.formContainer}>
@@ -50,14 +60,28 @@ export default function NewPlacesScreen() {
       />
 
       <Link href="../map-picker" asChild>
-        <Pressable style={styles.formButton}>
+      <Pressable style={styles.formButton}>
           <Text style={styles.formButtonText}>
             Velg plassering på kart
           </Text>
         </Pressable>
       </Link>
-      
 
+
+      <View style={styles.cameraPreviewContainer}>
+        {camera.image ? (
+          <>
+            <Image source={{ uri: camera.image }} style={styles.cameraImagePreview} />
+            <Pressable style={styles.cameraRetakeButton} onPress={camera.openCamera}>
+              <Text style={styles.cameraRetakeText}>Ta nytt bilde</Text>
+            </Pressable>
+          </>
+        ) : (
+          <Pressable style={styles.formButton} onPress={camera.openCamera}>
+            <Text style={styles.formButtonText}>Ta bilde</Text>
+          </Pressable>
+        )}
+      </View>
 
       <Pressable style={styles.formButton} onPress={handleSubmit} disabled={isLoading}>
         {isLoading ? (
