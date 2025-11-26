@@ -32,7 +32,7 @@ export const addPearlToDatabase = async (imageUri: string, pearlData: any) => {
 
     const imageUrl = await uploadImagePearl(pearlID, imageUri);
 
-    await setDoc(doc(db, "users", pearlID), {
+    await setDoc(doc(db, "pearls", pearlID), {
           imageUrl: imageUrl,
           ...pearlData,
           createdAt: new Date()
