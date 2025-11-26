@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from "react";
-import { View } from "react-native";
-import MapView, { MapPressEvent, Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import React, { useRef, useEffect, useState } from "react";
+import { View, Alert } from "react-native";
+import MapView, { Marker, PROVIDER_GOOGLE, MapPressEvent } from "react-native-maps";
+import * as Location from 'expo-location'; 
 import { styles } from "../../app/styles";
 
-const Initial_Region = {
+const FALLBACK_REGION = {
   latitude: 59.129082732254126,
   longitude: 11.352905810532166,
   latitudeDelta: 0.2,
@@ -17,6 +18,31 @@ interface MapViewerProps {
 
 const MapViewer = ({ onMapPress, selectedLocation }: MapViewerProps) => {
   const mapRef = useRef<MapView>(null);
+  const [hasPermission, setHasPermission] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      
+      if (status !== 'granted') {
+        Alert.alert("Tillatelse nektet", "Vi trenger din posisjon for å vise kartet riktig.");
+        return;
+      }
+      
+      setHasPermission(true);
+
+      if (!selectedLocation) {
+        let location = await Location.getCurrentPositionAsync({});
+        
+        mapRef.current?.animateToRegion({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+          latitudeDelta: 0.01,
+          longitudeDelta: 0.01,
+        });
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     if (selectedLocation && mapRef.current) {
@@ -28,16 +54,15 @@ const MapViewer = ({ onMapPress, selectedLocation }: MapViewerProps) => {
     }
   }, [selectedLocation]);
 
-
   return (
     <View style={styles.mapContainer}>
       <MapView
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
         style={styles.map}
-        showsUserLocation={true}
-        initialRegion={Initial_Region}
-        showsMyLocationButton={true}
+        initialRegion={FALLBACK_REGION} 
+        showsUserLocation={hasPermission} 
+        showsMyLocationButton={hasPermission} 
         showsCompass={true}
         onPress={onMapPress}
       >
