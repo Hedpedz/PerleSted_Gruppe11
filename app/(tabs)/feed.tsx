@@ -18,7 +18,7 @@ const Feed = () => {
 
           onPress={() =>
             router.push({
-              pathname: "/[id]",
+              pathname: "/(tabs)/pearl",
               params: { id: String(item.id) },
             })
           }
