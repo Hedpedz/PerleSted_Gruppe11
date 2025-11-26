@@ -1,10 +1,7 @@
-import { useNavigation } from "expo-router";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { View } from "react-native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { MapPressEvent, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { styles } from "../../app/styles";
-
-// 59.129082732254126, 11.352905810532166 - HIOF
 
 const Initial_Region = {
   latitude: 59.129082732254126,
@@ -13,40 +10,44 @@ const Initial_Region = {
   longitudeDelta: 0.2,
 };
 
-const MapViewer = () => {
-  const mapRef = useRef<any>(null);
-  const navigation = useNavigation();
+interface MapViewerProps {
+  onMapPress?: (event: MapPressEvent) => void;
+  selectedLocation?: { latitude: number; longitude: number } | null;
+}
 
-  const handleRegionChange = (region: any) => {
-    // Noe
-  };
+const MapViewer = ({ onMapPress, selectedLocation }: MapViewerProps) => {
+  const mapRef = useRef<MapView>(null);
 
-  const focusMap = (latitude: number, longitude: number) => {
-    const newRegion = {
-      latitude: latitude,
-      longitude: longitude,
-      latitudeDelta: 0.1,
-      longitudeDelta: 0.1,
-    };
-    if (mapRef.current) {
-      mapRef.current.animateToRegion(newRegion);
+  useEffect(() => {
+    if (selectedLocation && mapRef.current) {
+      mapRef.current.animateToRegion({
+        ...selectedLocation,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      });
     }
-  };
+  }, [selectedLocation]);
 
 
   return (
     <View style={styles.mapContainer}>
       <MapView
+        ref={mapRef}
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         showsUserLocation={true}
         initialRegion={Initial_Region}
-        customMapStyle={[]}
         showsMyLocationButton={true}
         showsCompass={true}
-        toolbarEnabled={true}
-        ref={mapRef}
-      />
+        onPress={onMapPress}
+      >
+        {selectedLocation && (
+          <Marker 
+            coordinate={selectedLocation} 
+            title="Valgt plassering"
+          />
+        )}
+      </MapView>
     </View>
   );
 };

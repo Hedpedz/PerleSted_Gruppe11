@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
   tabsLayoutContainer: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-    
+
   },
 
   // Profile 
@@ -147,7 +147,7 @@ export const styles = StyleSheet.create({
     paddingLeft: 7,
     gap: 8,
   },
-  
+
   settingsSmallButton: {
     backgroundColor: "#E1F8D7",
     width: 70,
@@ -159,7 +159,7 @@ export const styles = StyleSheet.create({
 
   },
 
- 
+
   settingsBigButton: {
     backgroundColor: "#E1F8D7",
     paddingVertical: 15,
@@ -315,4 +315,36 @@ export const styles = StyleSheet.create({
   map: {
     flex: 1,
   },
+  
+  // Map Picker Overlay 
+  mapOverlayContainer: {
+    position: 'absolute',
+    bottom: 80,
+    left: 70,
+    right: 70,
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 10,
+    alignItems: 'center'
+  },
+  mapInfoText: {
+    marginBottom: 5,
+    fontSize: 16,
+    color: '#333',
+    fontWeight: '500',
+  },
+
+  // Location Display in New Place 
+  locationResultContainer: {
+    alignItems: 'center'
+  },
+  locationCoordText: {
+    fontSize: 18, 
+    color: '#333'
+  },
+  locationSuccessText: {
+    color: 'green', 
+    fontSize: 12, 
+    marginTop: 4
+  }
 });

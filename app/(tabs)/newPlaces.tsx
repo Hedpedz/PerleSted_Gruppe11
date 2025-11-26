@@ -1,5 +1,5 @@
-import { Link, useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import { Link, useLocalSearchParams } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Image, Pressable, ScrollView, Text, TextInput, View } from 'react-native';
 import PerleCameraView from '../../components/camera/CameraViewer';
 import { usePerleCamera } from '../../hooks/useCamera';
@@ -8,15 +8,26 @@ import { styles } from '../styles';
 export default function NewPlacesScreen() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-
+  const [location, setLocation] = useState<{lat: number, long: number} | null>(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const camera = usePerleCamera(); 
-  const router = useRouter(); 
+  const params = useLocalSearchParams(); 
+
+  useEffect(() => {
+    if (params.lat && params.long) {
+      setLocation({
+        lat: parseFloat(params.lat as string),
+        long: parseFloat(params.long as string)
+      });
+    }
+  }, [params.lat, params.long]); 
 
   const handleSubmit = async () => {
     if (isLoading) return;
-    if (!title || !camera.image) { alert("Mangler info"); return; }
+    if (!title) { alert("Mangler tittel"); return; }
+    if (!camera.image) { alert("Mangler bilde"); return; }
+    if (!location) { alert("Mangler plassering"); return; }
     
     setIsLoading(true);
 
@@ -32,6 +43,7 @@ export default function NewPlacesScreen() {
 
     setTitle('');
     setDescription('');
+    setLocation(null);
     camera.resetImage();
   };
   if (camera.isCameraVisible) {
@@ -59,14 +71,24 @@ export default function NewPlacesScreen() {
         numberOfLines={4}
       />
 
-      <Link href="../map-picker" asChild>
-      <Pressable style={styles.formButton}>
-          <Text style={styles.formButtonText}>
-            Velg plassering på kart
-          </Text>
-        </Pressable>
-      </Link>
+      <View style={styles.locationResultContainer}>
+        {location ? (
+          <View style={styles.locationResultContainer}>
+            <Text style={styles.locationCoordText}>
+              {location.lat.toFixed(4)}, {location.long.toFixed(4)}
+            </Text>
+            <Text style={styles.locationSuccessText}>Plassering lagret</Text>
+          </View>
+        ) : null}
 
+        <Link href="/mapPicker" asChild>
+          <Pressable style={styles.formButton}>
+            <Text style={styles.formButtonText}>
+              {location ? "Endre plassering" : "Velg plassering på kart"}
+            </Text>
+          </Pressable>
+        </Link>
+      </View>
 
       <View style={styles.cameraPreviewContainer}>
         {camera.image ? (
