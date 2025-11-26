@@ -213,9 +213,10 @@ export const styles = StyleSheet.create({
   },
    // Form, new place
   formContainer: {
-    flex: 1,
+    flexGrow: 1,
     padding: 20,
     backgroundColor: '#FFFFFF',
+    paddingBottom: 80,
   },
   formTitle: {
     fontSize: 32,
