@@ -1,22 +1,13 @@
 import { Image } from "expo-image";
-import { SettingCard } from "../../components/settings/SettingCard";
-import React from "react";
-import { Pressable, Text, View } from "react-native"; 
-import image from "../../assets/beluga.png";
-import Button from "../../components/Button"; 
-import { styles } from "../styles";
 import { signOut } from "firebase/auth";
+import React from "react";
+import { Pressable, Text, View } from "react-native";
+import image from "../../assets/beluga.png";
+import Button from "../../components/Button";
+import { SettingCard } from "../../components/settings/SettingCard";
 import { auth } from "../../FirebaseConfig";
-
-interface ProfileHeaderProps {
-  imageUrl?: string;
-  username: string;
-  verified: boolean;
-  email: string;
-  phoneNumber: string;
-  notifications: boolean;
-  password?: string;
-}
+import { getUserDataFromDatabase } from "../../handlers/userHandler";
+import { styles } from "../styles";
 
 const dummyProfileData = {
   imageUrl: image,
@@ -25,19 +16,18 @@ const dummyProfileData = {
   phoneNumber: "12345678",
   email: "katt@example.com",
   notifications: true,
-  password: "hashedpassword",
 };
 
-const Settings = ({
-  imageUrl,
-  username = dummyProfileData.username,
-  verified = dummyProfileData.verified,
-  email = dummyProfileData.email,
-  password = dummyProfileData.password,
-  phoneNumber = dummyProfileData.phoneNumber,
-  notifications = dummyProfileData.notifications,
-}: ProfileHeaderProps) => {
+const Settings = async ({}) => {
+  const userData = await getUserDataFromDatabase();
 
+  const imageUrl = userData?.imageUrl || dummyProfileData.imageUrl;
+  const username = userData?.username || dummyProfileData.username;
+  const verified = userData?.verified || dummyProfileData.verified;
+  const phoneNumber = userData?.phoneNumber || dummyProfileData.phoneNumber;
+  const email = userData?.email || dummyProfileData.email;
+  const notifications =
+    userData?.notifications ?? dummyProfileData.notifications;
 
   const handleLogout = async () => {
     try {
@@ -65,21 +55,21 @@ const Settings = ({
           settingInfo={username}
           btnText="Endre"
         />
-        <SettingCard 
-          setting="Passord" 
-          settingInfo="********" 
-          btnText="Endre" 
+        <SettingCard
+          setting="Passord"
+          settingInfo="********"
+          btnText="Endre"
           style={styles.settingFormText}
         />
-        <SettingCard 
-          setting="E-post" 
-          settingInfo={email} 
-          btnText="Endre" 
+        <SettingCard
+          setting="E-post"
+          settingInfo={email}
+          btnText="Endre"
           style={styles.settingFormText}
         />
-        <SettingCard 
-          setting="Telefonnummer" 
-          settingInfo={phoneNumber} 
+        <SettingCard
+          setting="Telefonnummer"
+          settingInfo={phoneNumber}
           btnText="Endre"
           style={styles.settingFormText}
         />
@@ -88,16 +78,12 @@ const Settings = ({
           settingInfo={notifications ? "På" : "Av"}
           btnText="Endre"
         />
-      </View>  
+      </View>
       <Text> </Text>
 
-      <Pressable 
-        style={styles.settingsBigButton} 
-        onPress={handleLogout}          
-      >
+      <Pressable style={styles.settingsBigButton} onPress={handleLogout}>
         <Text style={styles.formButtonText}>Logg ut</Text>
       </Pressable>
-
     </View>
   );
 };
