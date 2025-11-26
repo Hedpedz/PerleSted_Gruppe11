@@ -2,7 +2,7 @@ import { Feather } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Header from "../components/Header";
+import Header from "../../components/Header";
 
 const _Layout = () => {
   return (

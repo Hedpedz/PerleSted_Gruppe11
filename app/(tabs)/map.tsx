@@ -1,13 +1,8 @@
 import React from "react";
-import { Text, View } from "react-native";
-import { styles } from "../styles";
+import MapViewer from "../../components/map/MapViewer";
 
-
-const Map = () => {
-    return (
-        <View>
-            <Text>Nytt sted</Text>
-        </View>
-    )
+export default function MapScreen() {
+  return <MapViewer />;
 }
-export default Map;
+
+

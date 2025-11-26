@@ -2,7 +2,7 @@ import { Feather } from '@expo/vector-icons';
 import { Link } from 'expo-router';
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
-import { styles } from '../styles';
+import { styles } from '../app/styles';
 
 export default function Header() {
   return (
