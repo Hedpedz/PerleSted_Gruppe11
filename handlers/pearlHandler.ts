@@ -3,7 +3,33 @@ import { db } from '../FirebaseConfig';
 import { downloadImage, uploadImagePearl } from './imageHandler';
 
 
-export const addPearlToDatabase = async (pearlID: string, imageUri: string, pearlData: any) => {
+export const generatePearlID = (title: string): string => {
+    const timestamp = Date.now().toString(36);
+
+    return title.toLowerCase() + timestamp;
+}
+
+export const addPearlToDatabase = async (imageUri: string, pearlData: any) => {
+    const pearlInfo = {...pearlData}
+
+    if (!pearlInfo.title) {
+        throw new Error("Pearl must have a title");
+    }
+
+    if (!pearlInfo.description) {
+        throw new Error("Pearl must have a description");
+    }
+
+    if (!pearlInfo.longitude || !pearlInfo.latitude) {
+        throw new Error("Pearl must have coordinates");
+    }
+
+    const pearlID = generatePearlID(pearlInfo.title);
+
+    if (!pearlID) {
+        throw new Error("ID was not genereated");
+    }
+
     const imageUrl = await uploadImagePearl(pearlID, imageUri);
 
     await setDoc(doc(db, "users", pearlID), {
