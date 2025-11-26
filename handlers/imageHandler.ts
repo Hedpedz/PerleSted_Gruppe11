@@ -2,11 +2,23 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from '../FirebaseConfig';
 
 // https://www.youtube.com/watch?v=a0KJ7l5sNGw
-export const uploadImage = async (id: string, imageUri: string): Promise<string> => {
+export const uploadImageProfile = async (id: string, imageUri: string): Promise<string> => {
     const response = await fetch(imageUri);
     const blob = await response.blob();
 
-    const storageRef = ref(storage, `images/${id}/${Date.now()}`);
+    const storageRef = ref(storage, `images/profile/${id}/${Date.now()}`);
+    await uploadBytes(storageRef, blob);
+    const downloadURL = await getDownloadURL(storageRef);
+
+    return downloadURL;
+
+}
+
+export const uploadImagePearl = async (id: string, imageUri: string): Promise<string> => {
+    const response = await fetch(imageUri);
+    const blob = await response.blob();
+
+    const storageRef = ref(storage, `images/pearl/${id}/${Date.now()}`);
     await uploadBytes(storageRef, blob);
     const downloadURL = await getDownloadURL(storageRef);
 
