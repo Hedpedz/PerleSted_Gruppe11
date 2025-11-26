@@ -1,12 +1,12 @@
 import { Image } from "expo-image";
-import { Text, View } from "react-native";
-
 import { SettingCard } from "../../components/settings/SettingCard";
-
 import React from "react";
+import { Pressable, Text, View } from "react-native"; 
 import image from "../../assets/beluga.png";
-import Button from "../../components/Button";
+import Button from "../../components/Button"; 
 import { styles } from "../styles";
+import { signOut } from "firebase/auth";
+import { auth } from "../../FirebaseConfig";
 
 interface ProfileHeaderProps {
   imageUrl?: string;
@@ -37,6 +37,16 @@ const Settings = ({
   phoneNumber = dummyProfileData.phoneNumber,
   notifications = dummyProfileData.notifications,
 }: ProfileHeaderProps) => {
+
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error("Feil ved utlogging:", error);
+    }
+  };
+
   return (
     <View style={styles.profileContainer}>
       <Image
@@ -50,42 +60,44 @@ const Settings = ({
         buttonTextStyle={styles.formButtonText}
       />
       <View style={styles.settingsContainer}>
-      <SettingCard
-        setting="Brukernavn"
-        settingInfo={username}
-        btnText="Endre"
-      />
-      <SettingCard 
-      setting="Passord" 
-      settingInfo="********" 
-      btnText="Endre" 
-      style={styles.settingFormText}
-      />
-      <SettingCard 
-      setting="E-post" 
-      settingInfo={email} 
-      btnText="Endre" 
-      style={styles.settingFormText}
-      />
-      <SettingCard 
-      setting="Telefonnummer" 
-      settingInfo={phoneNumber} 
-      btnText="Endre"
-      style={styles.settingFormText}
-      />
-      <SettingCard
-        setting="Varsler"
-        settingInfo={notifications ? "På" : "Av"}
-        btnText="Endre"
-      />
-      </View>
+        <SettingCard
+          setting="Brukernavn"
+          settingInfo={username}
+          btnText="Endre"
+        />
+        <SettingCard 
+          setting="Passord" 
+          settingInfo="********" 
+          btnText="Endre" 
+          style={styles.settingFormText}
+        />
+        <SettingCard 
+          setting="E-post" 
+          settingInfo={email} 
+          btnText="Endre" 
+          style={styles.settingFormText}
+        />
+        <SettingCard 
+          setting="Telefonnummer" 
+          settingInfo={phoneNumber} 
+          btnText="Endre"
+          style={styles.settingFormText}
+        />
+        <SettingCard
+          setting="Varsler"
+          settingInfo={notifications ? "På" : "Av"}
+          btnText="Endre"
+        />
+      </View>  
       <Text> </Text>
-      <Button
-        text="Logg ut"
-        path=".././"
-        buttonStyle={styles.settingsBigButton}
-        buttonTextStyle={styles.formButtonText}
-      />
+
+      <Pressable 
+        style={styles.settingsBigButton} 
+        onPress={handleLogout}          
+      >
+        <Text style={styles.formButtonText}>Logg ut</Text>
+      </Pressable>
+
     </View>
   );
 };
