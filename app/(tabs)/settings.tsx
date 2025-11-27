@@ -66,30 +66,27 @@ const Settings = () => {
         <SettingCard
           setting="Brukernavn"
           settingInfo={username}
-          btnText="Endre"
+          style={styles.settingFormText} 
         />
         <SettingCard
           setting="Passord"
           settingInfo="********"
-          btnText="Endre"
           style={styles.settingFormText}
         />
         <SettingCard
           setting="E-post"
           settingInfo={email}
-          btnText="Endre"
           style={styles.settingFormText}
         />
         <SettingCard
           setting="Telefonnummer"
           settingInfo={phoneNumber}
-          btnText="Endre"
           style={styles.settingFormText}
         />
         <SettingCard
           setting="Varsler"
           settingInfo={notifications ? "På" : "Av"}
-          btnText="Endre"
+          style={styles.settingFormText}
         />
       </View>
       <Text> </Text>
