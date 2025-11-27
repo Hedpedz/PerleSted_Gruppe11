@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useState } from "react";
 import { View, Alert } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE, MapPressEvent } from "react-native-maps";
-import * as Location from 'expo-location'; 
+import * as Location from 'expo-location';
 import { styles } from "../../app/styles";
+import { Pearl } from "../../types/pearl"; 
 
 const FALLBACK_REGION = {
   latitude: 59.129082732254126,
@@ -14,9 +15,10 @@ const FALLBACK_REGION = {
 interface MapViewerProps {
   onMapPress?: (event: MapPressEvent) => void;
   selectedLocation?: { latitude: number; longitude: number } | null;
+  pearls?: Pearl[]; 
 }
 
-const MapViewer = ({ onMapPress, selectedLocation }: MapViewerProps) => {
+const MapViewer = ({ onMapPress, selectedLocation, pearls = [] }: MapViewerProps) => {
   const mapRef = useRef<MapView>(null);
   const [hasPermission, setHasPermission] = useState(false);
 
@@ -72,6 +74,16 @@ const MapViewer = ({ onMapPress, selectedLocation }: MapViewerProps) => {
             title="Valgt plassering"
           />
         )}
+        {pearls.map((pearl) => (
+          <Marker
+            key={pearl.id}
+            coordinate={{
+              latitude: pearl.latitude,
+              longitude: pearl.longitude,
+            }}
+            title={pearl.title}
+          />
+        ))}
       </MapView>
     </View>
   );
