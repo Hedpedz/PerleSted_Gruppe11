@@ -26,7 +26,9 @@ export default function PearlList({
   return (
     <View
       style={{
-        ...styles.pearlListContainer,
+        flex: 1,
+        alignItems: "center",
+        width: "100%",
         paddingTop: insets.top,
         paddingBottom: insets.bottom,
         paddingHorizontal: insets.left,
@@ -41,10 +43,15 @@ export default function PearlList({
       />
       <FlatList
         data={pearls}
-        style={{ marginVertical: 20 }}
+        style={styles.pearlListFlatList}
         contentContainerStyle={{ gap: 25 }}
+        numColumns={2}
+        columnWrapperStyle={{ justifyContent: "space-between" }}
         renderItem={({ item }) => (
-          <Pressable onPress={() => handlePress(item)}>
+          <Pressable
+            style={styles.pearlListItem}
+            onPress={() => handlePress(item)}
+          >
             <PearlCard
               id={item.id}
               title={item.title}
@@ -62,6 +69,8 @@ const styles = StyleSheet.create({
   pearlListContainer: {
     flex: 1,
     alignItems: "center",
+    width: "100%",
+    height: "100%",
   },
 
   pearlListInput: {
@@ -70,5 +79,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     width: "90%",
-  }
+  },
+
+  pearlListFlatList: {
+    marginVertical: 20,
+    width: "90%",
+    //height: 100,
+  },
+
+  pearlListItem: {
+    height: 100,
+    width: "47%",
+  },
 });

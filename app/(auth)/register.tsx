@@ -41,6 +41,7 @@ export default function RegisterScreen() {
     await setDoc(doc(db, "users", uid), {
       username: username,
       email: email,
+      createdAt: new Date(),
     });
   };
 
@@ -87,12 +88,14 @@ export default function RegisterScreen() {
         password
       );
       if (userTemp.user) {
-        addUserFirestore(userTemp.user.uid, username, email);
+        await addUserFirestore(userTemp.user.uid, username, email);
         router.replace("/(tabs)/home");
       }
     } catch (error: any) {
       console.log(error);
       alert("Registrering feilet: " + error.message);
+      setIsLoading(false);
+    } finally {
       setIsLoading(false);
     }
   };
