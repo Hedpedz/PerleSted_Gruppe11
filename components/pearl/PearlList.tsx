@@ -1,12 +1,6 @@
 import { Pearl } from "@/types/pearl";
 import React, { useState } from "react";
-import {
-  FlatList,
-  KeyboardAvoidingView,
-  Pressable,
-  StyleSheet,
-  TextInput,
-} from "react-native";
+import { FlatList, Pressable, StyleSheet, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { PearlCard } from "./PearlCard";
 
@@ -30,7 +24,7 @@ export default function PearlList({
 
   const insets = useSafeAreaInsets();
   return (
-    <KeyboardAvoidingView
+    <View
       style={{
         flex: 1,
         alignItems: "center",
@@ -67,7 +61,7 @@ export default function PearlList({
         )}
         keyExtractor={(item) => item.id.toString()}
       />
-    </KeyboardAvoidingView>
+    </View>
   );
 }
 
