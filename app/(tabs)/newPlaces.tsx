@@ -29,13 +29,21 @@ export default function NewPlacesScreen() {
   const router = useRouter();
 
   useEffect(() => {
+    if (params.title) {
+      setTitle(params.title as string);
+    }
+
+    if (params.description) {
+      setDescription(params.description as string);
+    }
+
     if (params.lat && params.long) {
       setLocation({
         lat: parseFloat(params.lat as string),
         long: parseFloat(params.long as string),
       });
     }
-  }, [params.lat, params.long]);
+  }, [params.lat, params.long, params.title, params.description]);
 
   const handleSubmit = async () => {
     if (isLoading) return;
@@ -68,15 +76,18 @@ export default function NewPlacesScreen() {
       await addPearlToDatabase(camera.image, pearlData);
 
       console.log("Ny perle opprettet:", pearlData);
+
+      setDescription("");
+      setTitle("");
+      setLocation(null);
+      camera.resetImage();
+
+      return;
     } catch (error: any) {
       console.error("Feil ved oppretting av perle:", error);
       alert("Feil ved oppretting av perle: " + error);
     } finally {
       setIsLoading(false);
-      setTitle("");
-      setDescription("");
-
-      router.back();
     }
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -88,10 +99,6 @@ export default function NewPlacesScreen() {
     });
 
     setIsLoading(false);
-
-    setTitle("");
-    setDescription("");
-    setLocation(null);
     camera.resetImage();
   };
   if (camera.isCameraVisible) {
@@ -129,7 +136,18 @@ export default function NewPlacesScreen() {
           </View>
         ) : null}
 
-        <Link href="../mapPicker" asChild>
+        <Link
+          href={{
+            pathname: "../mapPicker",
+            params: {
+              title,
+              description,
+              lat: location?.lat,
+              long: location?.long,
+            },
+          }}
+          asChild
+        >
           <Pressable style={styles.formButton}>
             <Text style={styles.formButtonText}>
               {location ? "Endre plassering" : "Velg plassering på kart"}

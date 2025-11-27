@@ -41,7 +41,7 @@ const Home = () => {
         buttonStyle={styles.profileButton}
         buttonTextStyle={styles.profileText}
       />
-      <PearlList pearls={pearls} filterPearls={filterPearls} />
+      <PearlList pearls={filteredPearls} filterPearls={filterPearls} />
     </View>
   );
 };
