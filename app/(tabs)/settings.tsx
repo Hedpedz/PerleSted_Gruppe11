@@ -1,7 +1,7 @@
 import { Image } from "expo-image";
 import { signOut } from "firebase/auth";
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native"; 
 import { SettingCard } from "../../components/settings/SettingCard";
 import { auth } from "../../FirebaseConfig";
 import { styles } from "../styles";
@@ -12,7 +12,9 @@ const Settings = () => {
   const {
     username, email, phoneNumber, imageUrl, verified, 
     activeField, tempValue, setTempValue,             
-    handleStartEdit, handleSave                      
+    handleStartEdit, handleSave,
+    handleUpdateProfileImage, 
+    loadingImage              
   } = useProfileSettings();
 
   const handleLogout = async () => {
@@ -29,8 +31,14 @@ const Settings = () => {
         source={typeof imageUrl === "string" ? { uri: imageUrl } : imageUrl}
         style={styles.profileImageSettings}
       />
-      <Pressable style={styles.settingsPictureButton} onPress={() => alert("skal fikse")}>
-         <Text style={styles.formButtonText}>Endre bilde</Text>
+      <Pressable 
+        style={styles.settingsPictureButton} 
+        onPress={handleUpdateProfileImage} 
+        disabled={loadingImage}
+      >
+         <Text style={styles.formButtonText}>
+            {loadingImage ? "Laster opp..." : "Endre bilde"}
+         </Text>
       </Pressable>
 
       <View style={styles.settingsContainer}>
