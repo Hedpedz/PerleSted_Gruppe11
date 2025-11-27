@@ -1,13 +1,16 @@
 import { Image } from "expo-image";
 import React, { memo, useMemo } from "react";
-import { ImageSourcePropType, Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import {
+  ImageSourcePropType,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { styles } from "../../app/styles";
-
-
 
 type PearlCardProps = {
   id: string;
-  title: string;
+  title?: string;
   imageUrl?: string;
   imageLocal?: ImageSourcePropType;
   onPress?: () => void;
@@ -20,11 +23,10 @@ const PearlCardComponent: React.FC<PearlCardProps> = ({
   imageLocal,
   onPress,
 }) => {
-    const source = useMemo(
-        () => (imageLocal ? imageLocal : imageUrl ? { uri: imageUrl } : null),
-        [imageLocal, imageUrl]
+  const source = useMemo(
+    () => (imageLocal ? imageLocal : imageUrl ? { uri: imageUrl } : null),
+    [imageLocal, imageUrl]
   );
-
 
   const displayTitle = (title || "").trim() || "FredikstenFesning";
 
@@ -49,4 +51,3 @@ const PearlCardComponent: React.FC<PearlCardProps> = ({
 };
 
 export const PearlCard = memo(PearlCardComponent);
-

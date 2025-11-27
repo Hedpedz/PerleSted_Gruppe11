@@ -1,4 +1,4 @@
-import { deleteDoc, doc, getDoc, setDoc } from 'firebase/firestore';
+import { collection, deleteDoc, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { db } from '../FirebaseConfig';
 import { downloadImage, uploadImagePearl } from './imageHandler';
 
@@ -52,6 +52,15 @@ export const getPearlFromDatabase = async (pearlID: string) => {
     const pearlDoc = await getDoc(pearl)
 
     return pearlDoc.data();
+
+}
+
+export const getAllPearlsFromDatabase = async (): Promise<any[]> => {
+    const pearlDocs = await getDocs(collection(db, "pearls"))
+
+    const list = pearlDocs.docs.map((doc) => doc.data());
+
+    return list;
 
 }
 
