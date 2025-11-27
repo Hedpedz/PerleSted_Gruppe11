@@ -1,6 +1,12 @@
 import RateButton from "@/components/pearl/RateButton";
 import { getPearlFromDatabase } from "@/handlers/pearlHandler";
+import {
+  addFavoritePearl,
+  getFavoritePearls,
+  removeFavoritePearl,
+} from "@/handlers/userHandler";
 import { Ionicons } from "@expo/vector-icons";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
@@ -8,13 +14,18 @@ import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 export default function PearlDetailScreen() {
   const router = useRouter();
   const [pearl, setPearl] = useState<any>(null);
-  const pearlID = useLocalSearchParams<{ pearlID?: string }>();
+  const { pearlID } = useLocalSearchParams<{ pearlID?: string }>();
   const [loading, setLoading] = useState<boolean>(true);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
 
   useEffect(() => {
+    if (!pearlID) {
+      return;
+    }
+
     const getPearl = async () => {
       setLoading(true);
-      const pearlData = await getPearlFromDatabase(pearlID.pearlID as string);
+      const pearlData = await getPearlFromDatabase(pearlID as string);
 
       if (!pearlData) {
         throw new Error("Pearl not found");
@@ -24,8 +35,38 @@ export default function PearlDetailScreen() {
 
       setLoading(false);
     };
+
+    const checkIfFavorite = async () => {
+      if (pearlID) {
+        const favorites = await getFavoritePearls();
+        setIsFavorite(favorites.includes(pearlID));
+      }
+    };
+
     getPearl();
+    checkIfFavorite();
   }, [pearlID]);
+
+  const toggleFavorite = async () => {
+    if (!pearlID) {
+      alert("Ugyldig perle-ID");
+      return;
+    }
+
+    try {
+      if (isFavorite) {
+        await removeFavoritePearl(pearlID);
+        setIsFavorite(false);
+        alert("Perlen er fjernet fra dine favoritter");
+      } else {
+        await addFavoritePearl(pearlID);
+        setIsFavorite(true);
+        alert("Perlen er lagt til som favoritt");
+      }
+    } catch (error) {
+      alert("En feil oppstod: " + error);
+    }
+  };
 
   if (!pearl) {
     return (
@@ -99,8 +140,13 @@ export default function PearlDetailScreen() {
               padding: 8,
             }}
             hitSlop={8}
+            onPress={() => toggleFavorite()}
           >
-            <Ionicons name="heart-outline" size={35} color="#000" />
+            <FontAwesome
+              name={isFavorite ? "heart" : "heart-o"}
+              size={35}
+              color={isFavorite ? "red" : "black"}
+            />
           </TouchableOpacity>
         </View>
 
@@ -171,11 +217,11 @@ export default function PearlDetailScreen() {
               alignItems: "center",
             }}
           >
-            <RateButton value={1} pearlID={pearlID.pearlID as string} />
-            <RateButton value={2} pearlID={pearlID.pearlID as string} />
-            <RateButton value={3} pearlID={pearlID.pearlID as string} />
-            <RateButton value={4} pearlID={pearlID.pearlID as string} />
-            <RateButton value={5} pearlID={pearlID.pearlID as string} />
+            <RateButton value={1} pearlID={pearlID as string} />
+            <RateButton value={2} pearlID={pearlID as string} />
+            <RateButton value={3} pearlID={pearlID as string} />
+            <RateButton value={4} pearlID={pearlID as string} />
+            <RateButton value={5} pearlID={pearlID as string} />
           </View>
         </View>
 
