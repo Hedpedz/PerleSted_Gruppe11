@@ -9,7 +9,8 @@ import { getUserDataFromDatabase } from "../../handlers/userHandler";
 import { styles } from "../styles";
 
 import PearlList from "@/components/pearl/PearlList";
-import { getAllPearlsFromDatabase } from "@/handlers/pearlHandler";
+import { auth } from "@/FirebaseConfig";
+import { getAllPearlsForUser } from "@/handlers/pearlHandler";
 import { Pearl } from "@/types/pearl";
 import React, { useState } from "react";
 import Button from "../../components/Button";
@@ -46,8 +47,14 @@ const Profile = () => {
       setUserData(data);
     };
 
+    const userID = auth.currentUser?.uid;
+
+    if (!userID) {
+      throw new Error("User not authenticated");
+    }
+
     const getPearls = async () => {
-      const allPearls = await getAllPearlsFromDatabase();
+      const allPearls = await getAllPearlsForUser(userID);
 
       setPearls(allPearls as Pearl[]);
       setFilteredPearls(allPearls as Pearl[]);

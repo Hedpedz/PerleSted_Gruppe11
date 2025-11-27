@@ -64,6 +64,14 @@ export const getAllPearlsFromDatabase = async (): Promise<any[]> => {
 
 }
 
+export const getAllPearlsForUser = async (userID: string): Promise<any[]> => {
+    const list = await getAllPearlsFromDatabase();
+
+    const userPearls = list.filter((pearl) => pearl.createdBy === userID);
+
+    return userPearls;
+}
+
 export const deletePearlFromDatabase = async (pearlID: string) => {
 
     const pearl = doc(db, "pearls", pearlID);
