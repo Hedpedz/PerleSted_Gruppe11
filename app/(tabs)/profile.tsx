@@ -1,30 +1,15 @@
-import { ProfileSettingCard } from "../../components/profile/ProfileSettingCard";
-
-import { Image } from "expo-image";
-import { ScrollView, Text, View } from "react-native";
-
-import { getUserDataFromDatabase } from "../../handlers/userHandler";
-import { styles } from "../styles";
-
 import PearlList from "@/components/pearl/PearlList";
 import { auth } from "@/FirebaseConfig";
 import { getAllPearlsForUser } from "@/handlers/pearlHandler";
 import { Pearl } from "@/types/pearl";
-import React, { useState } from "react";
+import { Image } from "expo-image";
+import { useFocusEffect } from "expo-router";
+import React, { useCallback, useState } from "react";
+import { ScrollView, Text, View } from "react-native";
 import Button from "../../components/Button";
-
-const postsDummy = [
-  { title: "Post 1", id: "1" },
-  { title: "Post 2", id: "2" },
-  { title: "Post 3", id: "3" },
-  { title: "Post 4", id: "4" },
-  { title: "Post 5", id: "5" },
-  { title: "Post 6", id: "6" },
-  { title: "Post 7", id: "7" },
-  { title: "Post 8", id: "8" },
-  { title: "Post 9", id: "9" },
-  { title: "Post 10", id: "10" },
-];
+import { ProfileSettingCard } from "../../components/profile/ProfileSettingCard";
+import { getUserDataFromDatabase } from "../../handlers/userHandler";
+import { styles } from "../styles";
 
 const dummyProfileData = {
   imageUrl:
@@ -40,27 +25,29 @@ const Profile = () => {
   const [pearls, setPearls] = useState<Pearl[]>([]);
   const [filteredPearls, setFilteredPearls] = useState<Pearl[]>([]);
 
-  React.useEffect(() => {
-    const fetchUserData = async () => {
-      const data = await getUserDataFromDatabase();
-      setUserData(data);
-    };
+  useFocusEffect(
+    useCallback(() => {
+      const fetchUserData = async () => {
+        const data = await getUserDataFromDatabase();
+        setUserData(data);
+      };
 
-    const userID = auth.currentUser?.uid;
+      const userID = auth.currentUser?.uid;
 
-    if (!userID) {
-      throw new Error("User not authenticated");
-    }
+      if (!userID) {
+        throw new Error("User not authenticated");
+      }
 
-    const getPearls = async () => {
-      const allPearls = await getAllPearlsForUser(userID);
+      const getPearls = async () => {
+        const allPearls = await getAllPearlsForUser(userID);
 
-      setPearls(allPearls as Pearl[]);
-      setFilteredPearls(allPearls as Pearl[]);
-    };
-    getPearls();
-    fetchUserData();
-  }, []);
+        setPearls(allPearls as Pearl[]);
+        setFilteredPearls(allPearls as Pearl[]);
+      };
+      getPearls();
+      fetchUserData();
+    }, [])
+  );
 
   const filterPearls = (query: string) => {
     const filtered = pearls.filter((pearl) =>

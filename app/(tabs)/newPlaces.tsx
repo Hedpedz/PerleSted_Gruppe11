@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import PerleCameraView from "../../components/camera/CameraViewer";
 import { usePerleCamera } from "../../hooks/useCamera";
+import { useImagePicker } from "../../hooks/useImagePicker";
 import { styles } from "../styles";
 
 export default function NewPlacesScreen() {
@@ -23,12 +24,15 @@ export default function NewPlacesScreen() {
     long: number;
   } | null>(null);
 
-  const [userData, setUserData] = useState<any>(undefined);
+  const [savedImage, setSavedImage] = useState<string | null>(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const camera = usePerleCamera();
+  const gallery = useImagePicker(); 
   const params = useLocalSearchParams();
   const router = useRouter();
+
+  const finalImage = savedImage || gallery.pickedImage || camera.image;
 
   useEffect(() => {
     if (params.title) {
@@ -39,13 +43,17 @@ export default function NewPlacesScreen() {
       setDescription(params.description as string);
     }
 
+    if (params.image) {
+      setSavedImage(params.image as string);
+    }
+
     if (params.lat && params.long) {
       setLocation({
         lat: parseFloat(params.lat as string),
         long: parseFloat(params.long as string),
       });
     }
-  }, [params.lat, params.long, params.title, params.description]);
+  }, [params.lat, params.long, params.title, params.description, params.image,]);
 
   const handleSubmit = async () => {
     if (isLoading) return;
@@ -53,7 +61,7 @@ export default function NewPlacesScreen() {
       alert("Mangler tittel");
       return;
     }
-    if (!camera.image) {
+    if (!finalImage) {
       alert("Mangler bilde");
       return;
     }
@@ -84,36 +92,29 @@ export default function NewPlacesScreen() {
         throw new Error("Tittelen er for lang (maks 40 tegn)");
       }
 
-      await addPearlToDatabase(camera.image, pearlData);
+      await addPearlToDatabase(finalImage, pearlData);
 
       console.log("Ny perle opprettet:", pearlData);
-
+      
       alert("Perle opprettet!");
 
       setDescription("");
       setTitle("");
       setLocation(null);
+      setSavedImage(null);
       camera.resetImage();
+      gallery.resetPicker();
 
-      return;
+      router.replace("/(tabs)/profile"); 
+
     } catch (error: any) {
       console.error("Feil ved oppretting av perle:", error);
       alert("Feil ved oppretting av perle: " + error);
     } finally {
       setIsLoading(false);
     }
-
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    console.log("Ny perle opprettet (dummy):", {
-      title,
-      description,
-      image: camera.image,
-    });
-
-    setIsLoading(false);
-    camera.resetImage();
   };
+
   if (camera.isCameraVisible) {
     return <PerleCameraView camera={camera} />;
   }
@@ -157,6 +158,7 @@ export default function NewPlacesScreen() {
               description,
               lat: location?.lat,
               long: location?.long,
+              image: finalImage, 
             },
           }}
           asChild
@@ -170,23 +172,36 @@ export default function NewPlacesScreen() {
       </View>
 
       <View style={styles.cameraPreviewContainer}>
-        {camera.image ? (
+        {finalImage ? (
           <>
             <Image
-              source={{ uri: camera.image }}
+              source={{ uri: finalImage }}
               style={styles.cameraImagePreview}
             />
             <Pressable
               style={styles.cameraRetakeButton}
-              onPress={camera.openCamera}
+              onPress={() => {
+                camera.resetImage();
+                gallery.resetPicker();
+                setSavedImage(null);
+              }}
             >
-              <Text style={styles.cameraRetakeText}>Ta nytt bilde</Text>
+              <Text style={styles.cameraRetakeText}>Fjern / Ta nytt bilde</Text>
             </Pressable>
           </>
         ) : (
-          <Pressable style={styles.formButton} onPress={camera.openCamera}>
-            <Text style={styles.formButtonText}>Ta bilde</Text>
-          </Pressable>
+          <View style={{ width: '100%', gap: 10 }}>
+            <Pressable style={styles.formButton} onPress={camera.openCamera}>
+                <Text style={styles.formButtonText}>Ta bilde</Text>
+            </Pressable>
+
+            <Pressable 
+                style={[styles.formButton]} 
+                onPress={gallery.pickImage}
+            >
+                <Text style={styles.formButtonText}>Velg fra galleri</Text>
+            </Pressable>
+          </View>
         )}
       </View>
 

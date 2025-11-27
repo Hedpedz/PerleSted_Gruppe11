@@ -338,6 +338,24 @@ export const styles = StyleSheet.create({
     fontWeight: '500',
   },
 
+  // Map Callout 
+  calloutView: {
+    padding: 10,
+    minWidth: 150, 
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  calloutTitle: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginBottom: 5,
+    color: '#333',
+  },
+  calloutSub: {
+    color: '#007AFF', 
+    fontSize: 12,
+  },
+
   // Location Display in New Place 
   locationResultContainer: {
     alignItems: 'center'
