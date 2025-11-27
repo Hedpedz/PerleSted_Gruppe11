@@ -86,9 +86,26 @@ export const updatePearlRating = async (pearlID: string, newRating: number) => {
     }
     pearlData.ratings.push(newRating);
 
-    await updatePearlInDatabase(pearlID, { ratings: pearlData.ratings });
+    const averageRating = calculateAverageRating(pearlData.ratings);
+
+    const currentAmountOfRatings = pearlData.currentAmountOfRatings || 0;
+
+    await updatePearlInDatabase(pearlID, { ratings: pearlData.ratings, avgRating: averageRating, currentAmountOfRatings: currentAmountOfRatings + 1 });
     
     return true;
+}
+
+const calculateAverageRating = (ratings: number[]): number => {
+    let total = 0;
+
+    for (let i = 0; i < ratings.length; i++) {
+        if (ratings[i] < 1 || ratings[i] > 5) {
+            throw new Error("Ugyldig vurderingsverdi funnet");
+        }
+        total += ratings[i];
+    }
+
+    return Math.round((total / ratings.length) * 10) / 10;
 }
 
 
