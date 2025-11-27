@@ -160,6 +160,15 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
 
+  inlineInput: {
+    fontSize: 16,
+    color: "#000",
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    backgroundColor: "#f0f0f0", 
+    borderRadius: 5,
+    minWidth: 150, 
+  },
   
 
    // Auth
