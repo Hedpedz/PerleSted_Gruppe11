@@ -25,10 +25,11 @@ export default function NewPlacesScreen() {
   } | null>(null);
 
   const [savedImage, setSavedImage] = useState<string | null>(null);
+  const [userData, setUserData] = useState<any>(null);
 
   const [isLoading, setIsLoading] = useState(false);
   const camera = usePerleCamera();
-  const gallery = useImagePicker(); 
+  const gallery = useImagePicker();
   const params = useLocalSearchParams();
   const router = useRouter();
 
@@ -53,7 +54,7 @@ export default function NewPlacesScreen() {
         long: parseFloat(params.long as string),
       });
     }
-  }, [params.lat, params.long, params.title, params.description, params.image,]);
+  }, [params.lat, params.long, params.title, params.description, params.image]);
 
   const handleSubmit = async () => {
     if (isLoading) return;
@@ -95,7 +96,7 @@ export default function NewPlacesScreen() {
       await addPearlToDatabase(finalImage, pearlData);
 
       console.log("Ny perle opprettet:", pearlData);
-      
+
       alert("Perle opprettet!");
 
       setDescription("");
@@ -105,8 +106,7 @@ export default function NewPlacesScreen() {
       camera.resetImage();
       gallery.resetPicker();
 
-      router.replace("/(tabs)/profile"); 
-
+      router.replace("/(tabs)/profile");
     } catch (error: any) {
       console.error("Feil ved oppretting av perle:", error);
       alert("Feil ved oppretting av perle: " + error);
@@ -158,7 +158,7 @@ export default function NewPlacesScreen() {
               description,
               lat: location?.lat,
               long: location?.long,
-              image: finalImage, 
+              image: finalImage,
             },
           }}
           asChild
@@ -190,16 +190,13 @@ export default function NewPlacesScreen() {
             </Pressable>
           </>
         ) : (
-          <View style={{ width: '100%', gap: 10 }}>
+          <View style={{ width: "100%", gap: 10 }}>
             <Pressable style={styles.formButton} onPress={camera.openCamera}>
-                <Text style={styles.formButtonText}>Ta bilde</Text>
+              <Text style={styles.formButtonText}>Ta bilde</Text>
             </Pressable>
 
-            <Pressable 
-                style={[styles.formButton]} 
-                onPress={gallery.pickImage}
-            >
-                <Text style={styles.formButtonText}>Velg fra galleri</Text>
+            <Pressable style={[styles.formButton]} onPress={gallery.pickImage}>
+              <Text style={styles.formButtonText}>Velg fra galleri</Text>
             </Pressable>
           </View>
         )}
