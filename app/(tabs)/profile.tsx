@@ -5,25 +5,12 @@ import { ScrollView, Text, View } from "react-native";
 
 import image from "../../assets/beluga.png";
 import PostCard from "../../components/profile/PostCard";
+
+import { getUserDataFromDatabase } from "../../handlers/userHandler";
 import { styles } from "../styles";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../components/Button";
-
-interface ProfileProps {
-  imageUrl?: string;
-  username?: string;
-  verified?: boolean;
-  phoneNumber?: string;
-  email?: string;
-  posts?: Post[];
-}
-
-interface Post {
-  title: string;
-  imageUrl?: string;
-  id: string;
-}
 
 const postsDummy = [
   { title: "Post 1", id: "1" },
@@ -39,21 +26,34 @@ const postsDummy = [
 ];
 
 const dummyProfileData = {
-  imageUrl: image,
+  imageUrl: image, 
   username: "Katt",
   verified: true,
   phoneNumber: "12345678",
   email: "katt@example.com",
 };
 
-const Profile = ({
-  imageUrl = dummyProfileData.imageUrl,
-  username = dummyProfileData.username,
-  verified = dummyProfileData.verified,
-  phoneNumber = dummyProfileData.phoneNumber,
-  email = dummyProfileData.email,
-  posts = postsDummy,
-}: ProfileProps) => {
+const Profile = () => {
+ 
+  const [userData, setUserData] = useState<any>(undefined);
+
+  
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const data = await getUserDataFromDatabase();
+      setUserData(data);
+    };
+
+    fetchUserData();
+  }, []);
+
+  const username = userData?.username || dummyProfileData.username;
+  const verified = userData?.verified ?? dummyProfileData.verified; 
+  const phoneNumber = userData?.phoneNumber || dummyProfileData.phoneNumber;
+  const email = userData?.email || dummyProfileData.email;
+  
+  const imageUrl = userData?.imageUrl || dummyProfileData.imageUrl;
+
   return (
     <ScrollView>
       <View style={styles.profileContainer}>
@@ -72,7 +72,10 @@ const Profile = ({
             setting="Telefonnummer"
             settingInfo={phoneNumber}
           />
-          <ProfileSettingCard setting="E-post" settingInfo={email} />
+          <ProfileSettingCard 
+            setting="E-post" 
+            settingInfo={email} 
+          />
           <Button
             text="Endre instillinger"
             path="./settings"
@@ -81,13 +84,13 @@ const Profile = ({
           />
         </View>
         <View style={styles.profileContainerMiddle}>
-          <Text>Mine innlegg</Text>
+          <Text style={styles.pearlTitle}>Mine innlegg</Text> 
           <View style={styles.profilePostsView}>
-            {posts.map((post) => (
+            {postsDummy.map((post) => (
               <PostCard
                 key={post.id}
                 title={post.title}
-                imageUrl={post.imageUrl}
+                imageUrl={post.imageUrl} 
                 id={post.id}
               />
             ))}
