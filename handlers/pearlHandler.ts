@@ -13,21 +13,25 @@ export const addPearlToDatabase = async (imageUri: string, pearlData: any) => {
     const pearlInfo = {...pearlData}
 
     if (!pearlInfo.title) {
-        throw new Error("Pearl must have a title");
+        throw new Error("Perlen må ha en tittel");
     }
 
     if (!pearlInfo.description) {
-        throw new Error("Pearl must have a description");
+        throw new Error("Perlen må ha en beskrivelse");
     }
 
     if (!pearlInfo.longitude || !pearlInfo.latitude) {
-        throw new Error("Pearl must have coordinates");
+        throw new Error("Perlen må ha koordinater");
+    }
+
+    if (!pearlInfo.createdBy) {
+        throw new Error("Perlen må bli opprettet av en gyldig bruker");
     }
 
     const pearlID = generatePearlID(pearlInfo.title);
 
     if (!pearlID) {
-        throw new Error("ID was not genereated");
+        throw new Error("ID ble ikke generert");
     }
 
     const imageUrl = await uploadImagePearl(pearlID, imageUri);
@@ -59,14 +63,14 @@ export const updatePearlInDatabase = async (pearlID: string, updatedData: any) =
     const pearlData = await getPearlFromDatabase(pearlID);
 
     if (!pearlData) {
-        throw new Error("Pearl does not exist");
+        throw new Error("Perlen eksisterer ikke");
     }
 
     try {
         const pearl = doc(db, "pearls", pearlID);
         await setDoc(pearl, updatedData, { merge: true });
     } catch (error) {
-        console.error("Error updating pearl: ", error);
+        console.error("Feil ved oppdatering av perle: ", error);
         throw error;
     }
     

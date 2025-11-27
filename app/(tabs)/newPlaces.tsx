@@ -1,5 +1,5 @@
-import { auth } from "@/FirebaseConfig";
 import { addPearlToDatabase } from "@/handlers/pearlHandler";
+import { getUserDataFromDatabase } from "@/handlers/userHandler";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
@@ -22,6 +22,8 @@ export default function NewPlacesScreen() {
     lat: number;
     long: number;
   } | null>(null);
+
+  const [userData, setUserData] = useState<any>(undefined);
 
   const [isLoading, setIsLoading] = useState(false);
   const camera = usePerleCamera();
@@ -60,11 +62,16 @@ export default function NewPlacesScreen() {
       return;
     }
 
-    const createdBy = auth.currentUser?.uid;
-
-    setIsLoading(true);
+    const fetchUserData = async () => {
+      const data = await getUserDataFromDatabase();
+      setUserData(data);
+    };
 
     try {
+      await fetchUserData();
+      const createdBy = userData?.username;
+
+      setIsLoading(true);
       const pearlData = {
         title: title,
         description: description,
