@@ -8,9 +8,11 @@ export default function PearlDetailScreen() {
   const router = useRouter();
   const [pearl, setPearl] = useState<any>(null);
   const pearlID = useLocalSearchParams<{ pearlID: string }>().pearlID;
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const getPearl = async () => {
+      setLoading(true);
       const pearlData = await getPearlFromDatabase(pearlID);
 
       if (!pearlData) {
@@ -18,6 +20,8 @@ export default function PearlDetailScreen() {
       }
 
       setPearl(pearlData);
+
+      setLoading(false);
     };
     getPearl();
   }, [pearlID]);
@@ -56,7 +60,7 @@ export default function PearlDetailScreen() {
         )}
 
         <TouchableOpacity
-          onPress={() => router.replace("/(tabs)/feed")}
+          onPress={() => router.back()}
           style={{
             position: "absolute",
             top: 40,
