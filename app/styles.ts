@@ -114,14 +114,9 @@ export const styles = StyleSheet.create({
 
   // Settings
   settingsContainer: {
-    gap: 10,
-    display: "flex",
-    flexDirection: "row",
-    gridTemplateRows: "1fr 1fr",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
+    width: "100%",
+    gap: 5, 
+},
 
   profileImageSettings: {
     width: 120,
@@ -132,9 +127,8 @@ export const styles = StyleSheet.create({
     alignSelf: "center",
   },
 
-
+  
   settingsPictureButton: {
-    display: "flex",
     alignItems: "center",
     backgroundColor: "#E1F8D7",
     borderRadius: 8,
@@ -143,22 +137,20 @@ export const styles = StyleSheet.create({
   },
 
   settingFormText: {
-    display: "flex",
-    fontSize: 15,
-    flexDirection: "row",
-    paddingLeft: 7,
-    gap: 8,
+    width: "100%", 
+    fontSize: 15, 
+    flexDirection: "row", 
+    alignItems: "center",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e0e0e0e8",
   },
 
   settingsSmallButton: {
-    backgroundColor: "#E1F8D7",
-    width: 70,
-    height: 40,
+    width: 50,
+    height: 50,
     borderRadius: 20, 
     justifyContent: "center", 
     alignItems: "center",
-    marginInline: 40,
-
   },
 
 
@@ -170,7 +162,16 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-
+  inlineInput: {
+    fontSize: 16,
+    color: "#000",
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    backgroundColor: "#f0f0f0", 
+    borderRadius: 5,
+    minWidth: 150, 
+  },
+  
 
    // Auth
    authContainer: {
