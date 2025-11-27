@@ -347,5 +347,12 @@ export const styles = StyleSheet.create({
     color: 'green', 
     fontSize: 12, 
     marginTop: 4
-  }
+  },
+
+  // Home
+  homeContainer: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#FFFFFF',
+  },
 });

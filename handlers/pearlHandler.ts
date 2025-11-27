@@ -58,7 +58,7 @@ export const getPearlFromDatabase = async (pearlID: string) => {
 export const getAllPearlsFromDatabase = async (): Promise<any[]> => {
     const pearlDocs = await getDocs(collection(db, "pearls"))
 
-    const list = pearlDocs.docs.map((doc) => doc.data());
+    const list = pearlDocs.docs.map((docc) => ({ id: docc.id, ...docc.data() }));
 
     return list;
 

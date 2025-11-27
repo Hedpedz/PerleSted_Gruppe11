@@ -1,3 +1,4 @@
+import { auth } from "@/FirebaseConfig";
 import { addPearlToDatabase } from "@/handlers/pearlHandler";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
@@ -51,6 +52,8 @@ export default function NewPlacesScreen() {
       return;
     }
 
+    const createdBy = auth.currentUser?.uid;
+
     setIsLoading(true);
 
     try {
@@ -59,6 +62,7 @@ export default function NewPlacesScreen() {
         description: description,
         latitude: location.lat,
         longitude: location.long,
+        createdBy: createdBy,
       };
 
       await addPearlToDatabase(camera.image, pearlData);
@@ -125,7 +129,7 @@ export default function NewPlacesScreen() {
           </View>
         ) : null}
 
-        <Link href="/mapPicker" asChild>
+        <Link href="../mapPicker" asChild>
           <Pressable style={styles.formButton}>
             <Text style={styles.formButtonText}>
               {location ? "Endre plassering" : "Velg plassering på kart"}
