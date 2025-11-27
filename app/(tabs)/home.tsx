@@ -3,7 +3,7 @@ import PearlList from "@/components/pearl/PearlList";
 import { getAllPearlsFromDatabase } from "@/handlers/pearlHandler";
 import { Pearl } from "@/types/pearl";
 import React, { useState } from "react";
-import { View } from "react-native";
+import { ScrollView } from "react-native";
 import { styles } from "../styles";
 
 const Home = () => {
@@ -28,7 +28,11 @@ const Home = () => {
   };
 
   return (
-    <View style={styles.homeContainer}>
+    <ScrollView
+      style={styles.homeContainer}
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
+    >
       <Button
         text="Min profil"
         path="/profile"
@@ -42,7 +46,7 @@ const Home = () => {
         buttonTextStyle={styles.profileText}
       />
       <PearlList pearls={filteredPearls} filterPearls={filterPearls} />
-    </View>
+    </ScrollView>
   );
 };
 

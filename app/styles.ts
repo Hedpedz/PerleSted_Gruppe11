@@ -53,6 +53,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     gap: 12,
     width: "100%",
+    paddingBottom: 20,
   },
   profileContainer: {
     flex: 1,
@@ -60,11 +61,12 @@ export const styles = StyleSheet.create({
     paddingTop: 20,
     gap: 45,
     width: "90%",
-    alignItems: "center",
+    //alignItems: "center",
     alignSelf: "center",
   },
   profileHeaderContainer: {
     alignItems: "center",
+    paddingBottom: 20,
   },
   profileSettingCardContainer: {
     flexDirection: "row",

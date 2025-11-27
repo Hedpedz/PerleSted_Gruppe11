@@ -1,4 +1,5 @@
 import { Image } from "expo-image";
+import { router } from "expo-router";
 import React, { memo, useMemo } from "react";
 import {
   ImageSourcePropType,
@@ -21,12 +22,18 @@ const PearlCardComponent: React.FC<PearlCardProps> = ({
   title,
   imageUrl,
   imageLocal,
-  onPress,
 }) => {
   const source = useMemo(
     () => (imageLocal ? imageLocal : imageUrl ? { uri: imageUrl } : null),
     [imageLocal, imageUrl]
   );
+
+  const onPress = () => {
+    router.push({
+      pathname: "/(tabs)/pearl",
+      params: { pearlID: id },
+    });
+  };
 
   const displayTitle = (title || "").trim() || "FredikstenFesning";
 

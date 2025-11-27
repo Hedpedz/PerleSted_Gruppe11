@@ -55,6 +55,39 @@ export const getPearlFromDatabase = async (pearlID: string) => {
 
 }
 
+export const updatePearlInDatabase = async (pearlID: string, updatedData: any) => {
+    const pearlData = await getPearlFromDatabase(pearlID);
+
+    if (!pearlData) {
+        throw new Error("Pearl does not exist");
+    }
+
+    try {
+        const pearl = doc(db, "pearls", pearlID);
+        await setDoc(pearl, updatedData, { merge: true });
+    } catch (error) {
+        console.error("Error updating pearl: ", error);
+        throw error;
+    }
+    
+
+    return true;
+}
+
+export const updatePearlRating = async (pearlID: string, newRating: number) => {
+    const pearlData = await getPearlFromDatabase(pearlID) || {};
+
+    if (!pearlData.ratings) {
+        pearlData.ratings = [];
+    }
+    pearlData.ratings.push(newRating);
+
+    await updatePearlInDatabase(pearlID, { ratings: pearlData.ratings });
+    
+    return true;
+}
+
+
 export const getAllPearlsFromDatabase = async (): Promise<any[]> => {
     const pearlDocs = await getDocs(collection(db, "pearls"))
 
@@ -62,6 +95,14 @@ export const getAllPearlsFromDatabase = async (): Promise<any[]> => {
 
     return list;
 
+}
+
+export const getAllPearlsForUser = async (userID: string): Promise<any[]> => {
+    const list = await getAllPearlsFromDatabase();
+
+    const userPearls = list.filter((pearl) => pearl.createdBy === userID);
+
+    return userPearls;
 }
 
 export const deletePearlFromDatabase = async (pearlID: string) => {
