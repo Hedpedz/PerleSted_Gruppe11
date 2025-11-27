@@ -60,7 +60,7 @@ export const styles = StyleSheet.create({
     paddingTop: 20,
     gap: 45,
     width: "90%",
-    alignItems: "center",
+    //alignItems: "center",
     alignSelf: "center",
   },
   profileHeaderContainer: {

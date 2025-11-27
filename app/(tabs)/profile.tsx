@@ -4,12 +4,14 @@ import { Image } from "expo-image";
 import { ScrollView, Text, View } from "react-native";
 
 import image from "../../assets/beluga.png";
-import PostCard from "../../components/profile/PostCard";
 
 import { getUserDataFromDatabase } from "../../handlers/userHandler";
 import { styles } from "../styles";
 
-import React, { useEffect, useState } from "react";
+import PearlList from "@/components/pearl/PearlList";
+import { getAllPearlsFromDatabase } from "@/handlers/pearlHandler";
+import { Pearl } from "@/types/pearl";
+import React, { useState } from "react";
 import Button from "../../components/Button";
 
 const postsDummy = [
@@ -26,76 +28,81 @@ const postsDummy = [
 ];
 
 const dummyProfileData = {
-  imageUrl: image, 
+  imageUrl: image,
   username: "Katt",
-  verified: true,
+  verified: false,
   phoneNumber: "12345678",
   email: "katt@example.com",
 };
 
 const Profile = () => {
- 
   const [userData, setUserData] = useState<any>(undefined);
+  const [pearls, setPearls] = useState<Pearl[]>([]);
+  const [filteredPearls, setFilteredPearls] = useState<Pearl[]>([]);
 
-  
-  useEffect(() => {
+  React.useEffect(() => {
     const fetchUserData = async () => {
       const data = await getUserDataFromDatabase();
       setUserData(data);
     };
 
+    const getPearls = async () => {
+      const allPearls = await getAllPearlsFromDatabase();
+
+      setPearls(allPearls as Pearl[]);
+      setFilteredPearls(allPearls as Pearl[]);
+    };
+    getPearls();
     fetchUserData();
   }, []);
 
+  const filterPearls = (query: string) => {
+    const filtered = pearls.filter((pearl) =>
+      pearl.title.toLowerCase().includes(query.toLowerCase())
+    );
+    setFilteredPearls(filtered);
+  };
+
   const username = userData?.username || dummyProfileData.username;
-  const verified = userData?.verified ?? dummyProfileData.verified; 
+  const verified = userData?.verified ?? dummyProfileData.verified;
   const phoneNumber = userData?.phoneNumber || dummyProfileData.phoneNumber;
   const email = userData?.email || dummyProfileData.email;
-  
+
   const imageUrl = userData?.imageUrl || dummyProfileData.imageUrl;
 
   return (
-    <ScrollView>
-      <View style={styles.profileContainer}>
-        <View style={styles.profileHeaderContainer}>
-          <Image
-            source={typeof imageUrl === "string" ? { uri: imageUrl } : imageUrl}
-            style={styles.profileImage}
-          />
-          <Text style={styles.profileHeaderText}>{username}</Text>
-          <Text style={styles.profileHeaderText}>
-            {verified ? "Verifisert medlem" : "Uverifisert medlem"}
-          </Text>
-        </View>
-        <View style={styles.profileContainerMiddle}>
-          <ProfileSettingCard
-            setting="Telefonnummer"
-            settingInfo={phoneNumber}
-          />
-          <ProfileSettingCard 
-            setting="E-post" 
-            settingInfo={email} 
-          />
-          <Button
-            text="Endre instillinger"
-            path="./settings"
-            buttonStyle={styles.profileButton}
-            buttonTextStyle={styles.profileText}
-          />
-        </View>
-        <View style={styles.profileContainerMiddle}>
-          <Text style={styles.pearlTitle}>Mine innlegg</Text> 
-          <View style={styles.profilePostsView}>
-            {postsDummy.map((post) => (
-              <PostCard
-                key={post.id}
-                title={post.title}
-                imageUrl={post.imageUrl} 
-                id={post.id}
-              />
-            ))}
-          </View>
-        </View>
+    <ScrollView
+      style={styles.profileContainer}
+      showsHorizontalScrollIndicator={false}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={styles.profileHeaderContainer}>
+        <Image
+          source={typeof imageUrl === "string" ? { uri: imageUrl } : imageUrl}
+          style={styles.profileImage}
+        />
+        <Text style={styles.profileHeaderText}>{username}</Text>
+        <Text style={styles.profileHeaderText}>
+          {verified ? "Verifisert medlem" : "Uverifisert medlem"}
+        </Text>
+      </View>
+      <View style={styles.profileContainerMiddle}>
+        <ProfileSettingCard setting="Telefonnummer" settingInfo={phoneNumber} />
+        <ProfileSettingCard setting="E-post" settingInfo={email} />
+        <Button
+          text="Endre instillinger"
+          path="./settings"
+          buttonStyle={styles.profileButton}
+          buttonTextStyle={styles.profileText}
+        />
+      </View>
+      <View style={(styles.profileContainerMiddle, { flex: 1, width: "100%" })}>
+        <Text style={styles.pearlTitle}>Mine innlegg</Text>
+        <PearlList
+          pearls={filteredPearls}
+          filterPearls={filterPearls}
+          useInsets={false}
+        />
       </View>
     </ScrollView>
   );
