@@ -44,7 +44,6 @@ export default function PearlList({
       <FlatList
         data={pearls}
         style={styles.pearlListFlatList}
-        contentContainerStyle={{ gap: 25 }}
         numColumns={2}
         columnWrapperStyle={{ justifyContent: "space-between" }}
         renderItem={({ item }) => (
@@ -88,7 +87,7 @@ const styles = StyleSheet.create({
   },
 
   pearlListItem: {
-    height: 100,
     width: "47%",
+    marginBottom: 10,
   },
 });
