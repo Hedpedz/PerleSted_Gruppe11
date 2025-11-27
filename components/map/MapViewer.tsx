@@ -1,9 +1,10 @@
-import React, { useRef, useEffect, useState } from "react";
-import { View, Alert } from "react-native";
-import MapView, { Marker, PROVIDER_GOOGLE, MapPressEvent } from "react-native-maps";
 import * as Location from 'expo-location';
+import { useRouter } from "expo-router";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, Text, View } from "react-native";
+import MapView, { Callout, MapPressEvent, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { styles } from "../../app/styles";
-import { Pearl } from "../../types/pearl"; 
+import { Pearl } from "../../types/pearl";
 
 const FALLBACK_REGION = {
   latitude: 59.129082732254126,
@@ -21,21 +22,22 @@ interface MapViewerProps {
 const MapViewer = ({ onMapPress, selectedLocation, pearls = [] }: MapViewerProps) => {
   const mapRef = useRef<MapView>(null);
   const [hasPermission, setHasPermission] = useState(false);
+  const router = useRouter(); 
 
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      
+
       if (status !== 'granted') {
         Alert.alert("Tillatelse nektet", "Vi trenger din posisjon for å vise kartet riktig.");
         return;
       }
-      
+
       setHasPermission(true);
 
-      if (!selectedLocation) {
+      if (!selectedLocation && pearls.length === 0) {
         let location = await Location.getCurrentPositionAsync({});
-        
+
         mapRef.current?.animateToRegion({
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
@@ -55,6 +57,13 @@ const MapViewer = ({ onMapPress, selectedLocation, pearls = [] }: MapViewerProps
       });
     }
   }, [selectedLocation]);
+
+  const handleCalloutPress = (id: string) => {
+    router.push({
+      pathname: "/(tabs)/pearl", 
+      params: { pearlID: id },
+    });
+  };
 
   return (
     <View style={styles.mapContainer}>
@@ -81,8 +90,14 @@ const MapViewer = ({ onMapPress, selectedLocation, pearls = [] }: MapViewerProps
               latitude: pearl.latitude,
               longitude: pearl.longitude,
             }}
-            title={pearl.title}
-          />
+          >
+            <Callout onPress={() => handleCalloutPress(pearl.id)}>
+              <View style={styles.calloutView}>
+                <Text style={styles.calloutTitle}>{pearl.title}</Text>
+                <Text style={styles.calloutSub}>Trykk for info ›</Text>
+              </View>
+            </Callout>
+          </Marker>
         ))}
       </MapView>
     </View>
