@@ -73,9 +73,15 @@ export default function NewPlacesScreen() {
         createdBy: createdBy,
       };
 
+      if (title.length > 40) {
+        throw new Error("Tittelen er for lang (maks 40 tegn)");
+      }
+
       await addPearlToDatabase(camera.image, pearlData);
 
       console.log("Ny perle opprettet:", pearlData);
+
+      alert("Perle opprettet!");
 
       setDescription("");
       setTitle("");
