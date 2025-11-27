@@ -1,38 +1,51 @@
-import { router } from "expo-router";
 import React from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
 import { styles } from "../../app/styles";
-import Button from "../Button";
+import { Feather } from "@expo/vector-icons";
 
 interface SettingCardProps {
   setting: string;
-  settingInfo?: string;
-  btnText: string;
-  path?: Parameters<typeof router.push>[0];
-  style?: object;
-
-
+  value: string;         
+  isEditing: boolean;   
+  onChangeText: (text: string) => void; 
+  onEditPress: () => void;
+  onSavePress: () => void; 
 }
 
 export const SettingCard = ({
   setting,
-  settingInfo,
-  btnText,
-  // route = "changesetting",
-  path = "/settings",
+  value,
+  isEditing,
+  onChangeText,
+  onEditPress,
+  onSavePress
 }: SettingCardProps) => {
+  
   return (
-    <View style={styles.settingsContainer}>
-      <View style={styles.settingFormText}>
-        <Text style={styles.settingFormText}>{setting + ": "}</Text>
-        <Text style={styles.settingFormText}>{settingInfo ? settingInfo : "ERROR"}</Text>
+    <View style={styles.settingFormText}>
+      <View style={{flexDirection: 'row', flex: 1, marginRight: 10}}>
+        <Text style={{fontSize: 16, fontWeight: 'bold'}}>{setting}: </Text>
+        
+        {isEditing ? (
+          <TextInput 
+            style={styles.inlineInput}
+            value={value}
+            onChangeText={onChangeText}
+            autoFocus={true}
+          />
+        ) : (
+          <Text style={{fontSize: 16}} numberOfLines={1} ellipsizeMode="tail">
+            {value ? value : "Mangler info"}
+          </Text>
+        )}
       </View>
-      <Button
-        text={btnText}
-        path={path}
-        buttonStyle={styles.settingsSmallButton}
-        buttonTextStyle={styles.formButtonText}
-      />
+
+      <Pressable 
+        style={styles.settingsSmallButton} 
+        onPress={isEditing ? onSavePress : onEditPress}
+      >
+        <Feather name={isEditing ? "check" : "edit-3"} size={22} color="#000" />
+      </Pressable>
     </View>
   );
 };

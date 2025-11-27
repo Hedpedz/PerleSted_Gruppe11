@@ -90,7 +90,7 @@ const Profile = () => {
               <PostCard
                 key={post.id}
                 title={post.title}
-                imageUrl={post.imageUrl} 
+                // imageUrl={post.imageUrl} 
                 id={post.id}
               />
             ))}

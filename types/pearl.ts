@@ -12,5 +12,6 @@ export type Pearl = {
   createdBy: string;
   tags?: string[];
   isFavorite?: boolean;
-  location?: { lat: number; lng: number; name?: string };
+  latitude: number; 
+  longitude: number;
 };
