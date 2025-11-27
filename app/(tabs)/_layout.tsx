@@ -1,8 +1,11 @@
 import { Feather } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 import React from "react";
+import { Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../components/Header";
+
+// https://reactnative.dev/docs/platform-specific-code
 
 const _Layout = () => {
   return (
@@ -11,8 +14,17 @@ const _Layout = () => {
       <Tabs
         screenOptions={{
           headerShown: false,
-          tabBarStyle: { height: 50, paddingTop: 5, paddingBottom: 2 },
-          tabBarItemStyle: { paddingVertical: 7 },
+          //tabBarStyle: { height: 50, paddingTop: 5, paddingBottom: 2 },
+          tabBarStyle:
+            Platform.OS === "ios"
+              ? { height: 50, paddingTop: 5, paddingBottom: 2 }
+              : { height: 60, paddingTop: 5, paddingBottom: 5 },
+          // tabBarItemStyle: { paddingVertical: 7 },
+
+          tabBarItemStyle:
+            Platform.OS === "ios"
+              ? { paddingVertical: 7 }
+              : { paddingVertical: 0 },
           tabBarLabelStyle: { fontSize: 12 },
         }}
       >
