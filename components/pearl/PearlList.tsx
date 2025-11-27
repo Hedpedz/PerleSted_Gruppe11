@@ -1,6 +1,6 @@
 import { Pearl } from "@/types/pearl";
 import React, { useState } from "react";
-import { Pressable, StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { PearlCard } from "./PearlCard";
 
@@ -46,17 +46,13 @@ export default function PearlList({
       <View style={styles.pearlListFlatList}>
         <View style={styles.pearlListNestedView}>
           {pearls.map((item) => (
-            <Pressable
-              key={item.id}
-              style={styles.pearlListItem}
-              onPress={() => handlePress(item)}
-            >
+            <View key={item.id} style={styles.pearlListItem}>
               <PearlCard
                 id={item.id}
                 title={item.title}
                 imageUrl={item.imageUrl}
               />
-            </Pressable>
+            </View>
           ))}
         </View>
       </View>

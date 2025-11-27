@@ -1,20 +1,26 @@
+import { getPearlFromDatabase } from "@/handlers/pearlHandler";
 import { Ionicons } from "@expo/vector-icons";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { DummyPearls } from "../../data/pearlsDummy";
-
-import {getPearlFromDatabase} from '../../handlers/pearlHandler';
 
 export default function PearlDetailScreen() {
   const router = useRouter();
-  const { id } = useLocalSearchParams<{ id: string }>();
-  const [pearl, setPearl] = useState<(typeof DummyPearls)[number] | null>(null);
+  const [pearl, setPearl] = useState<any>(null);
+  const pearlID = useLocalSearchParams<{ pearlID: string }>().pearlID;
 
   useEffect(() => {
-    const found = DummyPearls.find((p) => p.id === id);
-    setPearl(found ?? null);
-  }, [id]);
+    const getPearl = async () => {
+      const pearlData = await getPearlFromDatabase(pearlID);
+
+      if (!pearlData) {
+        throw new Error("Pearl not found");
+      }
+
+      setPearl(pearlData);
+    };
+    getPearl();
+  }, [pearlID]);
 
   if (!pearl) {
     return (
@@ -24,16 +30,17 @@ export default function PearlDetailScreen() {
     );
   }
 
-  const imgSrc =
-    pearl.imageLocal ?? (pearl.imageUrl ? { uri: pearl.imageUrl } : null);
-
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "#f9fff7" }}>
       <Stack.Screen options={{ headerShown: false }} />
 
       <View style={{ position: "relative" }}>
-        {imgSrc ? (
-          <Image source={imgSrc} style={{ width: "100%", height: 280 }} resizeMode="cover" />
+        {pearl.imageUrl ? (
+          <Image
+            source={{ uri: pearl.imageUrl }}
+            style={{ width: "100%", height: 280 }}
+            resizeMode="cover"
+          />
         ) : (
           <View
             style={{
@@ -48,7 +55,6 @@ export default function PearlDetailScreen() {
           </View>
         )}
 
-        {/* Back button */}
         <TouchableOpacity
           onPress={() => router.replace("/(tabs)/feed")}
           style={{
@@ -92,14 +98,23 @@ export default function PearlDetailScreen() {
           </Text>
         )}
 
-        <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 8 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 8,
+          }}
+        >
           <Ionicons name="star" size={18} color="#000" />
-          <Text style={{ marginLeft: 4, fontSize: 16 }}>{pearl.rating ?? null }</Text>
+          <Text style={{ marginLeft: 4, fontSize: 16 }}>
+            {pearl.rating ?? null}
+          </Text>
         </View>
 
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Ionicons name="person-circle-outline" size={20} color="#000" />
-          <Text style={{ marginLeft: 6 }}>Opprettet av {pearl.createdBy ?? "Ukjent"}
+          <Text style={{ marginLeft: 6 }}>
+            Opprettet av {pearl.createdBy ?? "Ukjent"}
           </Text>
         </View>
       </View>
