@@ -66,3 +66,41 @@ export const getFavoritePearls = async (): Promise<string[]> => {
     const userData = await getUserDataFromDatabase();
     return userData?.favoritePearls || [];
 }
+
+export const addRatingUser = async (pearlID: string, rating: number) => {
+    const userID = auth.currentUser?.uid;
+    if (!userID) return false;
+
+    const userData = await getUserDataFromDatabase();
+    if (!userData) return false;
+
+    if (!userData.ratedPearls) {
+        userData.ratedPearls = {};
+    }
+
+    try {
+        userData.ratedPearls[pearlID] = rating;
+
+        await updateDoc(doc(db, "users", userID), {
+            ratedPearls: userData.ratedPearls
+        });
+    } catch (error) {
+        alert("Noe gikk galt ved rating av perlen: " + error);
+        return false;
+    }
+
+    return true;
+
+
+}
+
+export const getRatingUser = async (pearlID: string): Promise<number> => {
+    const userID = auth.currentUser?.uid;
+    if (!userID) return 0;
+
+    const userData = await getUserDataFromDatabase();
+
+    const ratingsUser = userData?.ratedPearls || {};
+
+    return ratingsUser[pearlID] || 0;
+}

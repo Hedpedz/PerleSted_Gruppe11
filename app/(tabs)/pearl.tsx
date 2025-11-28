@@ -2,7 +2,9 @@ import RateButton from "@/components/pearl/RateButton";
 import { getPearlFromDatabase } from "@/handlers/pearlHandler";
 import {
   addFavoritePearl,
+  addRatingUser,
   getFavoritePearls,
+  getRatingUser,
   removeFavoritePearl,
 } from "@/handlers/userHandler";
 import { Ionicons } from "@expo/vector-icons";
@@ -17,6 +19,7 @@ export default function PearlDetailScreen() {
   const { pearlID } = useLocalSearchParams<{ pearlID?: string }>();
   const [loading, setLoading] = useState<boolean>(true);
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
+  const [rating, setRating] = useState<number>(0);
 
   useEffect(() => {
     if (!pearlID) {
@@ -43,8 +46,34 @@ export default function PearlDetailScreen() {
       }
     };
 
+    const fetchUserRating = async () => {
+      if (pearlID) {
+        const userRating = await getRatingUser(pearlID);
+        setRating(userRating);
+      }
+    };
+
+    const ratePearl = async () => {
+      if (pearlID) {
+        try {
+          const userRating = await getRatingUser(pearlID);
+          await addRatingUser(pearlID, userRating);
+          setRating(userRating);
+
+          const currentPearl = await getPearlFromDatabase(pearlID);
+
+          if (currentPearl) {
+            setPearl(currentPearl);
+          }
+        } catch (error) {
+          alert("Noe gikk galt ved rating av perlen: " + error);
+        }
+      }
+    };
+
     getPearl();
     checkIfFavorite();
+    fetchUserRating();
   }, [pearlID]);
 
   const toggleFavorite = async () => {
@@ -217,11 +246,31 @@ export default function PearlDetailScreen() {
               alignItems: "center",
             }}
           >
-            <RateButton value={1} pearlID={pearlID as string} />
-            <RateButton value={2} pearlID={pearlID as string} />
-            <RateButton value={3} pearlID={pearlID as string} />
-            <RateButton value={4} pearlID={pearlID as string} />
-            <RateButton value={5} pearlID={pearlID as string} />
+            <RateButton
+              value={1}
+              pearlID={pearlID as string}
+              isRated={rating >= 1 ? true : false}
+            />
+            <RateButton
+              value={2}
+              pearlID={pearlID as string}
+              isRated={rating >= 2 ? true : false}
+            />
+            <RateButton
+              value={3}
+              pearlID={pearlID as string}
+              isRated={rating >= 3 ? true : false}
+            />
+            <RateButton
+              value={4}
+              pearlID={pearlID as string}
+              isRated={rating >= 4 ? true : false}
+            />
+            <RateButton
+              value={5}
+              pearlID={pearlID as string}
+              isRated={rating >= 5 ? true : false}
+            />
           </View>
         </View>
 

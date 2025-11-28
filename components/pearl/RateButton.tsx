@@ -3,7 +3,15 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import React from "react";
 import { Pressable, StyleSheet } from "react-native";
 
-const RateButton = ({ value, pearlID }: { value: number; pearlID: string }) => {
+const RateButton = ({
+  value,
+  pearlID,
+  isRated,
+}: {
+  value: number;
+  pearlID: string;
+  isRated: boolean;
+}) => {
   async function onRate(value: number): Promise<void> {
     try {
       await updatePearlRating(pearlID as string, value);
@@ -16,7 +24,11 @@ const RateButton = ({ value, pearlID }: { value: number; pearlID: string }) => {
 
   return (
     <Pressable onPress={() => onRate(value)}>
-      <FontAwesome name="star-o" size={24} color="black" />
+      <FontAwesome
+        name={isRated ? "star" : "star-o"}
+        size={35}
+        color={isRated ? "gold" : "black"}
+      />
     </Pressable>
   );
 };
