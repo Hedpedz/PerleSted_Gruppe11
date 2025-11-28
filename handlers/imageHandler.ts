@@ -1,7 +1,8 @@
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { storage } from '../FirebaseConfig';
 
-// https://www.youtube.com/watch?v=a0KJ7l5sNGw
+// Mye av koden er inspirert fra: https://www.youtube.com/watch?v=a0KJ7l5sNGw
+// Men den er kraftig modifisert slik at den fungerer bra i applikasjonen vår.
 export const uploadImageProfile = async (id: string, imageUri: string): Promise<string> => {
     const response = await fetch(imageUri);
     const blob = await response.blob();

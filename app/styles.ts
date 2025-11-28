@@ -119,6 +119,10 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
   },
+  profileSettingCardContainer: {
+    width: "100%",
+    marginBottom: 5,
+  },
 
   // Pearl Card (Brukes i lister, Home og Feed) 
   PearlCard: {

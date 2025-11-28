@@ -1,6 +1,8 @@
 import { CameraType, CameraView, useCameraPermissions } from 'expo-camera';
 import { useRef, useState } from 'react';
 
+// Kilde for oppsett av kamera: https://docs.expo.dev/versions/latest/sdk/camera/
+
 export function usePerleCamera() {
   const [image, setImage] = useState<string | null>(null);
   const [isCameraVisible, setIsCameraVisible] = useState(false);

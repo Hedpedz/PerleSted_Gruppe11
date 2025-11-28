@@ -1,10 +1,17 @@
-import * as Location from 'expo-location';
+import * as Location from "expo-location";
 import { useRouter } from "expo-router";
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, Text, View } from "react-native";
-import MapView, { Callout, MapPressEvent, Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import { styles } from "../../app/styles";
+import { Alert, StyleSheet, Text, View } from "react-native";
+import MapView, {
+  Callout,
+  MapPressEvent,
+  Marker,
+  PROVIDER_GOOGLE,
+} from "react-native-maps";
 import { Pearl } from "../../types/pearl";
+
+// Kilde for oppsett av kart: https://docs.expo.dev/versions/latest/sdk/map-view/
+// Kilde for geolokasjon: https://docs.expo.dev/versions/latest/sdk/location/
 
 const FALLBACK_REGION = {
   latitude: 59.129082732254126,
@@ -16,20 +23,27 @@ const FALLBACK_REGION = {
 interface MapViewerProps {
   onMapPress?: (event: MapPressEvent) => void;
   selectedLocation?: { latitude: number; longitude: number } | null;
-  pearls?: Pearl[]; 
+  pearls?: Pearl[];
 }
 
-const MapViewer = ({ onMapPress, selectedLocation, pearls = [] }: MapViewerProps) => {
+const MapViewer = ({
+  onMapPress,
+  selectedLocation,
+  pearls = [],
+}: MapViewerProps) => {
   const mapRef = useRef<MapView>(null);
   const [hasPermission, setHasPermission] = useState(false);
-  const router = useRouter(); 
+  const router = useRouter();
 
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
 
-      if (status !== 'granted') {
-        Alert.alert("Tillatelse nektet", "Vi trenger din posisjon for å vise kartet riktig.");
+      if (status !== "granted") {
+        Alert.alert(
+          "Tillatelse nektet",
+          "Vi trenger din posisjon for å vise kartet riktig."
+        );
         return;
       }
 
@@ -60,7 +74,7 @@ const MapViewer = ({ onMapPress, selectedLocation, pearls = [] }: MapViewerProps
 
   const handleCalloutPress = (id: string) => {
     router.push({
-      pathname: "/(tabs)/pearl", 
+      pathname: "/(tabs)/pearl",
       params: { pearlID: id },
     });
   };
@@ -71,17 +85,14 @@ const MapViewer = ({ onMapPress, selectedLocation, pearls = [] }: MapViewerProps
         ref={mapRef}
         provider={PROVIDER_GOOGLE}
         style={styles.map}
-        initialRegion={FALLBACK_REGION} 
-        showsUserLocation={hasPermission} 
-        showsMyLocationButton={hasPermission} 
+        initialRegion={FALLBACK_REGION}
+        showsUserLocation={hasPermission}
+        showsMyLocationButton={hasPermission}
         showsCompass={true}
         onPress={onMapPress}
       >
         {selectedLocation && (
-          <Marker 
-            coordinate={selectedLocation} 
-            title="Valgt plassering"
-          />
+          <Marker coordinate={selectedLocation} title="Valgt plassering" />
         )}
         {pearls.map((pearl) => (
           <Marker
@@ -91,6 +102,7 @@ const MapViewer = ({ onMapPress, selectedLocation, pearls = [] }: MapViewerProps
               longitude: pearl.longitude,
             }}
           >
+            {/* Callout map-markering, kilde: https://blog.spirokit.com/maps-in-react-native-adding-interactive-markers */}
             <Callout onPress={() => handleCalloutPress(pearl.id)}>
               <View style={styles.calloutView}>
                 <Text style={styles.calloutTitle}>{pearl.title}</Text>
@@ -103,5 +115,30 @@ const MapViewer = ({ onMapPress, selectedLocation, pearls = [] }: MapViewerProps
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  mapContainer: {
+    flex: 1,
+  },
+  map: {
+    flex: 1,
+  },
+  calloutView: {
+    padding: 10,
+    minWidth: 150,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  calloutTitle: {
+    fontWeight: "bold",
+    fontSize: 16,
+    marginBottom: 5,
+    color: "#333",
+  },
+  calloutSub: {
+    color: "#007AFF",
+    fontSize: 12,
+  },
+});
 
 export default MapViewer;

@@ -1,7 +1,7 @@
 import { updatePearlRating } from "@/handlers/pearlHandler";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import React from "react";
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable } from "react-native";
 
 const RateButton = ({
   value,
@@ -36,5 +36,3 @@ const RateButton = ({
 };
 
 export default RateButton;
-
-const styles = StyleSheet.create({});

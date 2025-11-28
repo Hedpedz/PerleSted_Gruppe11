@@ -41,6 +41,10 @@ export default function LoginScreen() {
     throw new Error("Brukernavn finnes ikke");
   };
 
+  /*
+    Kilde: https://github.com/andepants/firebase-expo-guide/blob/main/app/index.tsx
+    Endret for å støtte innlogging med brukernavn også
+  */
   const signIn = async () => {
     if (isLoading) return;
     setIsLoading(true);
@@ -113,21 +117,21 @@ export default function LoginScreen() {
 const localStyles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 40,
-    color: '#333333',
+    color: "#333333",
   },
   link: {
     marginTop: 20,
   },
   linkText: {
-    color: '#007AFF', 
-  }
+    color: "#007AFF",
+  },
 });

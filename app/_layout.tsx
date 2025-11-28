@@ -5,6 +5,11 @@ import { ActivityIndicator, View } from "react-native";
 import { auth } from "../FirebaseConfig";
 import { styles } from "../app/styles";
 
+/* 
+  Med RootLayout kan vi få til persistent lagring.
+  Kilde: https://github.com/andepants/firebase-expo-guide/blob/main/app/(tabs)/three.tsx 
+*/
+
 export default function RootLayout() {
   const [initializing, setInitializing] = useState(true);
   const router = useRouter();

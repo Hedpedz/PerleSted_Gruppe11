@@ -1,17 +1,24 @@
 import { Link, useRouter } from "expo-router";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  collection,
+  doc,
+  getDocs,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 import React, { useRef, useState } from "react";
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Pressable,
+  StyleSheet,
   Text,
   TextInput,
-  StyleSheet
 } from "react-native";
 import { auth, db } from "../../FirebaseConfig";
 import { styles as globalStyles } from "../styles";
-import { collection, doc, getDocs, query, setDoc, where } from "firebase/firestore";
 
 const userData = collection(db, "users");
 
@@ -30,8 +37,8 @@ export default function RegisterScreen() {
     uid: string,
     username: string,
     email: string
-  ) => { 
-       await setDoc(doc(db, "users", uid), {
+  ) => {
+    await setDoc(doc(db, "users", uid), {
       username: username,
       email: email,
       createdAt: new Date(),
@@ -50,6 +57,10 @@ export default function RegisterScreen() {
     return emails.empty;
   };
 
+  /*
+    Kilde: https://github.com/andepants/firebase-expo-guide/blob/main/app/index.tsx
+    Originalt baser på signUp-funksjonen, men modifisert for å inkludere diverse sjekker.
+  */
   const handleRegister = async () => {
     if (isLoading) return;
     if (password !== confirmPassword) {
@@ -73,7 +84,7 @@ export default function RegisterScreen() {
         email,
         password
       );
-            if (userTemp.user) {
+      if (userTemp.user) {
         await addUserFirestore(userTemp.user.uid, username, email);
         router.replace("/(tabs)/home");
       }
@@ -147,21 +158,21 @@ export default function RegisterScreen() {
 const localStyles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     padding: 20,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 40,
-    color: '#333333',
+    color: "#333333",
   },
   link: {
     marginTop: 20,
   },
   linkText: {
-    color: '#007AFF',
-  }
+    color: "#007AFF",
+  },
 });
