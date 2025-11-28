@@ -74,6 +74,7 @@ export default function PearlDetailScreen() {
     getPearl();
     checkIfFavorite();
     fetchUserRating();
+    ratePearl();
   }, [pearlID]);
 
   const toggleFavorite = async () => {
@@ -250,6 +251,7 @@ export default function PearlDetailScreen() {
               value={1}
               pearlID={pearlID as string}
               isRated={rating >= 1 ? true : false}
+              onPress={() => ratePearl(1)}
             />
             <RateButton
               value={2}
