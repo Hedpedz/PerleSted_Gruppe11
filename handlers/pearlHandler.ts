@@ -1,6 +1,7 @@
 import { collection, deleteDoc, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
 import { db } from '../FirebaseConfig';
 import { downloadImage, uploadImagePearl } from './imageHandler';
+import { getUserDataFromDatabase } from './userHandler';
 
 
 export const generatePearlID = (title: string): string => {
@@ -24,10 +25,8 @@ export const addPearlToDatabase = async (imageUri: string, pearlData: any) => {
         throw new Error("Perlen må ha koordinater");
     }
 
-    if (!pearlInfo.createdBy) {
-        throw new Error("Perlen må bli opprettet av en gyldig bruker");
-    }
-
+    const userData = await getUserDataFromDatabase();
+    const username = userData?.username;
     const pearlID = generatePearlID(pearlInfo.title);
 
     if (!pearlID) {
@@ -39,6 +38,7 @@ export const addPearlToDatabase = async (imageUri: string, pearlData: any) => {
     await setDoc(doc(db, "pearls", pearlID), {
           imageUrl: imageUrl,
           ...pearlData,
+          createdBy: username,
           createdAt: new Date()
         });
 

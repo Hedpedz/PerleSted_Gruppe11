@@ -376,4 +376,21 @@ export const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: '#FFFFFF',
   },
+
+  // Feed
+  feedContainer: {
+    flex: 1,
+    backgroundColor: "#fcfffd",
+  },
+  feedContent: {
+    paddingHorizontal: 16,
+    paddingTop: 12,
+    paddingBottom: 20, 
+  },
+  feedLoading: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fcfffd",
+  },
 });

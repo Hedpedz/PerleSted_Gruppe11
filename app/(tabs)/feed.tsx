@@ -1,49 +1,56 @@
-import { router } from "expo-router";
-import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { useFocusEffect } from "expo-router";
+import React, { useCallback, useState } from "react";
+import { ActivityIndicator, FlatList, View } from "react-native";
 import { PearlCard } from "../../components/pearl/PearlCard";
-import { DummyPearls } from "../../data/pearlsDummy";
+import { getAllPearlsFromDatabase } from "../../handlers/pearlHandler";
+import { Pearl } from "../../types/pearl";
+import { styles } from "../styles";
 
 const Feed = () => {
-  return (
-    <FlatList
-      data={DummyPearls}
-      keyExtractor={(item) => item.id} //each item has i own Id
-      renderItem={({ item }) => (
-        <PearlCard
-          id={item.id}
-          title={item.title}
-          imageLocal={item.imageLocal}
-          //imageUrl={item.imageUrl}
+  const [pearls, setPearls] = useState<Pearl[]>([]);
+  const [loading, setLoading] = useState(true);
 
-          onPress={() =>
-            router.push({
-              pathname: "/(tabs)/pearl",
-              params: { id: String(item.id) },
-            })
-          }
-        />
-      )}
-      ListHeaderComponent={
-        <View style={styles.content}>
-          <View style={styles.row}></View>
-        </View>
-      }
-    />
+  useFocusEffect(
+    useCallback(() => {
+      const fetchPearls = async () => {
+        try {
+          const data = await getAllPearlsFromDatabase();
+          setPearls(data as Pearl[]);
+        } catch (error) {
+          console.error("Kunne ikke hente feed:", error);
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      fetchPearls();
+    }, [])
+  );
+
+  if (loading) {
+    return (
+      <View style={styles.feedLoading}>
+        <ActivityIndicator/>
+      </View>
+    );
+  }
+
+  return (
+    <View style={styles.feedContainer}>
+      <FlatList
+        data={pearls}
+        keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.feedContent} 
+        renderItem={({ item }) => (
+          <PearlCard
+            id={item.id}
+            title={item.title}
+            imageUrl={item.imageUrl} 
+          />
+        )}
+      />
+    </View>
   );
 };
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fcfffd",
-  },
-  content: {
-    paddingHorizontal: 16,
-    paddingTop: 12,
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center", // ถ้าจะมีหลายการ์ดค่อยใช้ FlatList + numColumns/columnWrapperStyle
-  },
-});
+
 export default Feed;
