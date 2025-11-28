@@ -1,7 +1,7 @@
 import { Image } from "expo-image";
 import { signOut } from "firebase/auth";
 import React from "react";
-import { Pressable, Text, View } from "react-native"; 
+import { Pressable, Text, View } from "react-native";
 import { SettingCard } from "../../components/settings/SettingCard";
 import { auth } from "../../FirebaseConfig";
 import { styles } from "../styles";
@@ -29,7 +29,7 @@ const Settings = () => {
     <View style={styles.profileContainer}>
       <Image
         source={typeof imageUrl === "string" ? { uri: imageUrl } : imageUrl}
-        style={styles.profileImageSettings}
+        style={styles.profileImage}
       />
       <Pressable 
         style={styles.settingsPictureButton} 

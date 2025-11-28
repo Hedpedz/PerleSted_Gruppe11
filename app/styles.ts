@@ -48,10 +48,20 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
     marginTop: 8,
+    marginBottom: 12,
   },
+
+  profileHeaderTextName: {
+    fontSize: 25,
+    fontWeight: "600",
+    textAlign: "center",
+    marginTop: 6,
+    marginBottom: 30,
+  },
+
   profileContainerMiddle: {
     alignItems: "center",
-    gap: 12,
+    gap: 30,
     width: "100%",
     paddingBottom: 20,
   },
@@ -61,7 +71,6 @@ export const styles = StyleSheet.create({
     paddingTop: 20,
     gap: 45,
     width: "90%",
-    //alignItems: "center",
     alignSelf: "center",
   },
   profileHeaderContainer: {
@@ -73,11 +82,12 @@ export const styles = StyleSheet.create({
     width: "100%",
   },
   profileImage: {
-    width: 90,
-    height: 90,
+    width: 150,
+    height: 150,
     borderWidth: 4,
-    borderRadius: 90,
+    borderRadius: 80,
     borderColor: "#E1F8D7",
+    alignSelf: "center",
   },
   profilePostsView: {
     flexDirection: "row",
@@ -85,11 +95,15 @@ export const styles = StyleSheet.create({
     gap: 12,
     justifyContent: "space-between",
   },
+
   //Pearl
   pearlTitle: {
     fontSize: 20,
-    textAlign: "center",
+    textAlign: "left",
     marginTop: 8,
+    borderBottomColor: "#e0e0e0e8",
+    borderBottomWidth: 1,
+    paddingBottom: 10,
   },
   PearlCard: {
     width: "100%",
@@ -117,16 +131,6 @@ export const styles = StyleSheet.create({
     width: "100%",
     gap: 5, 
 },
-
-  profileImageSettings: {
-    width: 120,
-    height: 120,
-    borderWidth: 4,
-    borderRadius: 60,
-    borderColor: "#E1F8D7",
-    alignSelf: "center",
-  },
-
   
   settingsPictureButton: {
     alignItems: "center",

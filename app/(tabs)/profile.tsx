@@ -1,4 +1,3 @@
-import PearlList from "@/components/pearl/PearlList";
 import { auth } from "@/FirebaseConfig";
 import { getAllPearlsForUser } from "@/handlers/pearlHandler";
 import { Pearl } from "@/types/pearl";
@@ -23,7 +22,7 @@ const dummyProfileData = {
 const Profile = () => {
   const [userData, setUserData] = useState<any>(undefined);
   const [pearls, setPearls] = useState<Pearl[]>([]);
-  const [filteredPearls, setFilteredPearls] = useState<Pearl[]>([]);
+ 
 
   useFocusEffect(
     useCallback(() => {
@@ -42,7 +41,6 @@ const Profile = () => {
         const allPearls = await getAllPearlsForUser(userID);
 
         setPearls(allPearls as Pearl[]);
-        setFilteredPearls(allPearls as Pearl[]);
       };
       getPearls();
       fetchUserData();
@@ -53,7 +51,6 @@ const Profile = () => {
     const filtered = pearls.filter((pearl) =>
       pearl.title.toLowerCase().includes(query.toLowerCase())
     );
-    setFilteredPearls(filtered);
   };
 
   const username = userData?.username || dummyProfileData.username;
@@ -74,7 +71,7 @@ const Profile = () => {
           source={typeof imageUrl === "string" ? { uri: imageUrl } : imageUrl}
           style={styles.profileImage}
         />
-        <Text style={styles.profileHeaderText}>{username}</Text>
+        <Text style={styles.profileHeaderTextName}>{username}</Text>
         <Text style={styles.profileHeaderText}>
           {verified ? "Verifisert medlem" : "Uverifisert medlem"}
         </Text>
@@ -85,17 +82,13 @@ const Profile = () => {
         <Button
           text="Endre instillinger"
           path="./settings"
-          buttonStyle={styles.profileButton}
+          buttonStyle={styles.settingsBigButton}
           buttonTextStyle={styles.profileText}
         />
       </View>
       <View style={(styles.profileContainerMiddle, { flex: 1, width: "100%" })}>
         <Text style={styles.pearlTitle}>Mine innlegg</Text>
-        <PearlList
-          pearls={filteredPearls}
-          filterPearls={filterPearls}
-          useInsets={false}
-        />
+ 
       </View>
     </ScrollView>
   );
