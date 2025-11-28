@@ -21,7 +21,7 @@ export default function PearlList({
   };
 
   const insets = useSafeAreaInsets();
-  
+
   return (
     <View
       style={{
@@ -34,17 +34,17 @@ export default function PearlList({
       }}
     >
       <TextInput
-        style={styles.pearlListInput}
+        style={styles.input}
         onChangeText={handlePearlFilter}
         value={filter}
         placeholder="Søk etter perle.."
-        placeholderTextColor="#000" 
+        placeholderTextColor="#000"
         keyboardType="default"
       />
-      <View style={styles.pearlListFlatList}>
-        <View style={styles.pearlListNestedView}>
+      <View style={styles.flatList}>
+        <View style={styles.nestedView}>
           {pearls.map((item) => (
-            <View key={item.id} style={styles.pearlListItem}>
+            <View key={item.id} style={styles.item}>
               <PearlCard
                 id={item.id}
                 title={item.title}
@@ -59,35 +59,35 @@ export default function PearlList({
 }
 
 const styles = StyleSheet.create({
-  pearlListContainer: {
+  container: {
     flex: 1,
     alignItems: "center",
     width: "100%",
     height: "100%",
   },
 
-  pearlListInput: {
+  input: {
     height: 40,
     margin: 12,
     borderWidth: 1,
     padding: 10,
     width: "90%",
     color: "#000",
-    borderColor: "grey", 
-    borderRadius: 8, 
+    borderColor: "grey",
+    borderRadius: 8,
   },
 
-  pearlListFlatList: {
+  flatList: {
     marginVertical: 20,
     width: "90%",
   },
 
-  pearlListItem: {
+  item: {
     width: "47%",
     marginBottom: 10,
   },
 
-  pearlListNestedView: {
+  nestedView: {
     justifyContent: "space-between",
     flexDirection: "row",
     flexWrap: "wrap",

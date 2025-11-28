@@ -3,26 +3,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
 
   // Header
-  headerContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 5,
-    backgroundColor: '#FFFFFF',
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
-  },
-  headerTitle: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#333333',
-  },
-  headerIconContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 16,
-  },
+  
 
   // Tabs layout 
   tabsLayoutContainer: {
@@ -257,72 +238,7 @@ export const styles = StyleSheet.create({
     color: '#000000',
   },
 
-  // Camera
-  cameraContainer: {
-    flex: 1,
-    backgroundColor: 'black',
-  },
-  cameraView: {
-    flex: 1,
-    justifyContent: 'flex-end',
-  },
-  cameraControls: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    paddingBottom: 40,
-    paddingTop: 20,
-    backgroundColor: 'rgba(0,0,0,0.4)',
-  },
-  cameraControlButton: {
-    padding: 10,
-  },
-  cameraControlText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  cameraCaptureButton: {
-    width: 70,
-    height: 70,
-    borderRadius: 35,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  cameraCaptureInner: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: 'white',
-  },
-  cameraPreviewContainer: {
-    width: '100%',
-    marginVertical: 10,
-    alignItems: 'center',
-  },
-  cameraImagePreview: {
-    width: '100%',
-    height: 200,
-    borderRadius: 10,
-    marginBottom: 10,
-    backgroundColor: '#eee',
-  },
-  cameraRetakeButton: {
-    padding: 5,
-  },
-  cameraRetakeText: {
-    color: '#007AFF',
-    fontSize: 16,
-  },
-
-  // Map
-  mapContainer: {
-    flex: 1,
-  },
-  map: {
-    flex: 1,
-  },
+  
   
   // Map Picker Overlay 
   mapOverlayContainer: {
@@ -342,24 +258,7 @@ export const styles = StyleSheet.create({
     fontWeight: '500',
   },
 
-  // Map Callout 
-  calloutView: {
-    padding: 10,
-    minWidth: 150, 
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  calloutTitle: {
-    fontWeight: 'bold',
-    fontSize: 16,
-    marginBottom: 5,
-    color: '#333',
-  },
-  calloutSub: {
-    color: '#007AFF', 
-    fontSize: 12,
-  },
-
+ 
   // Location Display in New Place 
   locationResultContainer: {
     alignItems: 'center'
