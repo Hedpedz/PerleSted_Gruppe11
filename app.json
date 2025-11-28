@@ -4,7 +4,7 @@
     "slug": "Perlested",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/beluga.png",
+    "icon": "./assets/perlested.jpg",
     "scheme": "perlested",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
