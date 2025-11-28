@@ -102,6 +102,7 @@ const MapViewer = ({
               longitude: pearl.longitude,
             }}
           >
+            {/* Callout map-markering, kilde: https://blog.spirokit.com/maps-in-react-native-adding-interactive-markers */}
             <Callout onPress={() => handleCalloutPress(pearl.id)}>
               <View style={styles.calloutView}>
                 <Text style={styles.calloutTitle}>{pearl.title}</Text>

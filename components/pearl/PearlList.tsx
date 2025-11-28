@@ -4,6 +4,10 @@ import { StyleSheet, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { PearlCard } from "./PearlCard";
 
+// Koden til denne komponenten er kopiert over fra:
+// https://github.com/mariuswallin/hiof-2025-mobile/blob/main/student-liste-filter/components/StudentList.tsx
+// og modifisert til å passe vår applikasjon
+
 export default function PearlList({
   pearls,
   filterPearls,
@@ -41,6 +45,9 @@ export default function PearlList({
         placeholderTextColor="#000"
         keyboardType="default"
       />
+      {/* Måtte gjøre om flatlisten fordi komponenten lastes inn i ScrollView. Tok og wrappet
+          to views sammen for å få tilsvarende funksjonalitet og styling som FlatList.
+      */}
       <View style={styles.flatList}>
         <View style={styles.nestedView}>
           {pearls.map((item) => (
