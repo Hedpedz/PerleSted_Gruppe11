@@ -1,5 +1,6 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import { styles } from "../../app/styles";
 
 interface ProfileSettingCardProps {
   setting: string;
@@ -11,19 +12,19 @@ export const ProfileSettingCard = ({
   settingInfo,
 }: ProfileSettingCardProps) => {
   return (
-    <View style={styles.settingCardContainer}>
-      <Text style={styles.text}>{setting + ":"}</Text>
-      <Text style={styles.text}>{settingInfo ? settingInfo : " ERROR"}</Text>
+    <View style={[styles.profileSettingCardContainer, { 
+        flexDirection: 'row',  
+        gap: 5 
+    }]}>
+      
+      <Text style={[styles.profileText, { fontWeight: 'bold' }]}>
+        {setting}:
+      </Text>
+
+      <Text style={styles.profileText}>
+        {settingInfo ? settingInfo : "Ikke satt"}
+      </Text>
+      
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  text: {
-    fontSize: 16,
-  },
-  settingCardContainer: {
-    flexDirection: "row",
-    width: "100%",
-  },
-});

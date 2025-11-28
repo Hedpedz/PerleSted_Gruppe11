@@ -1,9 +1,5 @@
 import RateButton from "@/components/pearl/RateButton";
-import { auth } from "@/FirebaseConfig";
-import {
-  getPearlFromDatabase,
-  updatePearlRating,
-} from "@/handlers/pearlHandler";
+import { getPearlFromDatabase, updatePearlRating } from "@/handlers/pearlHandler";
 import {
   addFavoritePearl,
   addRatingUser,
@@ -15,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export default function PearlDetailScreen() {
   const router = useRouter();
@@ -26,40 +22,28 @@ export default function PearlDetailScreen() {
   const [rating, setRating] = useState<number>(0);
 
   useEffect(() => {
-    if (!pearlID) {
-      return;
-    }
+    if (!pearlID) return;
 
-    const getPearl = async () => {
+    const fetchData = async () => {
       setLoading(true);
-      const pearlData = await getPearlFromDatabase(pearlID as string);
+      try {
+        const pearlData = await getPearlFromDatabase(pearlID as string);
+        if (pearlData) setPearl(pearlData);
 
-      if (!pearlData) {
-        throw new Error("Pearl not found");
-      }
-
-      setPearl(pearlData);
-
-      setLoading(false);
-    };
-
-    const checkIfFavorite = async () => {
-      if (pearlID) {
         const favorites = await getFavoritePearls();
         setIsFavorite(favorites.includes(pearlID));
-      }
-    };
 
-    const fetchUserRating = async () => {
-      if (pearlID) {
+      
         const userRating = await getRatingUser(pearlID);
         setRating(userRating);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    getPearl();
-    checkIfFavorite();
-    fetchUserRating();
+    fetchData();
   }, [pearlID]);
 
   const ratePearl = async (value: number) => {
@@ -69,30 +53,22 @@ export default function PearlDetailScreen() {
       return;
     }
 
-    if (pearlID) {
-      try {
-        await updatePearlRating(pearlID as string, value);
+    try {
+      await updatePearlRating(pearlID as string, value);
 
-        await addRatingUser(pearlID, value);
-        setRating(value);
+      await addRatingUser(pearlID, value);
+      setRating(value);
 
-        const currentPearl = await getPearlFromDatabase(pearlID);
-
-        if (currentPearl) {
-          setPearl(currentPearl);
-        }
-      } catch (error) {
-        alert("Noe gikk galt ved rating av perlen: " + error);
-      }
+      const updatedPearl = await getPearlFromDatabase(pearlID);
+      if (updatedPearl) setPearl(updatedPearl);
+      
+    } catch (error) {
+      alert("Noe gikk galt ved rating av perlen: " + error);
     }
   };
 
   const toggleFavorite = async () => {
-    if (!pearlID) {
-      alert("Ugyldig perle-ID");
-      return;
-    }
-
+    if (!pearlID) return;
     try {
       if (isFavorite) {
         await removeFavoritePearl(pearlID);
@@ -104,9 +80,13 @@ export default function PearlDetailScreen() {
         alert("Perlen er lagt til som favoritt");
       }
     } catch (error) {
-      alert("En feil oppstod: " + error);
+      alert("Feil: " + error);
     }
   };
+
+  if (loading) {
+    return <View style={localStyles.center}><ActivityIndicator size="large" color="#000" /></View>;
+  }
 
   if (!pearl) {
     return (
@@ -117,72 +97,23 @@ export default function PearlDetailScreen() {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "#f9fff7",
-        width: "90%",
-        alignSelf: "center",
-        paddingTop: 40,
-      }}
-    >
-      <ScrollView
-        style={{
-          flex: 1,
-          backgroundColor: "#f9fff7",
-        }}
-      >
+    <View style={localStyles.container}>
+      <ScrollView style={{ flex: 1 }}>
         <Stack.Screen options={{ headerShown: false }} />
 
-        <View style={{ position: "relative" }}>
+        <View style={localStyles.imageSection}>
           {pearl.imageUrl ? (
-            <Image
-              source={{ uri: pearl.imageUrl }}
-              style={{ width: "100%", height: 280 }}
-              resizeMode="cover"
-            />
+            <Image source={{ uri: pearl.imageUrl }} style={localStyles.image} />
           ) : (
-            <View
-              style={{
-                width: "100%",
-                height: 280,
-                backgroundColor: "#e5e7eb",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "#6b7280" }}>No image</Text>
-            </View>
+            <View style={localStyles.noImage}><Text style={{ color: "#6b7280" }}>No image</Text></View>
           )}
 
-          <TouchableOpacity
-            onPress={() => router.back()}
-            style={{
-              position: "absolute",
-              top: 40,
-              left: 16,
-              backgroundColor: "rgba(255,255,255,0.8)",
-              borderRadius: 30,
-              padding: 6,
-            }}
-            hitSlop={8}
-          >
+          <TouchableOpacity onPress={() => router.back()} style={localStyles.backButton}>
             <Ionicons name="arrow-back" size={22} color="#000" />
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={{
-              position: "absolute",
-              top: 220,
-              right: 10,
-              backgroundColor: "rgba(255,255,255,0.8)",
-              borderRadius: 50,
-              padding: 8,
-            }}
-            hitSlop={8}
-            onPress={() => toggleFavorite()}
-          >
-            <FontAwesome
+          <TouchableOpacity style={localStyles.favButton} onPress={toggleFavorite}>
+          <FontAwesome
               name={isFavorite ? "heart" : "heart-o"}
               size={35}
               color={isFavorite ? "red" : "black"}
@@ -190,110 +121,143 @@ export default function PearlDetailScreen() {
           </TouchableOpacity>
         </View>
 
-        <View>
-          <Text
-            style={{
-              fontSize: 22,
-              fontWeight: "700",
-              marginBottom: 6,
-              marginTop: 10,
-              marginLeft: 10,
-              marginRight: 10,
-              justifyContent: "center",
-              alignSelf: "center",
-            }}
-          >
-            {pearl.title}
-          </Text>
+        <View style={localStyles.contentSection}>
+          
+          <Text style={localStyles.title}>{pearl.title}</Text>
 
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 8,
-              marginLeft: 10,
-              justifyContent: "space-between",
-            }}
-          >
-            <Text style={{ marginRight: 6, fontSize: 16 }}>{`Anmeldelser: ${
-              pearl.currentAmountOfRatings ?? 0
-            }`}</Text>
-            <Text style={{ marginRight: 10, fontSize: 16 }}>
-              {`Gjennomsnitt: ${pearl.avgRating ?? "Ingen anmeldelser enda"}`}
+          <View style={localStyles.statsContainer}>
+            <Text style={localStyles.statsText}>
+                {`Anmeldelser: ${pearl.currentAmountOfRatings ?? 0}`}
+            </Text>
+            <Text style={localStyles.statsText}>
+                {`Gjennomsnitt: ${pearl.avgRating ? pearl.avgRating.toFixed(1) : "Ingen anmeldelser enda"}`}
             </Text>
           </View>
 
           {!!pearl.description && (
-            <Text
-              style={{
-                color: "#444",
-                lineHeight: 20,
-                marginBottom: 10,
-                marginLeft: 10,
-              }}
-            >
-              {pearl.description}
-            </Text>
+            <Text style={localStyles.description}>{pearl.description}</Text>
           )}
 
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginLeft: 10,
-            }}
-          >
-            <Ionicons name="person-circle-outline" size={20} color="#000" />
-            <Text style={{ marginLeft: 6 }}>
-              Opprettet av {pearl.createdBy ?? "Ukjent"}
+          <View style={localStyles.creatorRow}>
+            <Ionicons name="person-circle-outline" size={24} color="#666" />
+            <Text style={{ marginLeft: 8, fontSize: 16, color: "#555" }}>
+              Opprettet av <Text style={{ fontWeight: "bold", color: "#000" }}>
+                {pearl.createdByUsername || pearl.createdBy || "Ukjent"}
+              </Text>
             </Text>
           </View>
 
-          <View
-            style={{
-              marginLeft: 10,
-              marginTop: 10,
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <RateButton
-              value={1}
-              pearlID={pearlID as string}
-              isRated={rating >= 1 ? true : false}
-              onPress={() => {
-                ratePearl(1);
-              }}
-            />
-            <RateButton
-              value={2}
-              pearlID={pearlID as string}
-              isRated={rating >= 2 ? true : false}
-              onPress={() => ratePearl(2)}
-            />
-            <RateButton
-              value={3}
-              pearlID={pearlID as string}
-              isRated={rating >= 3 ? true : false}
-              onPress={() => ratePearl(3)}
-            />
-            <RateButton
-              value={4}
-              pearlID={pearlID as string}
-              isRated={rating >= 4 ? true : false}
-              onPress={() => ratePearl(4)}
-            />
-            <RateButton
-              value={5}
-              pearlID={pearlID as string}
-              isRated={rating >= 5 ? true : false}
-              onPress={() => ratePearl(5)}
-            />
+          <View style={localStyles.ratingWrapper}>
+            <Text style={localStyles.ratingTitle}>Gi din vurdering:</Text>
+            <View style={localStyles.ratingRow}>
+                {[1, 2, 3, 4, 5].map((val) => (
+                    <RateButton 
+                        key={val} 
+                        value={val} 
+                        pearlID={pearlID as string} 
+                        isRated={rating >= val} 
+                        onPress={() => ratePearl(val)}
+                    />
+                ))}
+            </View>
           </View>
         </View>
-
-        <View style={{ height: 40 }} />
       </ScrollView>
     </View>
   );
 }
+
+const localStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#f9fff7",
+  },
+  center: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  imageSection: {
+    position: "relative",
+    width: "100%",
+    height: 300,
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+  },
+  noImage: {
+    width: "100%",
+    height: "100%",
+    backgroundColor: "#e5e7eb",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  backButton: {
+    position: "absolute",
+    top: 50,
+    left: 20,
+    backgroundColor: "rgba(255,255,255,0.9)",
+    borderRadius: 30,
+    padding: 8,
+    elevation: 5,
+  },
+  favButton: {
+    position: "absolute",
+    top: 260,
+    right: 20,
+    backgroundColor: "rgba(255,255,255,0.9)",
+    borderRadius: 50,
+    padding: 12,
+    elevation: 5,
+  },
+  contentSection: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 40,
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: "800",
+    marginBottom: 10,
+    color: "#333",
+    textAlign: 'center',
+  },
+  statsContainer: {
+    marginBottom: 20,
+    gap: 5, 
+    alignItems: 'center', 
+  },
+  statsText: {
+    fontSize: 16,
+    color: "#555",
+  },
+  description: {
+    fontSize: 16,
+    lineHeight: 24,
+    color: "#444",
+    marginBottom: 20,
+    textAlign: 'left', 
+  },
+  creatorRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderTopColor: "#eee",
+    marginBottom: 30,
+  },
+  ratingWrapper: {
+    alignItems: 'center',
+    gap: 15,
+  },
+  ratingTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  ratingRow: {
+    flexDirection: "row",
+    gap: 12,
+  }
+});

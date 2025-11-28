@@ -2,37 +2,24 @@ import { addPearlToDatabase } from "@/handlers/pearlHandler";
 import { getUserDataFromDatabase } from "@/handlers/userHandler";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Image,
-  Pressable,
-  ScrollView,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import PerleCameraView from "../../components/camera/CameraViewer";
 import { usePerleCamera } from "../../hooks/useCamera";
 import { useImagePicker } from "../../hooks/useImagePicker";
-import { styles } from "../styles";
+import { styles as globalStyles } from "../styles";
 
 export default function NewPlacesScreen() {
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [location, setLocation] = useState<{
-    lat: number;
-    long: number;
-  } | null>(null);
-
+  const [location, setLocation] = useState<{ lat: number; long: number; } | null>(null);
   const [savedImage, setSavedImage] = useState<string | null>(null);
   const [userData, setUserData] = useState<any>(null);
-
   const [isLoading, setIsLoading] = useState(false);
   const camera = usePerleCamera();
   const gallery = useImagePicker();
   const params = useLocalSearchParams();
   const router = useRouter();
-
   const finalImage = savedImage || gallery.pickedImage || camera.image;
 
   useEffect(() => {
@@ -58,7 +45,7 @@ export default function NewPlacesScreen() {
 
   const handleSubmit = async () => {
     if (isLoading) return;
-    if (!title) {
+      if (!title) {
       alert("Mangler tittel");
       return;
     }
@@ -98,7 +85,6 @@ export default function NewPlacesScreen() {
       console.log("Ny perle opprettet:", pearlData);
 
       alert("Perle opprettet!");
-
       setDescription("");
       setTitle("");
       setLocation(null);
@@ -118,20 +104,18 @@ export default function NewPlacesScreen() {
   if (camera.isCameraVisible) {
     return <PerleCameraView camera={camera} />;
   }
-
   return (
-    <ScrollView contentContainerStyle={styles.formContainer}>
-      <Text style={styles.formTitle}>Plott en ny Perle</Text>
-
+    <ScrollView contentContainerStyle={localStyles.container}>
+      <Text style={localStyles.title}>Plott en ny Perle</Text>
       <TextInput
-        style={styles.formInput}
+        style={globalStyles.formInput}
         placeholderTextColor="#888888"
         placeholder="Tittel på perlen"
         value={title}
         onChangeText={setTitle}
       />
       <TextInput
-        style={[styles.formInput, { height: 100, textAlignVertical: "top" }]}
+        style={[globalStyles.formInput, { height: 100, textAlignVertical: "top" }]}
         placeholderTextColor="#888888"
         placeholder="Beskrivelse"
         value={description}
@@ -139,17 +123,13 @@ export default function NewPlacesScreen() {
         multiline
         numberOfLines={4}
       />
-
-      <View style={styles.locationResultContainer}>
-        {location ? (
-          <View style={styles.locationResultContainer}>
-            <Text style={styles.locationCoordText}>
-              {location.lat.toFixed(4)}, {location.long.toFixed(4)}
-            </Text>
-            <Text style={styles.locationSuccessText}>Plassering lagret</Text>
+      <View style={localStyles.locationContainer}>
+        {location && (
+          <View style={{ alignItems: 'center' }}>
+            <Text style={{ fontSize: 16 }}>{location.lat.toFixed(4)}, {location.long.toFixed(4)}</Text>
+            <Text style={{ color: 'green', fontSize: 12 }}>Plassering lagret</Text>
           </View>
-        ) : null}
-
+        )}
         <Link
           href={{
             pathname: "../mapPicker",
@@ -163,56 +143,81 @@ export default function NewPlacesScreen() {
           }}
           asChild
         >
-          <Pressable style={styles.formButton}>
-            <Text style={styles.formButtonText}>
+          <Pressable style={globalStyles.formButton}>
+            <Text style={globalStyles.formButtonText}>
               {location ? "Endre plassering" : "Velg plassering på kart"}
             </Text>
           </Pressable>
         </Link>
       </View>
-
-      <View style={styles.cameraPreviewContainer}>
+      <View style={localStyles.imageContainer}>
         {finalImage ? (
           <>
-            <Image
-              source={{ uri: finalImage }}
-              style={styles.cameraImagePreview}
-            />
+            <Image 
+            source={{ uri: finalImage }} 
+            style={localStyles.imagePreview} />
             <Pressable
-              style={styles.cameraRetakeButton}
-              onPress={() => {
-                camera.resetImage();
+              style={{ marginTop: 10 }}
+              onPress={() => { 
+                camera.resetImage(); 
                 gallery.resetPicker();
-                setSavedImage(null);
-              }}
+                setSavedImage(null); }}
             >
-              <Text style={styles.cameraRetakeText}>Fjern / Ta nytt bilde</Text>
+              <Text style={{ color: '#007AFF' }}>Fjern / Ta nytt bilde</Text>
             </Pressable>
           </>
         ) : (
           <View style={{ width: "100%", gap: 10 }}>
-            <Pressable style={styles.formButton} onPress={camera.openCamera}>
-              <Text style={styles.formButtonText}>Ta bilde</Text>
+            <Pressable style={globalStyles.formButton} onPress={camera.openCamera}>
+              <Text style={globalStyles.formButtonText}>Ta bilde</Text>
             </Pressable>
-
-            <Pressable style={[styles.formButton]} onPress={gallery.pickImage}>
-              <Text style={styles.formButtonText}>Velg fra galleri</Text>
+            <Pressable style={globalStyles.formButton} onPress={gallery.pickImage}>
+              <Text style={globalStyles.formButtonText}>Velg fra galleri</Text>
             </Pressable>
           </View>
         )}
       </View>
-
-      <Pressable
-        style={styles.formButton}
-        onPress={handleSubmit}
-        disabled={isLoading}
+      <Pressable 
+      style={globalStyles.formButton} 
+      onPress={handleSubmit} 
+      disabled={isLoading}
       >
-        {isLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <Text style={styles.formButtonText}>Opprett Perle</Text>
-        )}
+        {isLoading ? 
+        <ActivityIndicator color="#fff" /> 
+        : 
+        <Text style={globalStyles.formButtonText}>Opprett Perle</Text>}
       </Pressable>
     </ScrollView>
   );
 }
+const localStyles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    padding: 20,
+    backgroundColor: '#FFFFFF',
+    paddingBottom: 80,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 30,
+    textAlign: 'center',
+    color: '#333',
+  },
+  locationContainer: {
+    marginVertical: 15,
+    alignItems: 'center'
+  },
+  imageContainer: {
+    width: '100%',
+    marginVertical: 15,
+    alignItems: 'center',
+  },
+  imagePreview: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    backgroundColor: '#eee',
+  }
+});
+
