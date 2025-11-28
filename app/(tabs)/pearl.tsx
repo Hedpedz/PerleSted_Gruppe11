@@ -1,4 +1,5 @@
 import RateButton from "@/components/pearl/RateButton";
+import { auth } from "@/FirebaseConfig";
 import {
   getPearlFromDatabase,
   updatePearlRating,

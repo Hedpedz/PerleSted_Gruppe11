@@ -1,5 +1,5 @@
 import { collection, deleteDoc, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
-import { db } from '../FirebaseConfig';
+import { auth, db } from '../FirebaseConfig';
 import { downloadImage, uploadImagePearl } from './imageHandler';
 import { getUserDataFromDatabase } from './userHandler';
 
@@ -81,16 +81,37 @@ export const updatePearlInDatabase = async (pearlID: string, updatedData: any) =
 export const updatePearlRating = async (pearlID: string, newRating: number) => {
     const pearlData = await getPearlFromDatabase(pearlID) || {};
 
+    const userID = auth.currentUser?.uid;
+    
+    if (!userID) {
+        return false;
+    }
+
     if (!pearlData.ratings) {
         pearlData.ratings = [];
     }
+
+    if (!pearlData.userRatings) {
+        pearlData.userRatings = {};
+    }
+
+    let currentAmountOfRatings = pearlData.currentAmountOfRatings || 0;
+
+    const userRated = pearlData.userRatings[userID];
+    if (userRated) {
+        pearlData.ratings = pearlData.ratings.filter((rating: number) => rating !== userRated);
+        currentAmountOfRatings -= 1;
+    }
+    
     pearlData.ratings.push(newRating);
+
+    pearlData.userRatings[userID] = newRating;
 
     const averageRating = calculateAverageRating(pearlData.ratings);
 
-    const currentAmountOfRatings = pearlData.currentAmountOfRatings || 0;
+    
 
-    await updatePearlInDatabase(pearlID, { ratings: pearlData.ratings, avgRating: averageRating, currentAmountOfRatings: currentAmountOfRatings + 1 });
+    await updatePearlInDatabase(pearlID, { ratings: pearlData.ratings, avgRating: averageRating, userRatings: pearlData.userRatings, currentAmountOfRatings: currentAmountOfRatings + 1 });
     
     return true;
 }
