@@ -14,12 +14,11 @@ const _Layout = () => {
       <Tabs
         screenOptions={{
           headerShown: false,
-          //tabBarStyle: { height: 50, paddingTop: 5, paddingBottom: 2 },
           tabBarStyle:
             Platform.OS === "ios"
               ? { height: 50, paddingTop: 5, paddingBottom: 2 }
               : { height: 60, paddingTop: 5, paddingBottom: 5 },
-          // tabBarItemStyle: { paddingVertical: 7 },
+
 
           tabBarItemStyle:
             Platform.OS === "ios"

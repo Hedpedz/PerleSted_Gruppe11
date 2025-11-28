@@ -5,9 +5,11 @@ import { Pearl } from "@/types/pearl";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
 import { styles as globalStyles } from "../styles"; 
+
 const Home = () => {
   const [pearls, setPearls] = useState<Pearl[]>([]);
   const [filteredPearls, setFilteredPearls] = useState<Pearl[]>([]);
+
   React.useEffect(() => {
     const getPearls = async () => {
       const allPearls = await getAllPearlsFromDatabase();
@@ -16,6 +18,7 @@ const Home = () => {
     };
     getPearls();
   }, []);
+  
   const filterPearls = (query: string) => {
     const filtered = pearls.filter((pearl) =>
       pearl.title.toLowerCase().includes(query.toLowerCase())

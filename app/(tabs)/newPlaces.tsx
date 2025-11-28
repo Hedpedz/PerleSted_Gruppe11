@@ -2,27 +2,17 @@ import { addPearlToDatabase } from "@/handlers/pearlHandler";
 import { getUserDataFromDatabase } from "@/handlers/userHandler";
 import { Link, useLocalSearchParams, useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View
-} from "react-native";
+import { ActivityIndicator, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import PerleCameraView from "../../components/camera/CameraViewer";
 import { usePerleCamera } from "../../hooks/useCamera";
 import { useImagePicker } from "../../hooks/useImagePicker";
 import { styles as globalStyles } from "../styles";
+
 export default function NewPlacesScreen() {
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [location, setLocation] = useState<{
-     lat: number;
-      long: number; 
-    } | null>(null);
+  const [location, setLocation] = useState<{ lat: number; long: number; } | null>(null);
   const [savedImage, setSavedImage] = useState<string | null>(null);
   const [userData, setUserData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,6 +21,7 @@ export default function NewPlacesScreen() {
   const params = useLocalSearchParams();
   const router = useRouter();
   const finalImage = savedImage || gallery.pickedImage || camera.image;
+
   useEffect(() => {
     if (params.title) {
       setTitle(params.title as string);
@@ -109,7 +100,7 @@ export default function NewPlacesScreen() {
       setIsLoading(false);
     }
   };
-  
+
   if (camera.isCameraVisible) {
     return <PerleCameraView camera={camera} />;
   }
