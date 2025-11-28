@@ -5,6 +5,8 @@ import { MapPressEvent } from "react-native-maps";
 import { styles } from "../app/styles";
 import MapViewer from "../components/map/MapViewer";
 
+// Kilde for oppsett av kart: https://docs.expo.dev/versions/latest/sdk/map-view/
+
 export default function MapPickerScreen() {
   const router = useRouter();
   const [selectedLocation, setSelectedLocation] = useState<{

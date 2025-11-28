@@ -10,6 +10,9 @@ import MapView, {
 } from "react-native-maps";
 import { Pearl } from "../../types/pearl";
 
+// Kilde for oppsett av kart: https://docs.expo.dev/versions/latest/sdk/map-view/
+// Kilde for geolokasjon: https://docs.expo.dev/versions/latest/sdk/location/
+
 const FALLBACK_REGION = {
   latitude: 59.129082732254126,
   longitude: 11.352905810532166,

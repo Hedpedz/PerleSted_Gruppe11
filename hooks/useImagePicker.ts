@@ -2,6 +2,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { useState } from 'react';
 import { Alert } from 'react-native';
 
+// Kilde for oppsett av imagepicker: https://docs.expo.dev/versions/latest/sdk/imagepicker/
+
 export const useImagePicker = () => {
   const [image, setImage] = useState<string | null>(null);
 
