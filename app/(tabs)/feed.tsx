@@ -1,15 +1,12 @@
 import { useFocusEffect } from "expo-router";
 import React, { useCallback, useState } from "react";
-import { ActivityIndicator, FlatList, View } from "react-native";
+import { ActivityIndicator, FlatList, View, StyleSheet } from "react-native";
 import { PearlCard } from "../../components/pearl/PearlCard";
 import { getAllPearlsFromDatabase } from "../../handlers/pearlHandler";
 import { Pearl } from "../../types/pearl";
-import { styles } from "../styles";
-
 const Feed = () => {
   const [pearls, setPearls] = useState<Pearl[]>([]);
   const [loading, setLoading] = useState(true);
-
   useFocusEffect(
     useCallback(() => {
       const fetchPearls = async () => {
@@ -22,25 +19,22 @@ const Feed = () => {
           setLoading(false);
         }
       };
-
       fetchPearls();
     }, [])
   );
-
   if (loading) {
     return (
-      <View style={styles.feedLoading}>
-        <ActivityIndicator/>
+      <View style={localStyles.loadingContainer}>
+        <ActivityIndicator size="large" color="#000" />
       </View>
     );
   }
-
   return (
-    <View style={styles.feedContainer}>
+    <View style={localStyles.container}>
       <FlatList
         data={pearls}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.feedContent} 
+        contentContainerStyle={localStyles.content} 
         renderItem={({ item }) => (
           <PearlCard
             id={item.id}
@@ -52,5 +46,22 @@ const Feed = () => {
     </View>
   );
 };
-
+const localStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fcfffd",
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fcfffd",
+  },
+  content: {
+    paddingHorizontal: 16,
+    paddingTop: 12,
+    paddingBottom: 20, 
+  },
+});
 export default Feed;
+
