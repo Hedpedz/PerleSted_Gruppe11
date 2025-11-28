@@ -7,10 +7,12 @@ const RateButton = ({
   value,
   pearlID,
   isRated,
+  onPress,
 }: {
   value: number;
   pearlID: string;
   isRated: boolean;
+  onPress: (value: number) => void;
 }) => {
   async function onRate(value: number): Promise<void> {
     try {
@@ -23,7 +25,7 @@ const RateButton = ({
   }
 
   return (
-    <Pressable onPress={() => onRate(value)}>
+    <Pressable onPress={() => onPress(value)}>
       <FontAwesome
         name={isRated ? "star" : "star-o"}
         size={35}

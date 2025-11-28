@@ -1,5 +1,8 @@
 import RateButton from "@/components/pearl/RateButton";
-import { getPearlFromDatabase } from "@/handlers/pearlHandler";
+import {
+  getPearlFromDatabase,
+  updatePearlRating,
+} from "@/handlers/pearlHandler";
 import {
   addFavoritePearl,
   addRatingUser,
@@ -53,29 +56,35 @@ export default function PearlDetailScreen() {
       }
     };
 
-    const ratePearl = async () => {
-      if (pearlID) {
-        try {
-          const userRating = await getRatingUser(pearlID);
-          await addRatingUser(pearlID, userRating);
-          setRating(userRating);
-
-          const currentPearl = await getPearlFromDatabase(pearlID);
-
-          if (currentPearl) {
-            setPearl(currentPearl);
-          }
-        } catch (error) {
-          alert("Noe gikk galt ved rating av perlen: " + error);
-        }
-      }
-    };
-
     getPearl();
     checkIfFavorite();
     fetchUserRating();
-    ratePearl();
   }, [pearlID]);
+
+  const ratePearl = async (value: number) => {
+    if (!pearlID) return;
+    if (rating === value) {
+      alert("Du har allerede gitt denne ratingen.");
+      return;
+    }
+
+    if (pearlID) {
+      try {
+        await updatePearlRating(pearlID as string, value);
+
+        await addRatingUser(pearlID, value);
+        setRating(value);
+
+        const currentPearl = await getPearlFromDatabase(pearlID);
+
+        if (currentPearl) {
+          setPearl(currentPearl);
+        }
+      } catch (error) {
+        alert("Noe gikk galt ved rating av perlen: " + error);
+      }
+    }
+  };
 
   const toggleFavorite = async () => {
     if (!pearlID) {
@@ -251,27 +260,33 @@ export default function PearlDetailScreen() {
               value={1}
               pearlID={pearlID as string}
               isRated={rating >= 1 ? true : false}
-              onPress={() => ratePearl(1)}
+              onPress={() => {
+                ratePearl(1);
+              }}
             />
             <RateButton
               value={2}
               pearlID={pearlID as string}
               isRated={rating >= 2 ? true : false}
+              onPress={() => ratePearl(2)}
             />
             <RateButton
               value={3}
               pearlID={pearlID as string}
               isRated={rating >= 3 ? true : false}
+              onPress={() => ratePearl(3)}
             />
             <RateButton
               value={4}
               pearlID={pearlID as string}
               isRated={rating >= 4 ? true : false}
+              onPress={() => ratePearl(4)}
             />
             <RateButton
               value={5}
               pearlID={pearlID as string}
               isRated={rating >= 5 ? true : false}
+              onPress={() => ratePearl(5)}
             />
           </View>
         </View>
