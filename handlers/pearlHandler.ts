@@ -11,7 +11,7 @@ export const generatePearlID = (title: string): string => {
 }
 
 export const addPearlToDatabase = async (imageUri: string, pearlData: any) => {
-    const pearlInfo = {...pearlData}
+    let pearlInfo = {...pearlData}
 
     if (!pearlInfo.title) {
         throw new Error("Perlen må ha en tittel");

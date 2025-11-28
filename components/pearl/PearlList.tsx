@@ -20,11 +20,8 @@ export default function PearlList({
     filterPearls(query);
   };
 
-  const handlePress = (pearl: Pearl) => {
-    filterPearls(pearl.title);
-  };
-
   const insets = useSafeAreaInsets();
+  
   return (
     <View
       style={{
@@ -40,7 +37,8 @@ export default function PearlList({
         style={styles.pearlListInput}
         onChangeText={handlePearlFilter}
         value={filter}
-        placeholder="Søk etter perle"
+        placeholder="Søk etter perle.."
+        placeholderTextColor="#000" 
         keyboardType="default"
       />
       <View style={styles.pearlListFlatList}>
@@ -74,12 +72,14 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     width: "90%",
+    color: "#000",
+    borderColor: "grey", 
+    borderRadius: 8, 
   },
 
   pearlListFlatList: {
     marginVertical: 20,
     width: "90%",
-    //height: 100,
   },
 
   pearlListItem: {
