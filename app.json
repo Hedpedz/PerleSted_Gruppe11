@@ -14,16 +14,16 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/beluga.png",
-        "backgroundImage": "./assets/xp.jpg",
-        "monochromeImage": "./assets/xp.jpg"
+        "foregroundImage": "./assets/perlested.jpg",
+        "backgroundImage": "./assets/perlested.jpg",
+        "monochromeImage": "./assets/perlested.jpg"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/xp.jpg"
+      "favicon": "./assets/perlested.jpg"
     },
     "plugins": [
       "expo-router",
