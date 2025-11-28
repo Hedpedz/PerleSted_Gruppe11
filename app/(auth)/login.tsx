@@ -6,11 +6,12 @@ import {
   ActivityIndicator,
   KeyboardAvoidingView,
   Pressable,
+  StyleSheet,
   Text,
   TextInput,
 } from "react-native";
 import { auth, db } from "../../FirebaseConfig";
-import { styles } from "../styles";
+import { styles as globalStyles } from "../styles";
 
 export default function LoginScreen() {
   const userData = collection(db, "users");
@@ -19,20 +20,6 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-
-  /*
-  const handleLogin = async () => {
-    if (isLoading) return;
-    setIsLoading(true);
-
-    try {
-      await login(username, password);
-    } catch (e) {
-      alert("Innlogging feilet (dummy-feil)");
-      setIsLoading(false);
-    }
-  };
-*/
 
   const isEmail = (input: string) => {
     //https://stackoverflow.com/questions/41252314/how-can-i-correctly-check-if-a-string-does-not-contain-a-specific-word
@@ -66,6 +53,8 @@ export default function LoginScreen() {
           loginName = email;
         } catch (error: any) {
           alert("Brukernavnet ble ikke funnet: " + error.message);
+          setIsLoading(false);
+          return;
         }
       }
 
@@ -82,11 +71,11 @@ export default function LoginScreen() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.authContainer} behavior="padding">
-      <Text style={styles.authTitle}>PerleSted</Text>
+    <KeyboardAvoidingView style={localStyles.container} behavior="padding">
+      <Text style={localStyles.title}>PerleSted</Text>
 
       <TextInput
-        style={styles.authInput}
+        style={globalStyles.authInput}
         placeholder="Brukernavn"
         placeholderTextColor="#888888"
         value={username}
@@ -94,7 +83,7 @@ export default function LoginScreen() {
         autoCapitalize="none"
       />
       <TextInput
-        style={styles.authInput}
+        style={globalStyles.authInput}
         placeholder="Passord"
         placeholderTextColor="#888888"
         value={password}
@@ -103,20 +92,42 @@ export default function LoginScreen() {
       />
 
       <Pressable
-        style={styles.authButton}
+        style={globalStyles.authButton}
         onPress={signIn}
         disabled={isLoading}
       >
         {isLoading ? (
-          <ActivityIndicator />
+          <ActivityIndicator color="#fff" />
         ) : (
-          <Text style={styles.authButtonText}>Logg inn</Text>
+          <Text style={globalStyles.authButtonText}>Logg inn</Text>
         )}
       </Pressable>
 
-      <Link href="/register" style={styles.authLink}>
-        <Text>Ny bruker? Registrer deg</Text>
+      <Link href="/register" style={localStyles.link}>
+        <Text style={localStyles.linkText}>Ny bruker? Registrer deg</Text>
       </Link>
     </KeyboardAvoidingView>
   );
 }
+
+const localStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 20,
+    backgroundColor: '#FFFFFF',
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginBottom: 40,
+    color: '#333333',
+  },
+  link: {
+    marginTop: 20,
+  },
+  linkText: {
+    color: '#007AFF', 
+  }
+});
