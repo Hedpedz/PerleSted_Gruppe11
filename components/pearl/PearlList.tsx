@@ -1,15 +1,17 @@
 import { Pearl } from "@/types/pearl";
 import React, { useState } from "react";
-import { FlatList, Pressable, StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { PearlCard } from "./PearlCard";
 
 export default function PearlList({
   pearls,
   filterPearls,
+  useInsets = true,
 }: {
   pearls: Pearl[];
   filterPearls: (query: string) => void;
+  useInsets?: boolean;
 }) {
   const [filter, setFilter] = useState("");
 
@@ -18,19 +20,16 @@ export default function PearlList({
     filterPearls(query);
   };
 
-  const handlePress = (pearl: Pearl) => {
-    filterPearls(pearl.title);
-  };
-
   const insets = useSafeAreaInsets();
+  
   return (
     <View
       style={{
         flex: 1,
         alignItems: "center",
         width: "100%",
-        paddingTop: insets.top,
-        paddingBottom: insets.bottom,
+        paddingTop: useInsets ? insets.top : 0,
+        paddingBottom: useInsets ? insets.bottom : 0,
         paddingHorizontal: insets.left,
       }}
     >
@@ -38,29 +37,23 @@ export default function PearlList({
         style={styles.pearlListInput}
         onChangeText={handlePearlFilter}
         value={filter}
-        placeholder="Søk etter perle"
+        placeholder="Søk etter perle.."
+        placeholderTextColor="#000" 
         keyboardType="default"
       />
-      <FlatList
-        data={pearls}
-        style={styles.pearlListFlatList}
-        contentContainerStyle={{ gap: 25 }}
-        numColumns={2}
-        columnWrapperStyle={{ justifyContent: "space-between" }}
-        renderItem={({ item }) => (
-          <Pressable
-            style={styles.pearlListItem}
-            onPress={() => handlePress(item)}
-          >
-            <PearlCard
-              id={item.id}
-              title={item.title}
-              imageUrl={item.imageUrl}
-            />
-          </Pressable>
-        )}
-        keyExtractor={(item) => item.id.toString()}
-      />
+      <View style={styles.pearlListFlatList}>
+        <View style={styles.pearlListNestedView}>
+          {pearls.map((item) => (
+            <View key={item.id} style={styles.pearlListItem}>
+              <PearlCard
+                id={item.id}
+                title={item.title}
+                imageUrl={item.imageUrl}
+              />
+            </View>
+          ))}
+        </View>
+      </View>
     </View>
   );
 }
@@ -79,16 +72,24 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 10,
     width: "90%",
+    color: "#000",
+    borderColor: "grey", 
+    borderRadius: 8, 
   },
 
   pearlListFlatList: {
     marginVertical: 20,
     width: "90%",
-    //height: 100,
   },
 
   pearlListItem: {
-    height: 100,
     width: "47%",
+    marginBottom: 10,
+  },
+
+  pearlListNestedView: {
+    justifyContent: "space-between",
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
 });

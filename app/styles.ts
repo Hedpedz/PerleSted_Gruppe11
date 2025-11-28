@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
 
-  // Header
+  // Header 
   headerContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -24,154 +24,8 @@ export const styles = StyleSheet.create({
     gap: 16,
   },
 
-  // Tabs layout 
-  tabsLayoutContainer: {
-    flex: 1,
-    backgroundColor: '#FFFFFF',
-
-  },
-
-  // Profile 
-  profileButton: {
-    backgroundColor: "transparent",
-    padding: 16,
-    borderRadius: 8,
-    alignItems: "center",
-    width: "100%",
-    borderWidth: 1,
-    borderColor: "#e0e0e0e8",
-  },
-  profileText: {
-    fontSize: 16,
-  },
-  profileHeaderText: {
-    fontSize: 16,
-    textAlign: "center",
-    marginTop: 8,
-  },
-  profileContainerMiddle: {
-    alignItems: "center",
-    gap: 12,
-    width: "100%",
-  },
-  profileContainer: {
-    flex: 1,
-    paddingBottom: 30,
-    paddingTop: 20,
-    gap: 45,
-    width: "90%",
-    alignItems: "center",
-    alignSelf: "center",
-  },
-  profileHeaderContainer: {
-    alignItems: "center",
-  },
-  profileSettingCardContainer: {
-    flexDirection: "row",
-    width: "100%",
-  },
-  profileImage: {
-    width: 90,
-    height: 90,
-    borderWidth: 4,
-    borderRadius: 90,
-    borderColor: "#E1F8D7",
-  },
-  profilePostsView: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 12,
-    justifyContent: "space-between",
-  },
-  //Pearl
-  pearlTitle: {
-    fontSize: 20,
-    textAlign: "center",
-    marginTop: 8,
-  },
-  PearlCard: {
-    width: "100%",
-    marginTop: 16,
-    padding: 12,
-    borderRadius: 12,
-    backgroundColor: "#fff",
-    shadowColor: "#000",
-    shadowOpacity: 0.15,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  PearlImageWrap: {
-    borderRadius: 12,
-    overflow: "hidden",
-  },
-  PearlImage: {
-    width: "100%",
-    height: 180,
-  },
-
-  // Settings
-  settingsContainer: {
-    gap: 10,
-    display: "flex",
-    flexDirection: "row",
-    gridTemplateRows: "1fr 1fr",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-
-  profileImageSettings: {
-    width: 120,
-    height: 120,
-    borderWidth: 4,
-    borderRadius: 60,
-    borderColor: "#E1F8D7",
-    alignSelf: "center",
-  },
-
-
-  settingsPictureButton: {
-    display: "flex",
-    alignItems: "center",
-    backgroundColor: "#E1F8D7",
-    borderRadius: 8,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-  },
-
-  settingFormText: {
-    display: "flex",
-    fontSize: 15,
-    flexDirection: "row",
-    paddingLeft: 7,
-    gap: 8,
-  },
-
-  settingsSmallButton: {
-    backgroundColor: "#E1F8D7",
-    width: 70,
-    height: 40,
-    borderRadius: 20, 
-    justifyContent: "center", 
-    alignItems: "center",
-    marginInline: 40,
-
-  },
-
-
-  settingsBigButton: {
-    backgroundColor: "#E1F8D7",
-    paddingVertical: 15,
-    borderRadius: 8,
-    width: "100%",
-    alignItems: "center",
-  },
-
-
-
-   // Auth
-   authContainer: {
+  // Auth (Login / Register)
+  authContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -209,9 +63,9 @@ export const styles = StyleSheet.create({
   },
   authLink: {
     marginTop: 20,
-
   },
-   // Form, new place
+
+  // Globale Form Elementer (Brukes i NewPlaces og Settings)
   formContainer: {
     flexGrow: 1,
     padding: 20,
@@ -250,7 +104,84 @@ export const styles = StyleSheet.create({
     color: '#000000',
   },
 
-  // Camera
+  // Felles Profil knapper (brukes i Home og Profile) 
+  profileButton: {
+    backgroundColor: "transparent",
+    padding: 16,
+    borderRadius: 8,
+    alignItems: "center",
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#e0e0e0e8",
+    marginBottom: 10,
+  },
+  profileText: {
+    fontSize: 16,
+    color: '#333',
+  },
+
+  // Pearl Card (Brukes i lister, Home og Feed) 
+  PearlCard: {
+    width: "100%",
+    marginTop: 16,
+    padding: 12,
+    borderRadius: 12,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowOffset: { width: 0, height: 4 },
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  PearlImageWrap: {
+    borderRadius: 12,
+    overflow: "hidden",
+    height: 180,
+    backgroundColor: '#eee',
+  },
+  PearlImage: {
+    width: "100%",
+    height: "100%",
+  },
+  pearlTitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginTop: 10,
+    color: '#333',
+  },
+
+  // Setting Card 
+  settingFormText: {
+    width: "100%", 
+    fontSize: 15, 
+    flexDirection: "row", 
+    alignItems: "center",
+    justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderBottomColor: "#e0e0e0e8",
+    paddingVertical: 15,
+    paddingHorizontal: 5,
+  },
+  settingsSmallButton: {
+    width: 50,
+    height: 50,
+    borderRadius: 25, 
+    justifyContent: "center", 
+    alignItems: "center",
+    backgroundColor: "#E1F8D7",
+  },
+  // Input for inline redigering
+  inlineInput: {
+    fontSize: 16,
+    color: "#000",
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    backgroundColor: "#f0f0f0", 
+    borderRadius: 5,
+    minWidth: 150, 
+  },
+
+  // Kamera (brukes i newplaces) 
   cameraContainer: {
     flex: 1,
     backgroundColor: 'black',
@@ -302,57 +233,72 @@ export const styles = StyleSheet.create({
     backgroundColor: '#eee',
   },
   cameraRetakeButton: {
-    padding: 5,
+    padding: 10,
   },
   cameraRetakeText: {
     color: '#007AFF',
     fontSize: 16,
   },
 
-  // Map
+  // Kart (Map) 
   mapContainer: {
     flex: 1,
   },
   map: {
     flex: 1,
   },
-  
-  // Map Picker Overlay 
   mapOverlayContainer: {
     position: 'absolute',
     bottom: 80,
-    left: 70,
-    right: 70,
+    left: 20,
+    right: 20,
     backgroundColor: 'white',
-    padding: 10,
-    borderRadius: 10,
-    alignItems: 'center'
+    padding: 15,
+    borderRadius: 15,
+    alignItems: 'center',
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    elevation: 5,
   },
   mapInfoText: {
-    marginBottom: 5,
+    marginBottom: 10,
     fontSize: 16,
     color: '#333',
     fontWeight: '500',
   },
+  
+  // Callout boble på kartet
+  calloutView: {
+    padding: 10,
+    minWidth: 150, 
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  calloutTitle: {
+    fontWeight: 'bold',
+    fontSize: 16,
+    marginBottom: 5,
+    color: '#333',
+  },
+  calloutSub: {
+    color: '#007AFF', 
+    fontSize: 12,
+  },
 
-  // Location Display in New Place 
+  // Location Result (Brukes i Newplaces) 
   locationResultContainer: {
-    alignItems: 'center'
+    alignItems: 'center',
+    marginBottom: 15,
   },
   locationCoordText: {
-    fontSize: 18, 
-    color: '#333'
+    fontSize: 16, 
+    color: '#333',
+    fontWeight: 'bold',
   },
   locationSuccessText: {
     color: 'green', 
     fontSize: 12, 
     marginTop: 4
-  },
-
-  // Home
-  homeContainer: {
-    flex: 1,
-    padding: 20,
-    backgroundColor: '#FFFFFF',
   },
 });

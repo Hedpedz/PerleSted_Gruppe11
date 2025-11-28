@@ -1,8 +1,10 @@
-import React, { useRef, useEffect, useState } from "react";
-import { View, Alert } from "react-native";
-import MapView, { Marker, PROVIDER_GOOGLE, MapPressEvent } from "react-native-maps";
-import * as Location from 'expo-location'; 
+import * as Location from 'expo-location';
+import { useRouter } from "expo-router";
+import React, { useEffect, useRef, useState } from "react";
+import { Alert, Text, View } from "react-native";
+import MapView, { Callout, MapPressEvent, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { styles } from "../../app/styles";
+import { Pearl } from "../../types/pearl";
 
 const FALLBACK_REGION = {
   latitude: 59.129082732254126,
@@ -14,26 +16,28 @@ const FALLBACK_REGION = {
 interface MapViewerProps {
   onMapPress?: (event: MapPressEvent) => void;
   selectedLocation?: { latitude: number; longitude: number } | null;
+  pearls?: Pearl[]; 
 }
 
-const MapViewer = ({ onMapPress, selectedLocation }: MapViewerProps) => {
+const MapViewer = ({ onMapPress, selectedLocation, pearls = [] }: MapViewerProps) => {
   const mapRef = useRef<MapView>(null);
   const [hasPermission, setHasPermission] = useState(false);
+  const router = useRouter(); 
 
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      
+
       if (status !== 'granted') {
         Alert.alert("Tillatelse nektet", "Vi trenger din posisjon for å vise kartet riktig.");
         return;
       }
-      
+
       setHasPermission(true);
 
-      if (!selectedLocation) {
+      if (!selectedLocation && pearls.length === 0) {
         let location = await Location.getCurrentPositionAsync({});
-        
+
         mapRef.current?.animateToRegion({
           latitude: location.coords.latitude,
           longitude: location.coords.longitude,
@@ -54,6 +58,13 @@ const MapViewer = ({ onMapPress, selectedLocation }: MapViewerProps) => {
     }
   }, [selectedLocation]);
 
+  const handleCalloutPress = (id: string) => {
+    router.push({
+      pathname: "/(tabs)/pearl", 
+      params: { pearlID: id },
+    });
+  };
+
   return (
     <View style={styles.mapContainer}>
       <MapView
@@ -72,6 +83,22 @@ const MapViewer = ({ onMapPress, selectedLocation }: MapViewerProps) => {
             title="Valgt plassering"
           />
         )}
+        {pearls.map((pearl) => (
+          <Marker
+            key={pearl.id}
+            coordinate={{
+              latitude: pearl.latitude,
+              longitude: pearl.longitude,
+            }}
+          >
+            <Callout onPress={() => handleCalloutPress(pearl.id)}>
+              <View style={styles.calloutView}>
+                <Text style={styles.calloutTitle}>{pearl.title}</Text>
+                <Text style={styles.calloutSub}>Trykk for info ›</Text>
+              </View>
+            </Callout>
+          </Marker>
+        ))}
       </MapView>
     </View>
   );

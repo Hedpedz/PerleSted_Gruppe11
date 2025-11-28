@@ -1,6 +1,7 @@
 import { collection, deleteDoc, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
-import { db } from '../FirebaseConfig';
+import { auth, db } from '../FirebaseConfig';
 import { downloadImage, uploadImagePearl } from './imageHandler';
+import { getUserDataFromDatabase } from './userHandler';
 
 
 export const generatePearlID = (title: string): string => {
@@ -10,24 +11,26 @@ export const generatePearlID = (title: string): string => {
 }
 
 export const addPearlToDatabase = async (imageUri: string, pearlData: any) => {
-    const pearlInfo = {...pearlData}
+    let pearlInfo = {...pearlData}
 
     if (!pearlInfo.title) {
-        throw new Error("Pearl must have a title");
+        throw new Error("Perlen må ha en tittel");
     }
 
     if (!pearlInfo.description) {
-        throw new Error("Pearl must have a description");
+        throw new Error("Perlen må ha en beskrivelse");
     }
 
     if (!pearlInfo.longitude || !pearlInfo.latitude) {
-        throw new Error("Pearl must have coordinates");
+        throw new Error("Perlen må ha koordinater");
     }
 
+    const userData = await getUserDataFromDatabase();
+    const username = userData?.username;
     const pearlID = generatePearlID(pearlInfo.title);
 
     if (!pearlID) {
-        throw new Error("ID was not genereated");
+        throw new Error("ID ble ikke generert");
     }
 
     const imageUrl = await uploadImagePearl(pearlID, imageUri);
@@ -35,6 +38,7 @@ export const addPearlToDatabase = async (imageUri: string, pearlData: any) => {
     await setDoc(doc(db, "pearls", pearlID), {
           imageUrl: imageUrl,
           ...pearlData,
+          createdBy: username,
           createdAt: new Date()
         });
 
@@ -55,6 +59,77 @@ export const getPearlFromDatabase = async (pearlID: string) => {
 
 }
 
+export const updatePearlInDatabase = async (pearlID: string, updatedData: any) => {
+    const pearlData = await getPearlFromDatabase(pearlID);
+
+    if (!pearlData) {
+        throw new Error("Perlen eksisterer ikke");
+    }
+
+    try {
+        const pearl = doc(db, "pearls", pearlID);
+        await setDoc(pearl, updatedData, { merge: true });
+    } catch (error) {
+        console.error("Feil ved oppdatering av perle: ", error);
+        throw error;
+    }
+    
+
+    return true;
+}
+
+export const updatePearlRating = async (pearlID: string, newRating: number) => {
+    const pearlData = await getPearlFromDatabase(pearlID) || {};
+
+    const userID = auth.currentUser?.uid;
+    
+    if (!userID) {
+        return false;
+    }
+
+    if (!pearlData.ratings) {
+        pearlData.ratings = [];
+    }
+
+    if (!pearlData.userRatings) {
+        pearlData.userRatings = {};
+    }
+
+    let currentAmountOfRatings = pearlData.currentAmountOfRatings || 0;
+
+    const userRated = pearlData.userRatings[userID];
+    if (userRated) {
+        pearlData.ratings = pearlData.ratings.filter((rating: number) => rating !== userRated);
+        currentAmountOfRatings -= 1;
+    }
+    
+    pearlData.ratings.push(newRating);
+
+    pearlData.userRatings[userID] = newRating;
+
+    const averageRating = calculateAverageRating(pearlData.ratings);
+
+    
+
+    await updatePearlInDatabase(pearlID, { ratings: pearlData.ratings, avgRating: averageRating, userRatings: pearlData.userRatings, currentAmountOfRatings: currentAmountOfRatings + 1 });
+    
+    return true;
+}
+
+const calculateAverageRating = (ratings: number[]): number => {
+    let total = 0;
+
+    for (let i = 0; i < ratings.length; i++) {
+        if (ratings[i] < 1 || ratings[i] > 5) {
+            throw new Error("Ugyldig vurderingsverdi funnet");
+        }
+        total += ratings[i];
+    }
+
+    return Math.round((total / ratings.length) * 10) / 10;
+}
+
+
 export const getAllPearlsFromDatabase = async (): Promise<any[]> => {
     const pearlDocs = await getDocs(collection(db, "pearls"))
 
@@ -62,6 +137,14 @@ export const getAllPearlsFromDatabase = async (): Promise<any[]> => {
 
     return list;
 
+}
+
+export const getAllPearlsForUser = async (userID: string): Promise<any[]> => {
+    const list = await getAllPearlsFromDatabase();
+
+    const userPearls = list.filter((pearl) => pearl.createdBy === userID);
+
+    return userPearls;
 }
 
 export const deletePearlFromDatabase = async (pearlID: string) => {
