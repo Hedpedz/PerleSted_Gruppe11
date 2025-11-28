@@ -140,9 +140,12 @@ export const getAllPearlsFromDatabase = async (): Promise<any[]> => {
 }
 
 export const getAllPearlsForUser = async (userID: string): Promise<any[]> => {
+    const userData = await getUserDataFromDatabase();
+    const username = userData?.username;
+
     const list = await getAllPearlsFromDatabase();
 
-    const userPearls = list.filter((pearl) => pearl.createdBy === userID);
+    const userPearls = list.filter((pearl) => pearl.createdBy === username);
 
     return userPearls;
 }
